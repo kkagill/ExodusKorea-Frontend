@@ -1,0 +1,45 @@
+<ngx-spinner bdColor="rgba(255,255,255,0.8)" size="large" color="#f7a233" type="timer"></ngx-spinner>
+<mat-toolbar>
+    <span class="title-center">로그인</span>
+</mat-toolbar>
+<mat-card class="my-card">
+    <div *ngIf="error" style="color: red;">{{error}}</div><br />
+    <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+        <mat-card-content>
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>이메일</mat-label>
+                <input matInput placeholder="이메일" formControlName="email" [formControl]="emailFormControl"
+                    [errorStateMatcher]="matcher" />
+                <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                    유효한 이메일 주소를 입력해주세요.
+                </mat-error>
+                <mat-error *ngIf="emailFormControl.hasError('required')">
+                    작성이 필요한 필드입니다.
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>비밀번호</mat-label>
+                <input matInput type="password" placeholder="비밀번호" formControlName="password" [formControl]="passwordFormControl"
+                    [errorStateMatcher]="matcher" />
+                <mat-error *ngIf="passwordFormControl.hasError('required')">
+                    작성이 필요한 필드입니다.
+                </mat-error>
+            </mat-form-field>
+            <a href="javascript:void(0);" (click)="goToForgotPwd()" class="remove-underline">비밀번호를 잊으셨나요?</a>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button 
+                    class="stick-to-right-side" 
+                    [disabled]="!(loginForm.controls.email.valid && loginForm.controls.password.valid)"
+                    color="accent">
+                로그인
+            </button>
+            <button mat-raised-button 
+                    class="stick-to-right-side" 
+                    (click)="onNoClick($event)" 
+                    color="primary">
+                닫기
+            </button>
+        </mat-card-actions>
+    </form>
+</mat-card>
