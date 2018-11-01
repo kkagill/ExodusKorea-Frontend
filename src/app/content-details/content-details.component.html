@@ -1,0 +1,92 @@
+<section class="magazine-section my-5">
+  <div class="row">
+    <div class="col-lg-8 col-md-12">
+      <div class="single-news mb-lg-0 mb-4">
+        <mat-card class="example-card" *ngIf="isCountryInfoLoaded">
+          <mat-card-content>
+            <div class="embed-responsive embed-responsive-1by1" *ngIf="safeURL">
+              <iframe class="embed-responsive-item" [src]='safeURL' frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div *ngIf="isYouTubeCommentLoaded">
+              <div *ngFor="let c of youTubeComments">
+                <mat-label> {{c.updatedAt | date:'y년 M월 d일'}}</mat-label>
+                <p>{{c.authorDisplayName}}: {{c.textDisplay}} 좋아요: {{c.likes}}</p>             
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-12">
+      <div class="single-news mb-4">
+        <div class="row">
+          <div class="col-md-12">
+            <mat-card class="example-card" *ngIf="isCountryInfoLoaded">
+              <mat-card-header>
+                <mat-card-title><b>국가정보 (2018)</b></mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <mat-label><b>국명:</b> {{countryInfo.countryName}}</mat-label><br />
+                <mat-label><b>수도:</b> {{countryInfo.capitalCity}}
+                  <img src="./../../assets/images/countries/{{countryInfo.countryInEnglish}}-square24.png" style="margin-top: -5px;">
+                </mat-label><br />
+                <mat-label><b>언어:</b> {{countryInfo.languages}}</mat-label><br />
+                <mat-label><b>인구:</b> {{countryInfo.population}}</mat-label><br />
+                <mat-label><b>화폐:</b> {{countryInfo.currency}}</mat-label><br />
+                <mat-label><b>1인당 GDP:</b> {{countryInfo.perCapitaGDP}}</mat-label><br />
+                <mat-label><b>주요도시:</b> {{countryInfo.majorCities}}</mat-label>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+
+      <div class="single-news mb-4">
+        <div class="row">
+          <div class="col-md-12">
+            <mat-card class="example-card" *ngIf="isPriceInfoLoaded">
+              <mat-card-header>
+                <mat-card-title><b>물가 (2018)</b></mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <p style="font-size: 12px;">* 한국 기준으로 비교</p>
+                <mat-label>
+                  <b>생활비:</b> {{priceInfo.costOfLiving}} <mdb-icon [icon]="priceInfo.costOfLivingIcon"></mdb-icon>
+                </mat-label><br />
+                <mat-label>
+                  <b>주거비:</b> {{priceInfo.rent}} <mdb-icon [icon]="priceInfo.rentIcon"></mdb-icon>
+                </mat-label><br />
+                <mat-label>
+                  <b>식료품:</b> {{priceInfo.groceries}} <mdb-icon [icon]="priceInfo.groceriesIcon"></mdb-icon>
+                </mat-label><br />
+                <mat-label>
+                  <b>외식비:</b> {{priceInfo.restaurantPrice}} <mdb-icon [icon]="priceInfo.restaurantPriceIcon"></mdb-icon>
+                </mat-label><br />
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+
+      <div class="single-news mb-4">
+        <div class="row">
+          <div class="col-md-12">
+            <mat-card class="example-card" *ngIf="isCurrencyInfoLoaded">
+              <mat-card-header>
+                <mat-card-title><b>환율</b></mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <p style="font-size: 12px;">{{currencyInfo.now | date:'y년 M월 d일' }}</p>
+                <mat-label>
+                  <b>{{currencyInfo.country}}</b> {{currencyInfo.baseCurrency}}: {{currencyInfo.krwRate}}
+                </mat-label>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

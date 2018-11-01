@@ -1,82 +1,72 @@
 <ngx-spinner bdColor="rgba(255,255,255,0.8)" size="large" color="#f7a233" type="timer"></ngx-spinner>
 <mat-toolbar>
-    <span class="title-center">회원가입</span>
+  <span class="title-center">회원가입</span>
 </mat-toolbar>
 <mat-card class="my-card">
-    <div *ngIf="success">
-        <div *ngIf="success" style="color: green;" [innerHTML]="success"></div>
-        <button *ngIf="success" mat-raised-button (click)="resendConfirmEmail()" color="primary">인증메일 재발송</button><br /><br />
-    </div>       
-    <div *ngIf="error" style="color: red;">{{error}}</div><br />
-    <div *ngIf="!success">
-        <form (ngSubmit)="onSubmit()" [formGroup]="registerForm">     
-            <mat-card-content>       
-                <mat-form-field appearance="outline" class="full-width">
-                    <mat-label>이메일</mat-label>
-                    <input matInput placeholder="이메일" 
-                            formControlName="email" 
-                            [formControl]="emailFormControl" 
-                            [errorStateMatcher]="matcher" />
-                    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-                        유효한 이메일 주소를 입력해주세요.
-                    </mat-error>   
-                    <mat-error *ngIf="emailFormControl.hasError('required')">
-                        작성이 필요한 필드입니다.
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="outline" class="full-width">
-                    <mat-label>닉네임</mat-label>
-                    <input matInput 
-                            placeholder="닉네임" 
-                            formControlName="nickName" 
-                            [formControl]="nickNameFormControl" 
-                            [errorStateMatcher]="matcher" />
-                    <mat-error *ngIf="nickNameFormControl.hasError('required')">
-                        작성이 필요한 필드입니다.
-                    </mat-error>
-                </mat-form-field>  
-                <mat-form-field appearance="outline" class="full-width">
-                    <mat-label>비밀번호</mat-label>
-                    <input matInput type="password" 
-                            placeholder="비밀번호" 
-                            formControlName="password" 
-                            [formControl]="passwordFormControl" 
-                            [errorStateMatcher]="matcher" />
-                    <mat-error *ngIf="passwordFormControl.hasError('required')">
-                        작성이 필요한 필드입니다.
-                    </mat-error>
-                </mat-form-field>  
-                <mat-form-field appearance="outline" class="full-width">
-                    <mat-label>비밀번호 재확인</mat-label>
-                    <input matInput type="password" 
-                            placeholder="비밀번호 재확인" 
-                            formControlName="confirmPassword" 
-                            [formControl]="confirmPasswordFormControl" 
-                            [errorStateMatcher]="matcher" />
-                    <mat-error *ngIf="confirmPasswordFormControl.hasError('required')">
-                        작성이 필요한 필드입니다.
-                    </mat-error>
-                </mat-form-field>  
-                <re-captcha (resolved)="$event && submit($event)" formControlName="recaptcha" siteKey="6Lf5B3YUAAAAACwH0L2VRaY-dA-BeK1k3NMmiP1U"></re-captcha>
-            </mat-card-content>
-            <mat-card-actions>   
-                <button mat-raised-button
-                        class="stick-to-right-side" 
-                        [disabled]="!(registerForm.controls.email.valid && 
+  <div *ngIf="success">
+    <div *ngIf="success" style="color: green;" [innerHTML]="success"></div>
+    <button *ngIf="success" mat-raised-button (click)="resendConfirmEmail()" color="primary">인증메일 재발송</button><br /><br />
+  </div>
+  <div *ngIf="error" style="color: red;">{{error}}</div><br />
+  <div *ngIf="!success">
+    <form (ngSubmit)="onSubmit()" [formGroup]="registerForm">
+      <mat-card-content>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>이메일</mat-label>
+          <input matInput placeholder="이메일" formControlName="email" [formControl]="emailFormControl"
+            [errorStateMatcher]="matcher" />
+          <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+            유효한 이메일 주소를 입력해주세요.
+          </mat-error>
+          <mat-error *ngIf="emailFormControl.hasError('required')">
+            작성이 필요한 필드입니다.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>닉네임</mat-label>
+          <input matInput placeholder="닉네임" formControlName="nickName" [formControl]="nickNameFormControl"
+            [errorStateMatcher]="matcher" />
+          <mat-error *ngIf="nickNameFormControl.hasError('required')">
+            작성이 필요한 필드입니다.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>비밀번호</mat-label>
+          <input matInput type="password" placeholder="비밀번호" formControlName="password" [formControl]="passwordFormControl"
+            [errorStateMatcher]="matcher" />
+          <mat-error *ngIf="passwordFormControl.hasError('required')">
+            작성이 필요한 필드입니다.
+          </mat-error>
+          <mat-error *ngIf="passwordFormControl.hasError('pattern') && !passwordFormControl.hasError('required')">
+            최소 8글자에 숫자, 대소문자를 섞어주세요.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>비밀번호 재확인</mat-label>
+          <input matInput type="password" placeholder="비밀번호 재확인" formControlName="confirmPassword" [formControl]="confirmPasswordFormControl"
+            [errorStateMatcher]="matcher" />
+          <mat-error *ngIf="confirmPasswordFormControl.hasError('required')">
+            작성이 필요한 필드입니다.
+          </mat-error>
+          <mat-error *ngIf="confirmPasswordFormControl.hasError('pattern') && !confirmPasswordFormControl.hasError('required')">
+            최소 8글자에 숫자, 대소문자를 섞어주세요.
+          </mat-error>
+        </mat-form-field>
+        <re-captcha (resolved)="$event && submit($event)" formControlName="recaptcha" siteKey="6Lf5B3YUAAAAACwH0L2VRaY-dA-BeK1k3NMmiP1U"></re-captcha>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button class="stick-to-right-side" [disabled]="!(registerForm.controls.email.valid && 
                                     registerForm.controls.nickName.valid &&
                                     registerForm.controls.password.valid &&
                                     registerForm.controls.confirmPassword.valid &&
-                                    registerForm.controls.recaptcha.valid)" 
-                        color="accent">
-                        등록
-                </button>    
-                <button mat-raised-button 
-                        class="stick-to-right-side"
-                        (click)="onNoClick($event)" 
-                        color="primary">
-                        닫기
-                </button>
-            </mat-card-actions>
-        </form>
-    </div>    
-</mat-card>    
+                                    registerForm.controls.recaptcha.valid)"
+          color="accent">
+          등록
+        </button>
+        <button mat-raised-button class="stick-to-right-side" (click)="onNoClick($event)" color="primary">
+          닫기
+        </button>
+      </mat-card-actions>
+    </form>
+  </div>
+</mat-card>

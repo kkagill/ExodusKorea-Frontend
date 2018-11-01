@@ -11,6 +11,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { TokenExpiredComponent } from './token-expired/token-expired.component';
+import { ConfirmedComponent } from './confirmed/confirmed.component';
 
 @NgModule({
   imports: [
@@ -32,7 +34,9 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
   declarations: [    
     LoginComponent, 
     RegisterComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    ConfirmedComponent,
+    TokenExpiredComponent
   ]
 })
 export class AuthModule { }

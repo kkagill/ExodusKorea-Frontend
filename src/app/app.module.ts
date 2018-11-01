@@ -12,18 +12,20 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { RecaptchaModule, RECAPTCHA_LANGUAGE } from 'ng-recaptcha';
 import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 import { FlexLayoutModule } from '@angular/flex-layout'
+import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
+import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
 
 import { AuthService } from './shared/services/auth.service';
 import { DataService } from './shared/services/data.service';
 import { ItemsService } from './shared/utils/items.service';
 import { ConfigService } from './shared/utils/config.service';
 import { AuthGuardService } from './shared/services/auth-guard.service';
-import { NotificationService } from './shared/utils/notification.service';
 import { HttpErrorInterceptorService } from './shared/services/http-error-interceptor.service';
 
 import { DateFormatPipe } from './shared/pipes/date-format.pipe';
 
 import { AppComponent } from './app.component';
+import { ContentDetailsComponent } from './content-details/content-details.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -32,7 +34,7 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,
-    DateFormatPipe,
+    ContentDetailsComponent,
   ],
   imports: [
     CoreModule,
@@ -55,7 +57,8 @@ export function tokenGetter() {
     }),
     RecaptchaModule.forRoot(),
     RecaptchaFormsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MDBBootstrapModulesPro.forRoot()
   ],
   providers: [
     Title,  
@@ -64,7 +67,7 @@ export function tokenGetter() {
     ItemsService,
     ConfigService,
     AuthGuardService,
-    NotificationService,
+    MDBSpinningPreloader,
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptorService, multi: true },
     { provide: RECAPTCHA_LANGUAGE, useValue: 'ko' }
     // { provide: ErrorHandler, useClass: GlobalErrorHandlerService }

@@ -1,5 +1,21 @@
 import { NgModule } from  '@angular/core';
-import { MatSnackBarModule, MatNativeDateModule,MatIconModule,MatButtonModule,MatCheckboxModule, MatToolbarModule, MatCardModule,MatFormFieldModule,MatInputModule,MatRadioModule,MatListModule, MatSidenavModule, MatDialogModule, MatProgressSpinnerModule } from  '@angular/material';
+import { MatSnackBarModule, 
+         MatNativeDateModule, 
+         MatIconModule, 
+         MatButtonModule, 
+         MatCheckboxModule, 
+         MatToolbarModule, 
+         MatCardModule, 
+         MatFormFieldModule,
+         MatInputModule,
+         MatRadioModule,
+         MatListModule, 
+         MatSidenavModule, 
+         MatDialogModule, 
+         MatProgressSpinnerModule,
+         MatExpansionModule,
+         MatMenuModule
+        } from  '@angular/material';
 import { FormsModule } from '@angular/forms';
  
 @NgModule({
@@ -18,7 +34,9 @@ import { FormsModule } from '@angular/forms';
         MatRadioModule, 
         MatSidenavModule,
         MatDialogModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatExpansionModule,
+        MatMenuModule
     ], 
     exports: [
         MatSnackBarModule,
@@ -35,7 +53,9 @@ import { FormsModule } from '@angular/forms';
         MatRadioModule,
         MatSidenavModule,
         MatDialogModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatExpansionModule,
+        MatMenuModule
     ] 
 }) 
 export class MaterialModule { }

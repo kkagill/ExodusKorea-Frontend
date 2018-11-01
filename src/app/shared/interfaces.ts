@@ -5,64 +5,52 @@ export interface IApplicationUser {
     lockoutEnd: Date;
 }
 
-export interface IStudent {
-    id: number;
-    lastName: string;
-    firstMidName: string;
-    enrollmentDate: Date;
+export interface INewVideo {
+    UploaderName: string;
+    UploadedDate: Date;
+    YouTubeVideoId: string;
+    Country: string;
+    Title: string;
+    Likes: number;
+    Comments: number;
+    CountryInEnglish: string;
 }
 
-export interface IStudentDetails {
-    id: number;
-    lastName: string;
-    firstMidName: string;
-    enrollmentDate: Date;
-    enrollments: IEnrollment[];
+export interface ICountryInfo {
+    CountryName: string;
+    CapitalCity: Date;
+    MajorCities: string;
+    Population: string;
+    TitLanguagesle: string;
+    PerCapitaGDP: number;
+    Currency: number;
+    CountryInEnglish: string;
 }
 
-export interface IEnrollment {
-    title: string;
-    grade: string;
-    fullName: string;
+export interface IPriceInfo {
+    Country: string;
+    CostOfLiving: Date;
+    CostOfLivingIcon: string;
+    Rent: string;
+    RentIcon: string;
+    Groceries: string;
+    GroceriesIcon: string;
+    RestaurantPrice: string;
+    RestaurantPriceIcon: string;
 }
 
-export interface ICourse {
-    courseID: number;
-    title: string;
-    credits: number;
-    departmentID: number;
-    department: string;
-    assigned: boolean;
+export interface ICurrencyInfo {
+    Country: string;
+    BaseCurrency: Date;
+    KrwRate: string;
+    Now: string;
 }
 
-export interface IDepartment {
-    departmentID: number;
-    name: string;
-}
-
-export interface IInstructor {
-    id: number;
-    lastName: string;
-    firstMidName: string;
-    hireDate: Date;
-    office: string;
-    selectedCourses: string[];
-    courses: ICourse[];
-}
-
-export interface IInstructorDetails {
-    id: number;
-    courses: ICourse[];
-    enrollments: IEnrollment[];
-}
-
-export interface IInstructorEdit {
-    id: number;
-    lastName: string;
-    firstMidName: string;
-    hireDate: Date;
-    office: string;  
-    assignedCourses: ICourse[];
+export interface IYouTubeComment {
+    AuthorDisplayName: string;
+    TextDisplay: string;
+    UpdatedAt: Date;
+    Likes: string;
 }
 
 export interface Pagination {

@@ -1,38 +1,51 @@
-import { Component } from '@angular/core';
+import { INewVideo } from './../../shared/interfaces';
+import { ItemsService } from './../../shared/utils/items.service';
+import { DataService } from './../../shared/services/data.service';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
-   selector: 'home',
-   templateUrl: './home.component.html'
+  selector: 'home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss']
 })
+export class HomeComponent implements OnInit {
+  allNewVideos: INewVideo[]; 
+  slides: any = [[]];  
+  backgroundUrl = '../../../assets/images/countries/';
 
-export class HomeComponent {
+  public constructor(private router: Router,
+    public http: HttpClient,
+    private dataService: DataService,
+    private itemService: ItemsService) { }
 
-    public constructor(private router: Router, 
-                       public http: HttpClient, 
-                       private authService: AuthService) { } 
-    
-       // provide local page the user's logged in status (do we have a token or not)
-       public isLoggedIn(): boolean {
-           return this.authService.isAuthenticated();
-       }
-    
-       // tell the server that the user wants to logout; clears token from server, then calls auth.service to clear token locally in browser
-    //    public logout() {
-    //        this.http.get('http://localhost:51089/connect/logout', { headers: this.authService.authJsonHeaders() })
-    //            .subscribe(response => {
-    //                // clear token in browser
-    //                this.authService.logout();
-    //                // return to 'login' page
-    //                this.router.navigate(['login']);
-    //            },
-    //            error => {
-    //                // failed; TODO: add some nice toast / error handling
-    //                alert(error.text());
-    //                console.log(error.text());
-    //            }
-    //            );
-    //    }    
+  ngOnInit() {
+    this.dataService.getNewVideos() 
+    .subscribe(res => {
+      if (res.status === 200) {
+        this.allNewVideos = this.itemService.getSerialized<INewVideo[]>(res.body);
+        this.slides = this.chunk(this.allNewVideos, 4); 
+      }
+      else {
+
+      }
+    });
+  }
+
+  chunk(arr, chunkSize) { 
+    let R = []; 
+    for (let i = 0, len = arr.length; i < len; i += chunkSize) { 
+      R.push(arr.slice(i, i + chunkSize)); 
+    } 
+    return R; 
+  } 
+
+  // public isLoggedIn(): boolean {
+  //   return this.authService.isAuthenticated();
+  // }
+
+  onMatCardClick(videoId) {
+    this.router.navigate(['content-details', videoId]);
+  }
 }

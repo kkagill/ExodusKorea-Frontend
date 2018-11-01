@@ -1,3 +1,4 @@
+import { DateFormatPipe } from './../shared/pipes/date-format.pipe';
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -8,9 +9,8 @@ import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MaterialModule } from '../shared/material.module';
-import { TokenExpiredComponent } from './token-expired/token-expired.component';
-import { ConfirmedComponent } from './confirmed/confirmed.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
 
 @NgModule({
   imports: [
@@ -18,15 +18,15 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     RouterModule,
     LayoutModule,
     MaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MDBBootstrapModulesPro.forRoot()
   ],
   declarations: [
+    DateFormatPipe,
     HomeComponent,
     HeaderComponent,
     ErrorComponent,
-    NotFoundComponent,
-    TokenExpiredComponent,
-    ConfirmedComponent
+    NotFoundComponent
   ],
   exports: [  
     HeaderComponent
