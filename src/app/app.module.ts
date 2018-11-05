@@ -14,6 +14,8 @@ import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 import { FlexLayoutModule } from '@angular/flex-layout'
 import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
 import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { AuthService } from './shared/services/auth.service';
 import { DataService } from './shared/services/data.service';
@@ -21,8 +23,6 @@ import { ItemsService } from './shared/utils/items.service';
 import { ConfigService } from './shared/utils/config.service';
 import { AuthGuardService } from './shared/services/auth-guard.service';
 import { HttpErrorInterceptorService } from './shared/services/http-error-interceptor.service';
-
-import { DateFormatPipe } from './shared/pipes/date-format.pipe';
 
 import { AppComponent } from './app.component';
 import { ContentDetailsComponent } from './content-details/content-details.component';
@@ -58,7 +58,10 @@ export function tokenGetter() {
     RecaptchaModule.forRoot(),
     RecaptchaFormsModule,
     FlexLayoutModule,
-    MDBBootstrapModulesPro.forRoot()
+    MDBBootstrapModulesPro.forRoot(),
+    NgxPaginationModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     Title,  

@@ -1,23 +1,27 @@
-<mdb-carousel [isControls]="true" class="carousel-multi-item multi-animation" [type]="'carousel-multi-item'"
- [animation]="'slide'">
-	<mdb-carousel-item *ngFor="let item of slides; let i = index">
-		<div class="col-md-3" *ngFor="let card of item">
-			<mat-card class="example-card" (click)="onMatCardClick(card.youTubeVideoId)" style="cursor:pointer;">
-				<mat-card-header>
-					<div mat-card-avatar class="example-header-image" 
-					[ngStyle]="{'background-image':'url(' + backgroundUrl + card.countryInEnglish +'.png' + ')'}"></div>
-					<mat-card-title>{{card.uploaderName}}</mat-card-title>
-					<mat-card-subtitle>{{card.uploadedDate | date:'y년 M월 d일'}}</mat-card-subtitle>
-				</mat-card-header>
-				<img mat-card-image src="https://img.youtube.com/vi/{{card.youTubeVideoId}}/hqdefault.jpg" alt="ECE">
-				<mat-card-content>
-					<h6><strong>{{card.country}} {{card.title}}</strong></h6>
-				</mat-card-content>
-				<mat-card-actions>
-					<button mat-button><i class="fa fa-thumbs-o-up"></i> {{card.likes}}</button>
-					<button mat-button><i class="fa fa-comment"></i> 89</button>
-				</mat-card-actions>
-			</mat-card>
-		</div>
-	</mdb-carousel-item>
-</mdb-carousel>
+<div *ngIf="!isNewVideosLoaded">
+	<mdb-progress-bar class="progress primary-color-dark" mode="indeterminate"></mdb-progress-bar>
+</div>
+<div *ngIf="isNewVideosLoaded">
+	<mdb-carousel [isControls]="true" class="carousel-multi-item multi-animation" [type]="'carousel-multi-item'"
+	 [animation]="'slide'">
+		<mdb-carousel-item *ngFor="let item of slides; let i = index">
+			<div class="col-md-3" *ngFor="let card of item">
+				<mat-card class="example-card" (click)="onMatCardClick(card.newVideoId, card.youTubeVideoId)" style="cursor:pointer;">
+					<mat-card-header>
+						<div mat-card-avatar class="example-header-image" [ngStyle]="{'background-image':'url(' + backgroundUrl + card.countryInEnglish +'.png' + ')'}"></div>
+						<mat-card-title>{{card.uploaderName}}</mat-card-title>
+						<mat-card-subtitle>{{card.uploadedDate | date:'y년 M월 d일'}}</mat-card-subtitle>
+					</mat-card-header>
+					<img mat-card-image src="https://img.youtube.com/vi/{{card.youTubeVideoId}}/hqdefault.jpg" alt="ECE">
+					<mat-card-content>
+						<h6><strong>{{card.country}} {{card.title}}</strong></h6>
+					</mat-card-content>
+					<mat-card-actions>
+						<i class="fa fa-thumbs-o-up"></i> {{card.likes}}
+						<!-- <button mat-button><i class="fa fa-comment"></i> 89</button> -->
+					</mat-card-actions>
+				</mat-card>
+			</div>
+		</mdb-carousel-item>
+	</mdb-carousel>
+</div>

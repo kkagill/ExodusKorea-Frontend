@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit {
   allNewVideos: INewVideo[]; 
   slides: any = [[]];  
   backgroundUrl = '../../../assets/images/countries/';
+  isNewVideosLoaded: boolean = false;
 
   public constructor(private router: Router,
     public http: HttpClient,
@@ -24,6 +25,7 @@ export class HomeComponent implements OnInit {
     this.dataService.getNewVideos() 
     .subscribe(res => {
       if (res.status === 200) {
+        this.isNewVideosLoaded = true;
         this.allNewVideos = this.itemService.getSerialized<INewVideo[]>(res.body);
         this.slides = this.chunk(this.allNewVideos, 4); 
       }
@@ -45,7 +47,7 @@ export class HomeComponent implements OnInit {
   //   return this.authService.isAuthenticated();
   // }
 
-  onMatCardClick(videoId) {
-    this.router.navigate(['content-details', videoId]);
+  onMatCardClick(newVideoid, videoId) {
+    this.router.navigate(['content-details', newVideoid, videoId]);
   }
 }

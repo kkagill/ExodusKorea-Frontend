@@ -6,6 +6,7 @@ export interface IApplicationUser {
 }
 
 export interface INewVideo {
+    NewVideoId: number;
     UploaderName: string;
     UploadedDate: Date;
     YouTubeVideoId: string;
@@ -46,11 +47,14 @@ export interface ICurrencyInfo {
     Now: string;
 }
 
-export interface IYouTubeComment {
+export interface IVideoComment {
+    VideoCommentId: number;
     AuthorDisplayName: string;
-    TextDisplay: string;
-    UpdatedAt: Date;
-    Likes: string;
+    Comment: string;
+    DateCreated: Date;
+    DateUpdated: Date;
+    Likes: number;
+    IsYouTubeComment: boolean;
 }
 
 export interface Pagination {

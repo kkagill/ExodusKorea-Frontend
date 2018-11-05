@@ -25,8 +25,8 @@ export class DataService {
       );
   }
 
-  getCountryInfo(videoId: string): Observable<any> {
-    return this.http.get(this._baseUrl + `carddetail/${videoId}/country-info`, { observe: "response" })
+  getCountryInfo(newVideoId: number): Observable<any> {
+    return this.http.get(this._baseUrl + `carddetail/${newVideoId}/country-info`, { observe: "response" })
       .pipe(
         map(res => {
           return res;
@@ -37,8 +37,8 @@ export class DataService {
       );
   }
 
-  getPriceInfo(videoId: string): Observable<any> {
-    return this.http.get(this._baseUrl + `carddetail/${videoId}/price-info`, { observe: "response" })
+  getPriceInfo(newVideoId: number): Observable<any> {
+    return this.http.get(this._baseUrl + `carddetail/${newVideoId}/price-info`, { observe: "response" })
       .pipe(
         map(res => {
           return res;
@@ -49,8 +49,8 @@ export class DataService {
       );
   }
 
-  getCurrencyInfo(videoId: string): Observable<any> {
-    return this.http.get(this._baseUrl + `carddetail/${videoId}/currency-info`, { observe: "response" })
+  getCurrencyInfo(newVideoId: number): Observable<any> {
+    return this.http.get(this._baseUrl + `carddetail/${newVideoId}/currency-info`, { observe: "response" })
       .pipe(
         map(res => {
           return res;
@@ -61,8 +61,20 @@ export class DataService {
       );
   }
 
-  getYouTubeComments(videoId: string): Observable<any> {
-    return this.http.get(this._baseUrl + `carddetail/${videoId}/youtube-comments`, { observe: "response" })
+  getYouTubeLikes(videoId: string): Observable<any> {
+    return this.http.get(this._baseUrl + `carddetail/${videoId}/youtube-likes`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  getVideoComments(newVideoId: number, videoId: string): Observable<any> {
+    return this.http.get(this._baseUrl + `carddetail/${newVideoId}/${videoId}/video-comments-combined`, { observe: "response" })
       .pipe(
         map(res => {
           return res;
