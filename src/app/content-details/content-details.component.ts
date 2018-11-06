@@ -5,6 +5,9 @@ import { ActivatedRoute } from '@angular/router';
 import { ItemsService } from '../shared/utils/items.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { AuthService } from '../shared/services/auth.service';
+import { MatDialog, MatSnackBar } from '@angular/material';
+import { LoginComponent } from 'src/app/auth/login/login.component';
 
 @Component({
   selector: 'app-content-details',
@@ -26,18 +29,33 @@ export class ContentDetailsComponent implements OnInit {
   isCurrencyInfoLoaded: boolean = false;
   isYouTubeLikesLoaded: boolean = false;
   isVideoCommentsLoaded: boolean = false;
+  selectedVideoCommentId: number;
   commentForm: any;
+  commentReplyForm: any;
+  email: string;
+  password: string;
 
   constructor(private dataService: DataService,
-    private activedRoute: ActivatedRoute,
-    private itemService: ItemsService,
-    private sanitizer: DomSanitizer,
-    private formBuilder: FormBuilder) {
+              private authService: AuthService,
+              private activedRoute: ActivatedRoute,
+              private itemService: ItemsService,
+              private sanitizer: DomSanitizer,
+              private formBuilder: FormBuilder,
+              public snackBar: MatSnackBar,
+              public dialog: MatDialog) {
     this.commentForm = this.formBuilder.group({
       comment: [null, Validators.compose(
         [
-          Validators.required, 
-          Validators.minLength(5), 
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(500)
+        ])]
+    });
+    this.commentReplyForm = this.formBuilder.group({
+      comment: [null, Validators.compose(
+        [
+          Validators.required,
+          Validators.minLength(5),
           Validators.maxLength(500)
         ])]
     });
@@ -111,7 +129,7 @@ export class ContentDetailsComponent implements OnInit {
       .subscribe(res => {
         if (res.status === 200) {
           this.isVideoCommentsLoaded = true;
-          this.videoComments = this.itemService.getSerialized<IVideoComment[]>(res.body);       
+          this.videoComments = this.itemService.getSerialized<IVideoComment[]>(res.body);
         }
         else {
 
@@ -119,39 +137,111 @@ export class ContentDetailsComponent implements OnInit {
       });
   }
 
-  onSubmit() {
-    if (this.commentForm.invalid) {
-      return;
-    }    
-    let body = {
-      'comment': this.commentForm.value
-    };
-    // this.dataService.register(body)
-    //   .subscribe(res => {
-    //     if (res.status === 201) {
-    //       this.error = '';
-    //       this.success = res.body.email +
-    //         '으로 인증 메일이 발송되었습니다. 3시간 이내로 인증을 받으셔야 가입이 완료됩니다.' + '<br/><br/>' +
-    //         '인증 메일을 받지 못하셨다면 인증메일을 재발송해주세요.' + '<br/><br/>';
+  onClickCommentBox() {
+    if (!this.authService.isAuthenticated()) {
+      this.dialog.open(LoginComponent, {
+        width: '410px',
+        data: { email: this.email, password: this.password }
+      });
+    }
+  }
 
-    //       localStorage.setItem('email', res.body.email);
-    //       this.spinner.hide();
-    //     }
-    //   },
-    //     error => {
-    //       if (error.status === 400) {
-    //         if (error.error === "Passwords do not match") {
-    //           this.error = '입력된 두 비밀번호가 일치하지 않습니다.';
-    //         }
-    //         else if (error.error[0].code === "DuplicateUserName") {
-    //           this.error = '이미 등록된 계정입니다.';
-    //         }
-    //       }
-    //       else {
-    //         this.error = '오류가 발생했습니다. 다시 시도해주세요.';
-    //       }
-    //       this.spinner.hide();
-    //     }
-    //   );
+  onSubmitComment() {
+    if (this.commentForm.invalid || !this.authService.isAuthenticated()) {
+      return;
+    }
+    let body = {
+      'comment': this.commentForm.value.comment,
+      'newVideoId': this.newVideoId
+    };
+    this.dataService.addNewComment(body)
+      .subscribe(res => {
+        if (res.status === 201) {
+          this.isVideoCommentsLoaded = false;
+          this.loadVideoComments();
+          setTimeout(() => {
+            this.snackBar.open('답글을 추가했습니다.', '', {
+              duration: 3000,
+              panelClass: ['green-snackbar']
+            });
+          }, 1500);
+        }
+      },
+        error => {
+          // if (error.status === 400) {
+          //   if (error.error === "Passwords do not match") {
+          //     this.error = '입력된 두 비밀번호가 일치하지 않습니다.';
+          //   }           
+          // }
+          // else {
+          //   this.error = '오류가 발생했습니다. 다시 시도해주세요.';
+          // }
+        }
+      );
+  }
+
+  onSubmitReply(videoCommentId: number) {
+    if (this.commentReplyForm.invalid || !this.authService.isAuthenticated()) {
+      return;
+    }
+    let body = {
+      'comment': this.commentReplyForm.value.comment,
+      'videoCommentId': videoCommentId
+    };
+    this.dataService.addNewCommentReply(body)
+      .subscribe(res => {
+        if (res.status === 201) {
+          this.isVideoCommentsLoaded = false;
+          this.loadVideoComments();
+          setTimeout(() => {
+            this.snackBar.open('답글을 추가했습니다.', '', {
+              duration: 3000,
+              panelClass: ['green-snackbar']
+            });
+          }, 1500);
+
+        this.onClickCancel();
+        }
+      },
+        error => {
+          // if (error.status === 400) {
+          //   if (error.error === "Passwords do not match") {
+          //     this.error = '입력된 두 비밀번호가 일치하지 않습니다.';
+          //   }           
+          // }
+          // else {
+          //   this.error = '오류가 발생했습니다. 다시 시도해주세요.';
+          // }
+        }
+      );
+  }
+
+  onClickCommentReply(videoCommentId: number) {
+    this.selectedVideoCommentId = videoCommentId;
+  }
+
+  onClickCancel() {
+    this.selectedVideoCommentId = -1;
+    this.commentReplyForm.get('comment').reset();
+  }
+
+  onClickLikes(videoCommentId: number) {
+    this.dataService.updateCommentLikes(videoCommentId)
+    .subscribe(res => {
+      if (res.status === 204) {
+        this.loadVideoComments();
+      }
+    },
+      error => {
+        // if (error.status === 400) {
+        //   if (error.error === "Passwords do not match") {
+        //     this.error = '입력된 두 비밀번호가 일치하지 않습니다.';
+        //   }           
+        // }
+        // else {
+        //   this.error = '오류가 발생했습니다. 다시 시도해주세요.';
+        // }
+      }
+    );
   }
 }

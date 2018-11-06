@@ -90,11 +90,11 @@ export class AuthService {
     return !!localStorage.getItem('access_token');
   }
 
-  // useJwtHelper() {
-  //     var token = sessionStorage.getItem('bearer_token');
-  //     //this.jwtHelper.getTokenExpirationDate(token),
-  //     //this.jwtHelper.isTokenExpired(token)       
-  //     return this.jwtHelper.decodeToken(token);       
+  // getDecodedToken() {  
+  //   var token = sessionStorage.getItem('access_token');
+  //   var decoded = this.jwtHelper.decodeToken(token);
+  //   console.log(decoded)
+  //   return decoded;
   // }
 
   // isAdmin() {

@@ -12,7 +12,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { RecaptchaModule, RECAPTCHA_LANGUAGE } from 'ng-recaptcha';
 import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 import { FlexLayoutModule } from '@angular/flex-layout'
-import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
+import { MDBBootstrapModulesPro, ToastModule } from 'ng-uikit-pro-standard';
 import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -61,7 +61,8 @@ export function tokenGetter() {
     MDBBootstrapModulesPro.forRoot(),
     NgxPaginationModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ToastModule.forRoot()
   ],
   providers: [
     Title,  
