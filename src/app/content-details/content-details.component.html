@@ -2,15 +2,15 @@
   <div class="row">
     <div class="col-lg-8 col-md-12">
       <div class="single-news mb-lg-0 mb-4">
+        <div *ngIf="safeURL">
+          <iframe [src]='safeURL' allowfullscreen style="width: 100%; height: 460px; border: 0"></iframe>
+        </div>
+        <br />
         <mat-card class="example-card" *ngIf="isCountryInfoLoaded">
           <mat-card-content>
-            <div class="embed-responsive embed-responsive-1by1" *ngIf="safeURL">
-              <iframe class="embed-responsive-item" [src]='safeURL' allowfullscreen></iframe>
-            </div>
-            <br />
             <div *ngIf="isYouTubeLikesLoaded" class="stick-to-right-side">
-              <button mat-stroked-button color="accent">
-                <i class="fa fa-thumbs-o-up"></i> {{likes}}
+              <button mat-stroked-button color="accent" (click)="onClickPostLikes()">
+                <i class="fa fa-thumbs-o-up"></i> 추천 ({{likes}})
               </button>
             </div>
             <br /><br />
@@ -43,16 +43,21 @@
                   <img *ngIf="vc.isYouTubeComment" src="./../../assets/images/youtube.png" alt="유튜브" style="margin-bottom: 3px;">
                 </mat-label>
                 <br />
-                <mat-label>{{vc.comment}}</mat-label>
+                <mat-label [innerHTML]="vc.comment"></mat-label>
                 <br />
                 <mat-label>
                   {{vc.dateCreated | date:'y-MM-dd'}}
-                  <button mat-icon-button color="accent" (click)="onClickLikes(vc.videoCommentId)">
+                  <button mat-icon-button *ngIf="!vc.isYouTubeComment" color="accent" (click)="onClickCommentLikes(vc.videoCommentId)">
                     <i class="fa fa-thumbs-o-up"></i> {{vc.likes}}
                   </button>
-                  <span class="pointer" *ngIf="!vc.isYouTubeComment" (click)="onClickCommentReply(vc.videoCommentId)">답글</span>
+                  <button mat-icon-button *ngIf="vc.isYouTubeComment" class="not-allowed" color="accent">
+                    <i class="fa fa-thumbs-o-up"></i> {{vc.likes}}
+                  </button>
+                  <span class="pointer" *ngIf="!vc.isYouTubeComment" style="margin-left: 15px;" (click)="onClickCommentReply(vc.videoCommentId)">답글</span>
+                  <span class="pointer" *ngIf="authService.isAuthenticated() && !vc.isYouTubeComment && vc.userId === authService.getUserId()"
+                    style="margin-left: 15px;" (click)="onClickCommentDelete(vc.videoCommentId)">삭제</span>
                   <div *ngIf="vc.videoCommentId === selectedVideoCommentId">
-                    <form (ngSubmit)="onSubmitReply(vc.videoCommentId)" [formGroup]="commentReplyForm">
+                    <form (ngSubmit)="onSubmitReply(vc.videoCommentId, vc.userId)" [formGroup]="commentReplyForm">
                       <mat-form-field appearance="outline" class="full-width">
                         <textarea matInput #replyInput maxlength="500" (mouseup)="onClickCommentBox()" placeholder="로그인 하셔야 댓글 작성이 가능합니다."
                           formControlName="comment"></textarea>
@@ -68,8 +73,7 @@
                           color="accent" style="margin-top: 10px;">
                           댓글입력
                         </button>
-                        <button mat-raised-button class="stick-to-right-side" (click)="onClickCancel()" 
-                          style="margin-top: 10px; margin-right: 7px;">
+                        <button mat-raised-button class="stick-to-right-side" (click)="onClickCancelReply()" style="margin-top: 10px; margin-right: 7px;">
                           취소
                         </button>
                       </mat-form-field>
@@ -91,14 +95,44 @@
                         <img *ngIf="vcr.isYouTubeComment" src="./../../assets/images/youtube.png" alt="유튜브" style="margin-bottom: 3px;">
                       </mat-label>
                       <br />
-                      <mat-label>{{vcr.comment}}</mat-label>
+                      <mat-label>
+                        <span *ngIf="vcr.repliedTo" style="color: #065fd4">@{{vcr.repliedTo}} </span>
+                        <span [innerHTML]="vcr.comment"></span>
+                      </mat-label>
                       <br />
                       <mat-label>
                         {{vcr.dateCreated | date:'y-MM-dd'}}
-                        <button mat-icon-button color="accent">
+                        <button mat-icon-button color="accent" (click)="onClickCommentReplyLikes(vcr.videoCommentReplyId)">
                           <i class="fa fa-thumbs-o-up"></i> {{vcr.likes}}
                         </button>
+                        <span class="pointer" *ngIf="!vc.isYouTubeComment" style="margin-left: 15px;" (click)="onClickCommentReplyReply(vcr.videoCommentReplyId)">답글</span>
+                        <span class="pointer" *ngIf="authService.isAuthenticated() && !vc.isYouTubeComment && vcr.userId === authService.getUserId()"
+                          style="margin-left: 15px;" (click)="onClickCommentReplyDelete(vcr.videoCommentId, vcr.videoCommentReplyId)">삭제</span>
                       </mat-label>
+                      <div *ngIf="vcr.videoCommentReplyId === selectedVideoCommentReplyId">
+                          <form (ngSubmit)="onSubmitReplyReply(vcr.videoCommentId, vcr.authorDisplayName, vcr.userId)" [formGroup]="commentReplyForm">
+                            <mat-form-field appearance="outline" class="full-width">
+                              <textarea matInput #replyInput maxlength="500" (mouseup)="onClickCommentBox()" placeholder="로그인 하셔야 댓글 작성이 가능합니다."
+                                formControlName="comment"></textarea>
+                              <mat-hint align="start"><strong>근거없는 비방/비하/욕설 시 무기한 차단 대상이 됩니다.</strong> </mat-hint>
+                              <mat-hint align="end">{{replyInput.value.length}} / 500</mat-hint>
+                              <mat-error *ngIf="commentReplyForm.controls['comment'].hasError('minlength')">
+                                최소 5글자를 입력해 주세요.
+                              </mat-error>
+                              <mat-error *ngIf="commentReplyForm.controls['comment'].hasError('maxlength')">
+                                최대 500글자까지 입니다.
+                              </mat-error>
+                              <button mat-raised-button class="stick-to-right-side" [disabled]="!commentReplyForm.valid"
+                                color="accent" style="margin-top: 10px;">
+                                댓글입력
+                              </button>
+                              <button mat-raised-button class="stick-to-right-side" (click)="onClickCancelReplyReply()" style="margin-top: 10px; margin-right: 7px;">
+                                취소
+                              </button>
+                            </mat-form-field>
+                          </form>
+                          <br />
+                        </div>
                     </div>
                   </div>
                   <br />
@@ -122,31 +156,60 @@
               <mat-card-header>
                 <mat-card-title><b>국가정보 (2018)</b></mat-card-title>
               </mat-card-header>
-              <mat-card-content>
-                <mat-label><b>국명:</b> {{countryInfo.countryName}}</mat-label><br />
+              <mat-card-content class="left-align-panel">
+                <mat-label><b>국명:</b> {{countryInfo.country}}</mat-label><br />
                 <mat-label><b>수도:</b> {{countryInfo.capitalCity}}
-                  <img src="./../../assets/images/countries/{{countryInfo.countryInEnglish}}-square24.png" style="margin-top: -5px;">
+                  <img src="./../../assets/images/countries/{{countryInfo.countryInEng}}-square24.png" style="margin-top: -5px;">
                 </mat-label><br />
                 <mat-label><b>언어:</b> {{countryInfo.languages}}</mat-label><br />
                 <mat-label><b>인구:</b> {{countryInfo.population}}</mat-label><br />
                 <mat-label><b>화폐:</b> {{countryInfo.currency}}</mat-label><br />
                 <mat-label><b>1인당 GDP:</b> {{countryInfo.perCapitaGDP}}</mat-label><br />
                 <mat-label><b>주요도시:</b> {{countryInfo.majorCities}}</mat-label>
+                <br /><br />
+                <mat-label><a href="{{countryInfo.countryLink}}" target="_blank">더 자세히..</a></mat-label>
               </mat-card-content>
             </mat-card>
           </div>
         </div>
       </div>
 
+      <div class="single-news mb-4" *ngIf="isSalaryInfoLoaded">
+          <div class="row">
+            <div class="col-md-12">
+              <mat-card class="example-card" *ngIf="salaryInfo.isDisplayable">
+                <mat-card-header>
+                  <mat-card-title><b>{{salaryInfo.occupation}} 연봉 (2018)</b></mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="left-align-panel">
+                  <p style="font-size: 12px;">{{salaryInfo.country}} 전국 평균</p>
+                 <div id="salary-chart">
+                    <mat-label id="low-word">최저</mat-label>
+                    <mat-label id="low">{{salaryInfo.low | currency:salaryInfo.currency:'symbol-narrow':'1.0'}}</mat-label>
+
+                    <mat-label id="median-word">평균</mat-label>
+                    <mat-label id="median">{{salaryInfo.median | currency:salaryInfo.currency:'symbol-narrow':'1.0'}}</mat-label>
+
+                    <mat-label id="high-word">최고</mat-label>
+                    <mat-label id="high">{{salaryInfo.high | currency:salaryInfo.currency:'symbol-narrow':'1.0'}}</mat-label>
+                 </div>
+                  
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+        </div>
+
       <div class="single-news mb-4">
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-6">
             <mat-card class="example-card" *ngIf="isPriceInfoLoaded">
               <mat-card-header>
                 <mat-card-title><b>물가 (2018)</b></mat-card-title>
               </mat-card-header>
-              <mat-card-content>
-                <p style="font-size: 12px;">* 한국 기준으로 비교</p>
+              <mat-card-content class="left-align-panel">
+                <p style="font-size: 12px;">{{priceInfo.country}} 전국 평균</p>
+                <p style="font-size: 11px;"> (한국 물가 대비)</p>
                 <mat-label>
                   <b>생활비:</b> {{priceInfo.costOfLiving}} <mdb-icon [icon]="priceInfo.costOfLivingIcon"></mdb-icon>
                 </mat-label><br />
@@ -158,31 +221,31 @@
                 </mat-label><br />
                 <mat-label>
                   <b>외식비:</b> {{priceInfo.restaurantPrice}} <mdb-icon [icon]="priceInfo.restaurantPriceIcon"></mdb-icon>
-                </mat-label><br />
+                </mat-label>
+                <br /><br />
+                <span class="pointer" style="color: #007ad9;" (click)="onClickPriceInfoDetail(priceInfo.countryInEng)">더
+                  자세히..</span>
               </mat-card-content>
             </mat-card>
           </div>
-        </div>
-      </div>
 
-      <div class="single-news mb-4">
-        <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-6">
             <mat-card class="example-card" *ngIf="isCurrencyInfoLoaded">
               <mat-card-header>
                 <mat-card-title><b>환율</b></mat-card-title>
               </mat-card-header>
-              <mat-card-content>
+              <mat-card-content class="left-align-panel">
                 <p style="font-size: 12px;">{{currencyInfo.now | date:'y년 M월 d일' }}</p>
                 <mat-label>
-                  <b>{{currencyInfo.country}}</b> {{currencyInfo.baseCurrency}}: {{currencyInfo.krwRate}}
+                  <b>{{currencyInfo.country}}</b> {{currencyInfo.baseCurrency}}
+                  <br /><br />
+                  <h3>{{currencyInfo.krwRate}}</h3>
                 </mat-label>
               </mat-card-content>
             </mat-card>
           </div>
         </div>
-      </div>
-
+      </div>  
     </div>
   </div>
 </section>

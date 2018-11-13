@@ -5,56 +5,120 @@ export interface IApplicationUser {
     lockoutEnd: Date;
 }
 
-export interface INewVideo {
-    NewVideoId: number;
-    UploaderName: string;
-    UploadedDate: Date;
-    YouTubeVideoId: string;
-    Country: string;
-    Title: string;
-    Likes: number;
-    Comments: number;
-    CountryInEnglish: string;
+export interface IVideoPost {
+    videoPostId: number;
+    uploader: string;
+    uploadedDate: Date;
+    title: string;
+    likes: number;
+    youTubeVideoId: string;
+    country: string;
+    countryInEng: string;  
 }
 
 export interface ICountryInfo {
-    CountryName: string;
-    CapitalCity: Date;
-    MajorCities: string;
-    Population: string;
-    TitLanguagesle: string;
-    PerCapitaGDP: number;
-    Currency: number;
-    CountryInEnglish: string;
+    country: string;
+    capitalCity: Date;
+    majorCities: string;
+    population: string;
+    perCapitaGDP: number;
+    currency: number;
+    countryInEng: string;
+    countryLink: string;
 }
 
 export interface IPriceInfo {
-    Country: string;
-    CostOfLiving: Date;
-    CostOfLivingIcon: string;
-    Rent: string;
-    RentIcon: string;
-    Groceries: string;
-    GroceriesIcon: string;
-    RestaurantPrice: string;
-    RestaurantPriceIcon: string;
+    country: string;
+    countryInEng: string;
+    costOfLiving: Date;
+    costOfLivingIcon: string;
+    rent: string;
+    rentIcon: string;
+    groceries: string;
+    groceriesIcon: string;
+    restaurantPrice: string;
+    restaurantPriceIcon: string;
+}
+
+export interface IPriceInfoDetail {  
+    city: string;
+    currency: string;
+    rent: IPI_Rent;
+    restaurant: IPI_Restaurant;
+    groceries: IPI_Groceries;
+    etc: IPI_Etc;
+}
+
+export interface IPI_Rent { 
+    oneBedRoomCenter: any;
+    oneBedRoomOutside: any;
+    twoBedRoomCenter: any;
+    twoBedRoomOutside: any;
+}
+
+export interface IPI_Restaurant {  
+    bigMacMeal: any;
+    cappuccino: any;
+    mealPerOne: any;
+}
+
+export interface IPI_Groceries {  
+    apple: any;
+    chickenBreasts: any;
+    cigarettes: any;
+    eggs: any;
+    milk: any;
+    potatoes: any;
+    water: any;
+}
+
+export interface IPI_Etc {   
+    bus: any;
+    gas: any;
+    internet: any;
+    subway: any;
 }
 
 export interface ICurrencyInfo {
-    Country: string;
-    BaseCurrency: Date;
-    KrwRate: string;
-    Now: string;
+    country: string;
+    baseCurrency: Date;
+    krwRate: string;
+    now: string;
 }
 
 export interface IVideoComment {
-    VideoCommentId: number;
-    AuthorDisplayName: string;
-    Comment: string;
-    DateCreated: Date;
-    DateUpdated: Date;
-    Likes: number;
-    IsYouTubeComment: boolean;
+    videoCommentId: number;
+    authorDisplayName: string;
+    comment: string;
+    dateCreated: Date;
+    dateUpdated: Date;
+    likes: number;
+    userId: string;
+    isYouTubeComment: boolean;
+    videoPostId: number;
+    videoCommentReplies: IVideoCommentReply[];
+}
+
+export interface IVideoCommentReply {
+    videoCommentReplyId: number;
+    videoCommentId: number;
+    authorDisplayName: string;
+    comment: string;
+    dateCreated: Date;
+    dateUpdated: Date;
+    likes: number;
+    userId: string;
+    repliedTo: string;
+}
+
+export interface ISalaryInfo {
+    country: string;
+    occupation: string;
+    currency: string;
+    low: number;
+    median: number;
+    high: number;
+    isDisplayable: boolean;  
 }
 
 export interface Pagination {

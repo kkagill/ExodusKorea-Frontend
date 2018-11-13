@@ -14,7 +14,8 @@ import { MatSnackBarModule,
          MatDialogModule, 
          MatProgressSpinnerModule,
          MatExpansionModule,
-         MatMenuModule
+         MatMenuModule,
+         MatTabsModule
         } from  '@angular/material';
 import { FormsModule } from '@angular/forms';
  
@@ -36,7 +37,8 @@ import { FormsModule } from '@angular/forms';
         MatDialogModule,
         MatProgressSpinnerModule,
         MatExpansionModule,
-        MatMenuModule
+        MatMenuModule,
+        MatTabsModule
     ], 
     exports: [
         MatSnackBarModule,
@@ -55,7 +57,8 @@ import { FormsModule } from '@angular/forms';
         MatDialogModule,
         MatProgressSpinnerModule,
         MatExpansionModule,
-        MatMenuModule
+        MatMenuModule,
+        MatTabsModule
     ] 
 }) 
 export class MaterialModule { }

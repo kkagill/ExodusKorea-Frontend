@@ -26,6 +26,8 @@ import { HttpErrorInterceptorService } from './shared/services/http-error-interc
 
 import { AppComponent } from './app.component';
 import { ContentDetailsComponent } from './content-details/content-details.component';
+import { DeleteCommentDialog } from './content-details/dialogs/delete-comment-dialog/delete-comment-dialog.component';
+import { PriceInfoDetailDialog } from './content-details/dialogs/price-info-detail-dialog/price-info-detail-dialog.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -35,6 +37,12 @@ export function tokenGetter() {
   declarations: [
     AppComponent,
     ContentDetailsComponent,
+    DeleteCommentDialog,
+    PriceInfoDetailDialog
+  ],
+  entryComponents: [
+    DeleteCommentDialog,
+    PriceInfoDetailDialog
   ],
   imports: [
     CoreModule,

@@ -10,6 +10,59 @@
   text-align: left;
 }
 
+.left-align-panel {
+  text-align: left;
+  margin-left: 8px;
+}
+
 .pointer {
   cursor: pointer;
+}
+
+.not-allowed {
+  cursor: not-allowed;
+}
+
+#salary-chart {
+  background: url(./../../assets/images/salary-chart.png) no-repeat center center;
+  height: 120px;
+  width: 250px;
+  margin-left: 20px;
+}
+
+#low-word {
+  position: absolute;
+  top: 190px;
+  left: 62px;
+}
+
+#low {
+  position: absolute;
+  top: 210px;
+}
+
+#median-word {
+  position: absolute;
+  top: 100px;
+  left: 155px;
+}
+
+#median {
+  position: absolute;
+  top: 120px;
+  left: 130px; 
+  font-size: 20px;
+  font-weight: 900;
+}
+
+#high-word {
+  position: absolute;
+  top: 60px;
+  left: 270px;
+}
+
+#high {
+  position: absolute;
+  top: 80px;
+  left: 255px;
 }

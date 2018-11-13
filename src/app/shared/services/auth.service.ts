@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { map, tap, catchError } from 'rxjs/operators';
 import { ConfigService } from '../utils/config.service';
 import { throwError } from 'rxjs';
+import { JwtHelper } from 'angular2-jwt';
 
 @Injectable()
 export class AuthService {
@@ -15,6 +16,8 @@ export class AuthService {
     this._baseUrl = this.configService.getApiURI();
     this._baseAuthUrl = this.configService.getAuthURI();
   }
+
+  jwtHelper: JwtHelper = new JwtHelper();
 
   login(email: string, password: string): Observable<boolean> {
     const body = `username=${email}&password=${password}&grant_type=password`;
@@ -86,26 +89,26 @@ export class AuthService {
     localStorage.removeItem('access_token');
   }
 
-  isAuthenticated() {
-    return !!localStorage.getItem('access_token');
+  getToken() {
+    return localStorage.getItem('access_token');   
   }
 
-  // getDecodedToken() {  
-  //   var token = sessionStorage.getItem('access_token');
-  //   var decoded = this.jwtHelper.decodeToken(token);
-  //   console.log(decoded)
-  //   return decoded;
-  // }
+  isAuthenticated() {
+    return !!this.getToken();
+  } 
 
+  decodeToken() {    
+    return this.jwtHelper.decodeToken(this.getToken());       
+  }
+
+  isTokenExpired() {
+    return this.jwtHelper.isTokenExpired(this.getToken());
+  }
+  
+  getUserId() {
+    return this.decodeToken().sub;
+  }
   // isAdmin() {
   //     return this.useJwtHelper().role == 'Admin' ? true : false;
-  // }
-
-  // getUserName() {
-  //     return this.useJwtHelper().name;
-  // }
-
-  // getUserId() {
-  //     return this.useJwtHelper().sub;
   // }
 }

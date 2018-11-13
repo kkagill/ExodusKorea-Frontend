@@ -39,17 +39,16 @@
       </ul>
     </links>
   </mdb-navbar>
-  <div class="view intro-2">
+  <div class="view intro-2" *ngIf="router.url === '/'">
     <div class="full-bg-img">
-      <div class="mask rgba-purple-light flex-center">
+      <div class="mask flex-center"><!-- rgba-purple-light  -->
         <div class="container text-center white-text wow fadeInUp">
-          <h2>해외취업의 모든 정보</h2>
+          <br><br><br><br><br>
+          <h1>해외취업의 모든 정보</h1>
           <br>
-          <h5>It will always stay visible on the top, even when you scroll down</h5>
-          <p>Navbar's background will switch from transparent to solid color while scrolling down</p>
-          <br>
-          <p>Full page intro with background image will be always displayed in full screen mode, regardless of device
-          </p>
+          <h5>굿바이, 미세먼지.. 스펙경쟁... 나는 해외로 간다!</h5>
+          <h6>경쟁이 치열한 국내 시장에서 눈을 돌리면 전 세계의 놀라운 시장이 보입니다.</h6>
+          <h6>글로벌 무대로 진출하고자 하는 당신을 위한 절호의 기회</h6>
         </div>
       </div>
     </div>

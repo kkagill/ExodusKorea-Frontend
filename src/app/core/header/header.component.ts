@@ -60,6 +60,5 @@ export class HeaderComponent {
       duration: 3000,
       panelClass: ['green-snackbar']
     });
-    this.router.navigate(['']);
   }
 }

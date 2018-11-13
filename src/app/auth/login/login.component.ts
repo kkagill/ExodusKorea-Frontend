@@ -6,7 +6,6 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatSnackBar, MatDialog } from '@angular/
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
-import { ToastService } from 'ng-uikit-pro-standard'
 
 export interface LoginDialogData {
   email: string;
@@ -30,7 +29,6 @@ export class LoginComponent {
     private spinner: NgxSpinnerService,
     public snackBar: MatSnackBar,
     public dialog: MatDialog,
-    private toastService: ToastService,
     public dialogRef: MatDialogRef<LoginComponent>,
     @Inject(MAT_DIALOG_DATA) public data: LoginDialogData) {
     this.emailFormControl = new FormControl('', [
@@ -56,7 +54,6 @@ export class LoginComponent {
         if (res) {
           this.spinner.hide();
           this.dialogRef.close();
-          //this.toastService.success('로그인되었습니다.');
           this.snackBar.open('로그인되었습니다.', '', {
             duration: 3000,
             panelClass: ['green-snackbar']

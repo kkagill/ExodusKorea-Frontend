@@ -1,0 +1,142 @@
+<h1 mat-dialog-title>개별 품목 물가 평균치</h1>
+<div *ngIf="!isPriceInfoDetailLoaded">
+  <mdb-spinner spinnerType="big" spinnerColor="yellow"></mdb-spinner>
+</div>
+<div *ngIf="isPriceInfoDetailLoaded" mat-dialog-content>
+  <mdb-tabset [buttonClass]="'pills-secondary white mb-2'" [contentClass]="'card'">
+    <mdb-tab *ngFor="let pid of priceInfoDetail" heading="{{pid.city}}">
+      <div class="row">
+        <div class="col-12">
+          <p>아파트 월 임차료</p>
+          <table mdbTable small="true">
+            <thead>
+              <tr>
+                <th scope="col" class="header-center">항목</th>
+                <th scope="col" class="header-center">가격 {{pid.currency}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr mdbTableCol>
+                <th scope="row" class="header-center">방1개 중심</th>
+                <td class="header-center">{{pid.rent.oneBedRoomCenter | currency:pid.currency:'symbol-narrow'}}</td>
+              </tr>
+              <tr mdbTableCol>
+                <th scope="row" class="header-center" class="header-center">방1개 외곽</th>
+                <td class="header-center">{{pid.rent.oneBedRoomOutside | currency:pid.currency:'symbol-narrow'}}</td>
+              </tr>
+              <tr mdbTableCol>
+                <th scope="row" class="header-center">방2개 중심</th>
+                <td class="header-center">{{pid.rent.twoBedRoomCenter | currency:pid.currency:'symbol-narrow'}}</td>
+              </tr>
+              <tr mdbTableCol>
+                <th scope="row" class="header-center">방2개 외곽</th>
+                <td class="header-center">{{pid.rent.twoBedRoomOutside | currency:pid.currency:'symbol-narrow'}}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <br />
+
+          <p>외식</p>
+          <table mdbTable small="true">
+            <thead>
+              <tr>
+                <th scope="col" class="header-center">항목</th>
+                <th scope="col" class="header-center">가격 {{pid.currency}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr mdbTableCol>
+                <th scope="row" class="header-center">한끼 값</th>
+                <td class="header-center">{{pid.restaurant.mealPerOne | currency:pid.currency:'symbol-narrow'}}</td>
+              </tr>
+              <tr mdbTableCol>
+                <th scope="row" class="header-center">빅맥 세트</th>
+                <td class="header-center">{{pid.restaurant.bigMacMeal | currency:pid.currency:'symbol-narrow'}}</td>
+              </tr>
+              <tr mdbTableCol>
+                <th scope="row" class="header-center">카푸치노</th>
+                <td class="header-center">{{pid.restaurant.cappuccino | currency:pid.currency:'symbol-narrow'}}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <br />
+
+          <p>식료품</p>
+          <table mdbTable small="true">
+            <thead>
+              <tr>
+                <th scope="col" class="header-center">항목</th>
+                <th scope="col" class="header-center">가격 {{pid.currency}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr mdbTableCol>
+                <th scope="row" class="header-center">우유 1L</th>
+                <td class="header-center">{{pid.groceries.milk | currency:pid.currency:'symbol-narrow'}}</td>
+              </tr>
+              <tr mdbTableCol>
+                <th scope="row" class="header-center">달걀 12개</th>
+                <td class="header-center">{{pid.groceries.eggs | currency:pid.currency:'symbol-narrow'}}</td>
+              </tr>
+              <tr mdbTableCol>
+                <th scope="row" class="header-center">닭가슴살 500g</th>
+                <td class="header-center">{{pid.groceries.chickenBreasts | currency:pid.currency:'symbol-narrow'}}</td>
+              </tr>
+              <tr mdbTableCol>
+                <th scope="row" class="header-center">사과 1kg</th>
+                <td class="header-center">{{pid.groceries.apple | currency:pid.currency:'symbol-narrow'}}</td>
+              </tr>
+              <tr mdbTableCol>
+                <th scope="row" class="header-center">감자 1kg</th>
+                <td class="header-center">{{pid.groceries.potatoes | currency:pid.currency:'symbol-narrow'}}</td>
+              </tr>
+              <tr mdbTableCol>
+                <th scope="row" class="header-center">물 1.5L</th>
+                <td class="header-center">{{pid.groceries.water | currency:pid.currency:'symbol-narrow'}}</td>
+              </tr>
+              <tr mdbTableCol>
+                <th scope="row" class="header-center">담배 1갑 (말보로)</th>
+                <td class="header-center">{{pid.groceries.cigarettes | currency:pid.currency:'symbol-narrow'}}</td>
+              </tr>
+            </tbody>
+          </table>    
+
+          <br />
+
+          <p>기타</p>
+          <table mdbTable small="true">
+            <thead>
+              <tr>
+                <th scope="col" class="header-center">항목</th>
+                <th scope="col" class="header-center">가격 {{pid.currency}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr mdbTableCol>
+                <th scope="row" class="header-center">시내버스 기본요금</th>
+                <td class="header-center">{{pid.etc.bus | currency:pid.currency:'symbol-narrow'}}</td>
+              </tr>
+              <tr mdbTableCol>
+                <th scope="row" class="header-center">지하철 기본요금</th>
+                <td class="header-center">{{pid.etc.subway | currency:pid.currency:'symbol-narrow'}}</td>
+              </tr>
+              <tr mdbTableCol>
+                <th scope="row" class="header-center">무연휘발유 1L</th>
+                <td class="header-center">{{pid.etc.gas | currency:pid.currency:'symbol-narrow'}}</td>
+              </tr>
+              <tr mdbTableCol>
+                <th scope="row" class="header-center">인터넷 월 이용료 (60Mbps)</th>
+                <td class="header-center">{{pid.etc.internet | currency:pid.currency:'symbol-narrow'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </mdb-tab>
+  </mdb-tabset>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancelClick()">닫기</button>
+</div>
