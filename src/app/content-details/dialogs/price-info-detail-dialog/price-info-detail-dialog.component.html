@@ -101,7 +101,7 @@
                 <td class="header-center">{{pid.groceries.cigarettes | currency:pid.currency:'symbol-narrow'}}</td>
               </tr>
             </tbody>
-          </table>    
+          </table>
 
           <br />
 
@@ -137,6 +137,8 @@
     </mdb-tab>
   </mdb-tabset>
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onCancelClick()">닫기</button>
-</div>
+<mat-card-actions>
+  <button mat-raised-button class="stick-to-right-side" (click)="onCancelClick()" color="primary">
+    닫기
+  </button>
+</mat-card-actions>

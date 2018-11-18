@@ -23,11 +23,14 @@ import { ItemsService } from './shared/utils/items.service';
 import { ConfigService } from './shared/utils/config.service';
 import { AuthGuardService } from './shared/services/auth-guard.service';
 import { HttpErrorInterceptorService } from './shared/services/http-error-interceptor.service';
+import { DataSharingService } from './shared/services/data-sharing.service';
 
 import { AppComponent } from './app.component';
 import { ContentDetailsComponent } from './content-details/content-details.component';
 import { DeleteCommentDialog } from './content-details/dialogs/delete-comment-dialog/delete-comment-dialog.component';
 import { PriceInfoDetailDialog } from './content-details/dialogs/price-info-detail-dialog/price-info-detail-dialog.component';
+import { NotifCommentDialog } from './core/header/dialogs/notif-comment-dialog.component';
+import { AddMinimumColDialog } from './content-details/dialogs/add-minimum-col-dialog/add-minimum-col-dialog.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -38,11 +41,15 @@ export function tokenGetter() {
     AppComponent,
     ContentDetailsComponent,
     DeleteCommentDialog,
-    PriceInfoDetailDialog
+    PriceInfoDetailDialog,
+    NotifCommentDialog,
+    AddMinimumColDialog
   ],
   entryComponents: [
     DeleteCommentDialog,
-    PriceInfoDetailDialog
+    PriceInfoDetailDialog,
+    NotifCommentDialog,
+    AddMinimumColDialog
   ],
   imports: [
     CoreModule,
@@ -80,6 +87,7 @@ export function tokenGetter() {
     ConfigService,
     AuthGuardService,
     MDBSpinningPreloader,
+    DataSharingService,
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptorService, multi: true },
     { provide: RECAPTCHA_LANGUAGE, useValue: 'ko' }
     // { provide: ErrorHandler, useClass: GlobalErrorHandlerService }

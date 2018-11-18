@@ -25,6 +25,18 @@ export class DataService {
       );
   }
 
+  getVideosByCountry(country: string): Observable<any> {
+    return this.http.get(this._baseUrl + `home/${country}/videos-by-country`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
   getCountryInfo(videoPostId: number): Observable<any> {
     return this.http.get(this._baseUrl + `carddetail/${videoPostId}/country-info`, { observe: "response" })
       .pipe(
@@ -63,6 +75,18 @@ export class DataService {
 
   getPriceInfoDetail(country: string): Observable<any> {
     return this.http.get(this._baseUrl + `carddetail/${country}/price-info-detail`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  getCitiesByCountry(country: string): Observable<any> {
+    return this.http.get(this._baseUrl + `carddetail/${country}/cities-by-country`, { observe: "response" })
       .pipe(
         map(res => {
           return res;
@@ -147,7 +171,23 @@ export class DataService {
           return throwError(err);
         })
       );
-  }  
+  }    
+  
+  getNotificationsForUser(): Observable<any> {
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+    };
+    return this.http.get<any>(this._baseUrl + 'carddetail/notifications-for-user', { headers: header, observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
 
   findUserLikedPost(id: number): Observable<any> {
     const header = {
@@ -309,6 +349,22 @@ export class DataService {
       );
   }
 
+  addMinimumCoL(body: any): Observable<any> {
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+    };
+    return this.http.post<any>(this._baseUrl + 'carddetail/add-minimum-col', body, { headers: header, observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
   updatePostLikes(id: number): Observable<any> {  
     const header = {
       'Content-Type': 'application/json',
@@ -347,6 +403,22 @@ export class DataService {
       'Authorization': 'Bearer ' + localStorage.getItem('access_token')
     }; 
     return this.http.put<any>(this._baseUrl + `carddetail/${id}/update-comment-reply-likes`, id, { headers: header, observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  updateHasReadById(id: number): Observable<any> {  
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+    }; 
+    return this.http.put<any>(this._baseUrl + `carddetail/${id}/update-has-read`, id, { headers: header, observe: "response" })
       .pipe(
         map(res => {
           return res;

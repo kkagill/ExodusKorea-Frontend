@@ -1,3 +1,4 @@
+<br /><br />
 <section class="magazine-section my-5">
   <div class="row">
     <div class="col-lg-8 col-md-12">
@@ -41,6 +42,8 @@
                 <mat-label class="thick">
                   {{vc.authorDisplayName}}
                   <img *ngIf="vc.isYouTubeComment" src="./../../assets/images/youtube.png" alt="유튜브" style="margin-bottom: 3px;">
+                  <img *ngIf="!vc.isYouTubeComment && vc.country" src="./../../assets/images/countries/{{vc.country}}-square16.png"
+                    style="margin-bottom: 3px;">
                 </mat-label>
                 <br />
                 <mat-label [innerHTML]="vc.comment"></mat-label>
@@ -93,6 +96,8 @@
                       <mat-label class="thick">
                         {{vcr.authorDisplayName}}
                         <img *ngIf="vcr.isYouTubeComment" src="./../../assets/images/youtube.png" alt="유튜브" style="margin-bottom: 3px;">
+                        <img *ngIf="!vcr.isYouTubeComment && vcr.country" src="./../../assets/images/countries/{{vcr.country}}-square16.png"
+                          style="margin-bottom: 3px;">
                       </mat-label>
                       <br />
                       <mat-label>
@@ -110,29 +115,31 @@
                           style="margin-left: 15px;" (click)="onClickCommentReplyDelete(vcr.videoCommentId, vcr.videoCommentReplyId)">삭제</span>
                       </mat-label>
                       <div *ngIf="vcr.videoCommentReplyId === selectedVideoCommentReplyId">
-                          <form (ngSubmit)="onSubmitReplyReply(vcr.videoCommentId, vcr.authorDisplayName, vcr.userId)" [formGroup]="commentReplyForm">
-                            <mat-form-field appearance="outline" class="full-width">
-                              <textarea matInput #replyInput maxlength="500" (mouseup)="onClickCommentBox()" placeholder="로그인 하셔야 댓글 작성이 가능합니다."
-                                formControlName="comment"></textarea>
-                              <mat-hint align="start"><strong>근거없는 비방/비하/욕설 시 무기한 차단 대상이 됩니다.</strong> </mat-hint>
-                              <mat-hint align="end">{{replyInput.value.length}} / 500</mat-hint>
-                              <mat-error *ngIf="commentReplyForm.controls['comment'].hasError('minlength')">
-                                최소 5글자를 입력해 주세요.
-                              </mat-error>
-                              <mat-error *ngIf="commentReplyForm.controls['comment'].hasError('maxlength')">
-                                최대 500글자까지 입니다.
-                              </mat-error>
-                              <button mat-raised-button class="stick-to-right-side" [disabled]="!commentReplyForm.valid"
-                                color="accent" style="margin-top: 10px;">
-                                댓글입력
-                              </button>
-                              <button mat-raised-button class="stick-to-right-side" (click)="onClickCancelReplyReply()" style="margin-top: 10px; margin-right: 7px;">
-                                취소
-                              </button>
-                            </mat-form-field>
-                          </form>
-                          <br />
-                        </div>
+                        <form (ngSubmit)="onSubmitReplyReply(vcr.videoCommentId, vcr.authorDisplayName, vcr.userId)"
+                          [formGroup]="commentReplyForm">
+                          <mat-form-field appearance="outline" class="full-width">
+                            <textarea matInput #replyInput maxlength="500" (mouseup)="onClickCommentBox()" placeholder="로그인 하셔야 댓글 작성이 가능합니다."
+                              formControlName="comment"></textarea>
+                            <mat-hint align="start"><strong>근거없는 비방/비하/욕설 시 무기한 차단 대상이 됩니다.</strong> </mat-hint>
+                            <mat-hint align="end">{{replyInput.value.length}} / 500</mat-hint>
+                            <mat-error *ngIf="commentReplyForm.controls['comment'].hasError('minlength')">
+                              최소 5글자를 입력해 주세요.
+                            </mat-error>
+                            <mat-error *ngIf="commentReplyForm.controls['comment'].hasError('maxlength')">
+                              최대 500글자까지 입니다.
+                            </mat-error>
+                            <button mat-raised-button class="stick-to-right-side" [disabled]="!commentReplyForm.valid"
+                              color="accent" style="margin-top: 10px;">
+                              댓글입력
+                            </button>
+                            <button mat-raised-button class="stick-to-right-side" (click)="onClickCancelReplyReply()"
+                              style="margin-top: 10px; margin-right: 7px;">
+                              취소
+                            </button>
+                          </mat-form-field>
+                        </form>
+                        <br />
+                      </div>
                     </div>
                   </div>
                   <br />
@@ -175,30 +182,27 @@
       </div>
 
       <div class="single-news mb-4" *ngIf="isSalaryInfoLoaded">
-          <div class="row">
-            <div class="col-md-12">
-              <mat-card class="example-card" *ngIf="salaryInfo.isDisplayable">
-                <mat-card-header>
-                  <mat-card-title><b>{{salaryInfo.occupation}} 연봉 (2018)</b></mat-card-title>
-                </mat-card-header>
-                <mat-card-content class="left-align-panel">
-                  <p style="font-size: 12px;">{{salaryInfo.country}} 전국 평균</p>
-                 <div id="salary-chart">
-                    <mat-label id="low-word">최저</mat-label>
-                    <mat-label id="low">{{salaryInfo.low | currency:salaryInfo.currency:'symbol-narrow':'1.0'}}</mat-label>
-
-                    <mat-label id="median-word">평균</mat-label>
-                    <mat-label id="median">{{salaryInfo.median | currency:salaryInfo.currency:'symbol-narrow':'1.0'}}</mat-label>
-
-                    <mat-label id="high-word">최고</mat-label>
-                    <mat-label id="high">{{salaryInfo.high | currency:salaryInfo.currency:'symbol-narrow':'1.0'}}</mat-label>
-                 </div>
-                  
-                </mat-card-content>
-              </mat-card>
-            </div>
+        <div class="row">
+          <div class="col-md-12">
+            <mat-card class="example-card" *ngIf="salaryInfo.isDisplayable">
+              <mat-card-header>
+                <mat-card-title><b>{{salaryInfo.occupation}} 연봉 (2018)</b></mat-card-title>
+              </mat-card-header>
+              <mat-card-content class="left-align-panel">
+                <p style="font-size: 12px;">{{salaryInfo.country}} 전국 평균</p>
+                <div id="salary-chart">
+                  <mat-label id="low-word">최저</mat-label>
+                  <mat-label id="low">{{salaryInfo.low | currency:salaryInfo.currency:'symbol-narrow':'1.0'}}</mat-label>
+                  <mat-label id="median-word">평균</mat-label>
+                  <mat-label id="median">{{salaryInfo.median | currency:salaryInfo.currency:'symbol-narrow':'1.0'}}</mat-label>
+                  <mat-label id="high-word">최고</mat-label>
+                  <mat-label id="high">{{salaryInfo.high | currency:salaryInfo.currency:'symbol-narrow':'1.0'}}</mat-label>
+                </div>
+              </mat-card-content>
+            </mat-card>
           </div>
         </div>
+      </div>
 
       <div class="single-news mb-4">
         <div class="row">
@@ -230,6 +234,33 @@
           </div>
 
           <div class="col-md-6">
+            <mat-card class="example-card" *ngIf="isCurrencyInfoLoaded" style="height: 95%;">
+              <mat-card-header>
+                <mat-card-title><b>최소 생활비</b></mat-card-title>
+              </mat-card-header>
+              <mat-card-content class="left-align-panel">
+                <p style="font-size: 12px;">한달 평균</p>
+                <mat-label>
+                  <b>밴쿠버:</b> $1,705
+                </mat-label>
+                <mat-label>
+                  <b>토론토:</b> $2,105
+                </mat-label>
+                <br /><br />
+                <span class="pointer" style="color: #007ad9;">더 자세히..</span>
+                <hr />
+                <p style="font-size: 12px;">{{priceInfo.country}}에 사세요?</p>
+                <button type="button" class="btn btn-outline-info waves-effect btn-sm" (click)="onClickHelp(priceInfo.country, countryInfo.countryInEng, currencyInfo.baseCurrency)"
+                  style="margin-top: -20px;">HELP!</button>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+
+      <div class="single-news mb-4" *ngIf="isSalaryInfoLoaded">
+        <div class="row">
+          <div class="col-md-12">
             <mat-card class="example-card" *ngIf="isCurrencyInfoLoaded">
               <mat-card-header>
                 <mat-card-title><b>환율</b></mat-card-title>
@@ -245,7 +276,7 @@
             </mat-card>
           </div>
         </div>
-      </div>  
+      </div>
     </div>
   </div>
 </section>

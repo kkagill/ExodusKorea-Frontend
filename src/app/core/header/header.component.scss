@@ -12,6 +12,22 @@ h1, h5, strong{
   z-index: 1;
 }
 
+.thick {
+  font-weight: bold;
+}
+
+.left-align {
+  text-align: left;
+}
+
+.limit-text {
+  display: block;
+  width: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 /* .spacer {
   flex: 1 1 auto;
 }

@@ -49,6 +49,23 @@ export interface IPriceInfoDetail {
     etc: IPI_Etc;
 }
 
+export interface ICity {  
+    cityId: number;
+    country: string;
+    name: string;
+}
+
+export interface IMinimumCOL {  
+    city: string;
+    rent: number;
+    transportation: number;
+    rice: number;
+    ramyun: number;
+    kimchi: number;
+    cell: number;
+    internet: number;
+}
+
 export interface IPI_Rent { 
     oneBedRoomCenter: any;
     oneBedRoomOutside: any;
@@ -94,6 +111,7 @@ export interface IVideoComment {
     dateUpdated: Date;
     likes: number;
     userId: string;
+    country: string;
     isYouTubeComment: boolean;
     videoPostId: number;
     videoCommentReplies: IVideoCommentReply[];
@@ -108,6 +126,7 @@ export interface IVideoCommentReply {
     dateUpdated: Date;
     likes: number;
     userId: string;
+    country: string;
     repliedTo: string;
 }
 
@@ -119,6 +138,19 @@ export interface ISalaryInfo {
     median: number;
     high: number;
     isDisplayable: boolean;  
+}
+
+export interface INotification {
+    notificationId: number;
+    videoCommentId: number;
+    videoCommentReplyId: number;
+    videoPostId: number;
+    youTubeVideoId: string;
+    userId: string;
+    nickName: string;
+    comment: string;  
+    dateCreated: Date;  
+    hasRead: boolean;
 }
 
 export interface Pagination {

@@ -1,12 +1,15 @@
+<br />
+<!-- <h4 class="stick-to-left-side busan-bada">새로운 소식</h4> -->
+<br />
 <div *ngIf="!isVideoPostLoaded">
-	<mdb-progress-bar class="progress primary-color-dark" mode="indeterminate"></mdb-progress-bar>
+	<mdb-spinner spinnerType="big" spinnerColor="yellow"></mdb-spinner>
 </div>
-<div *ngIf="isVideoPostLoaded">
+<div class="row" *ngIf="isVideoPostLoaded">
 	<mdb-carousel [isControls]="true" class="carousel-multi-item multi-animation" [type]="'carousel-multi-item'"
 	 [animation]="'slide'">
 		<mdb-carousel-item *ngFor="let item of slides; let i = index">
 			<div class="col-md-3" *ngFor="let card of item">
-				<mat-card class="example-card" (click)="onMatCardClick(card.videoPostId, card.youTubeVideoId)" style="cursor:pointer;">
+				<mat-card class="card card-body mb-3" (click)="onMatCardClick(card.videoPostId, card.youTubeVideoId)" style="cursor:pointer;">
 					<mat-card-header>
 						<div mat-card-avatar class="example-header-image" [ngStyle]="{'background-image':'url(' + backgroundUrl + card.countryInEng +'.png' + ')'}"></div>
 						<mat-card-title>{{card.uploader}}</mat-card-title>
@@ -24,4 +27,78 @@
 			</div>
 		</mdb-carousel-item>
 	</mdb-carousel>
+</div>
+
+<p *ngIf="isUSALoaded" class="country-title">미국</p>
+<hr /><br />
+<div *ngIf="!isUSALoaded">
+	<mdb-spinner spinnerType="big" spinnerColor="yellow"></mdb-spinner>
+</div>
+<div class="row" *ngIf="isUSALoaded">
+	<div class="col-md-3" *ngFor="let card of videosUSA">
+		<mat-card class="card card-body mb-3" (click)="onMatCardClick(card.videoPostId, card.youTubeVideoId)" style="cursor:pointer;">
+			<mat-card-header>
+				<div mat-card-avatar class="example-header-image" [ngStyle]="{'background-image':'url(' + backgroundUrl + card.countryInEng +'.png' + ')'}"></div>
+				<mat-card-title>{{card.uploader}}</mat-card-title>
+				<mat-card-subtitle>{{card.uploadedDate | date:'y년 M월 d일'}}</mat-card-subtitle>
+			</mat-card-header>
+			<img mat-card-image src="https://img.youtube.com/vi/{{card.youTubeVideoId}}/hqdefault.jpg" alt="ECE">
+			<mat-card-content>
+				<h6><strong>{{card.country}} {{card.title}}</strong></h6>
+			</mat-card-content>
+		</mat-card>
+	</div>
+	<div class="center">
+		<button mdbBtn type="button" color="info" outline="true" mdbWavesEffect>더 보기</button>
+	</div>
+</div>
+
+<br />
+<p *ngIf="isCanadaLoaded" class="country-title">캐나다</p>
+<hr /><br />
+<div *ngIf="!isCanadaLoaded">
+	<mdb-spinner spinnerType="big" spinnerColor="yellow"></mdb-spinner>
+</div>
+<div class="row" *ngIf="isCanadaLoaded">
+	<div class="col-md-3" *ngFor="let card of videosCanada">
+		<mat-card class="card card-body mb-3" (click)="onMatCardClick(card.videoPostId, card.youTubeVideoId)" style="cursor:pointer;">
+			<mat-card-header>
+				<div mat-card-avatar class="example-header-image" [ngStyle]="{'background-image':'url(' + backgroundUrl + card.countryInEng +'.png' + ')'}"></div>
+				<mat-card-title>{{card.uploader}}</mat-card-title>
+				<mat-card-subtitle>{{card.uploadedDate | date:'y년 M월 d일'}}</mat-card-subtitle>
+			</mat-card-header>
+			<img mat-card-image src="https://img.youtube.com/vi/{{card.youTubeVideoId}}/hqdefault.jpg" alt="ECE">
+			<mat-card-content>
+				<h6><strong>{{card.country}} {{card.title}}</strong></h6>
+			</mat-card-content>
+		</mat-card>
+	</div>
+	<div class="center">
+		<button mdbBtn type="button" color="info" outline="true" mdbWavesEffect>더 보기</button>
+	</div>
+</div>
+
+<br />
+<p *ngIf="isAustraliaLoaded" class="country-title">호주</p>
+<hr /><br />
+<div *ngIf="!isAustraliaLoaded">
+	<mdb-spinner spinnerType="big" spinnerColor="yellow"></mdb-spinner>
+</div>
+<div class="row" *ngIf="isAustraliaLoaded">
+	<div class="col-md-3" *ngFor="let card of videosAustralia">
+		<mat-card class="card card-body mb-3" (click)="onMatCardClick(card.videoPostId, card.youTubeVideoId)" style="cursor:pointer;">
+			<mat-card-header>
+				<div mat-card-avatar class="example-header-image" [ngStyle]="{'background-image':'url(' + backgroundUrl + card.countryInEng +'.png' + ')'}"></div>
+				<mat-card-title>{{card.uploader}}</mat-card-title>
+				<mat-card-subtitle>{{card.uploadedDate | date:'y년 M월 d일'}}</mat-card-subtitle>
+			</mat-card-header>
+			<img mat-card-image src="https://img.youtube.com/vi/{{card.youTubeVideoId}}/hqdefault.jpg" alt="ECE">
+			<mat-card-content>
+				<h6><strong>{{card.country}} {{card.title}}</strong></h6>
+			</mat-card-content>
+		</mat-card>
+	</div>
+	<div class="center">
+		<button mdbBtn type="button" color="info" outline="true" mdbWavesEffect>더 보기</button>
+	</div>
 </div>

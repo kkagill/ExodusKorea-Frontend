@@ -23,9 +23,22 @@
         </li>
       </ul>
       <ul *ngIf="authService.isAuthenticated()" class="navbar-nav nav-flex-icons">
-        <li class="nav-item waves-light" mdbWavesEffect>
-          <a class="nav-link"><i class="fa fa-envelope"></i></a>
-        </li>
+        <li class="nav-item dropdown" dropdown>
+          <a dropdownToggle mdbWavesEffect type="button" class="nav-link waves-light" mdbWavesEffect>            
+            <i *ngIf="isNotificationLoaded" matBadge="{{newNotifications}}" matBadgeColor="warn" class="fa fa-bell"></i>
+            <i *ngIf="!isNotificationLoaded" class="fa fa-bell"></i>
+          </a>
+          <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" style="overflow-y: scroll; height: 400px;" role="menu">
+            <div *ngFor="let n of notifications" class="dropdown-item waves-effect waves-light" 
+            (click)="onClickNotification(n.notificationId, n.videoPostId, n.youTubeVideoId, n.videoCommentId, n.videoCommentReplyId)" mdbWavesEffect>             
+              <span>{{n.nickName}}님의 답글 
+                <img *ngIf="!n.hasRead" src="./../../assets/images/new.png" alt="new" style="margin-bottom: 3px;">     
+              </span> 
+              <span class="thick limit-text">"{{n.comment}}"</span>                     
+              <span style="font-size: 11px;">{{n.dateCreated | date:'y년 M월 d일 HH시 mm분'}}</span>
+            </div>            
+          </div>
+        </li>       
         <li class="nav-item dropdown" dropdown>
           <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
             <i class="fa fa-user"></i>
@@ -41,14 +54,15 @@
   </mdb-navbar>
   <div class="view intro-2" *ngIf="router.url === '/'">
     <div class="full-bg-img">
-      <div class="mask flex-center"><!-- rgba-purple-light  -->
+      <div class="mask flex-center">
+        <!-- rgba-purple-light  -->
         <div class="container text-center white-text wow fadeInUp">
           <br><br><br><br><br>
           <h1>해외취업의 모든 정보</h1>
           <br>
-          <h5>굿바이, 미세먼지.. 스펙경쟁... 나는 해외로 간다!</h5>
+          <h5>굿바이, 스펙경쟁... 나는 해외로 간다!</h5>
           <h6>경쟁이 치열한 국내 시장에서 눈을 돌리면 전 세계의 놀라운 시장이 보입니다.</h6>
-          <h6>글로벌 무대로 진출하고자 하는 당신을 위한 절호의 기회</h6>
+          <h6>글로벌 무대로 진출하고자 하는 당신을 위한 정보 공유</h6>
         </div>
       </div>
     </div>

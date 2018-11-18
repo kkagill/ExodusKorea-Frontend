@@ -1,3 +1,5 @@
+import { AddMinimumColDialog } from './dialogs/add-minimum-col-dialog/add-minimum-col-dialog.component';
+import { DataSharingService } from './../shared/services/data-sharing.service';
 import { DeleteCommentDialog } from './dialogs/delete-comment-dialog/delete-comment-dialog.component';
 import { ICountryInfo, IPriceInfo, ICurrencyInfo, IVideoComment, IVideoCommentReply, ISalaryInfo } from './../shared/interfaces';
 import { Component, OnInit } from '@angular/core';
@@ -47,6 +49,7 @@ export class ContentDetailsComponent implements OnInit {
     private itemsService: ItemsService,
     private sanitizer: DomSanitizer,
     private formBuilder: FormBuilder,
+    private dataSharingService: DataSharingService,
     public snackBar: MatSnackBar,
     public dialog: MatDialog) {
     this.commentForm = this.formBuilder.group({
@@ -183,9 +186,15 @@ export class ContentDetailsComponent implements OnInit {
 
   onClickCommentBox() {
     if (!this.authService.isAuthenticated()) {
-      this.dialog.open(LoginComponent, {
+      const dialogRef = this.dialog.open(LoginComponent, {
         width: '410px',
         data: { email: this.email, password: this.password }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (this.authService.isAuthenticated()) {
+          this.dataSharingService.loggedIn.next(true); // pass data to header.component.ts
+        }
       });
     }
   }
@@ -223,9 +232,14 @@ export class ContentDetailsComponent implements OnInit {
               panelClass: ['warning-snackbar']
             });
             this.authService.logout();
-            this.dialog.open(LoginComponent, {
+            const dialogRef = this.dialog.open(LoginComponent, {
               width: '410px',
               data: { email: this.email, password: this.password }
+            });
+            dialogRef.afterClosed().subscribe(result => {
+              if (this.authService.isAuthenticated()) {
+                this.dataSharingService.loggedIn.next(true); // pass data to header.component.ts
+              }
             });
           }
           else {
@@ -304,9 +318,14 @@ export class ContentDetailsComponent implements OnInit {
               panelClass: ['warning-snackbar']
             });
             this.authService.logout();
-            this.dialog.open(LoginComponent, {
+            const dialogRef = this.dialog.open(LoginComponent, {
               width: '410px',
               data: { email: this.email, password: this.password }
+            });
+            dialogRef.afterClosed().subscribe(result => {
+              if (this.authService.isAuthenticated()) {
+                this.dataSharingService.loggedIn.next(true); // pass data to header.component.ts
+              }
             });
           }
           else {
@@ -386,9 +405,14 @@ export class ContentDetailsComponent implements OnInit {
               panelClass: ['warning-snackbar']
             });
             this.authService.logout();
-            this.dialog.open(LoginComponent, {
+            const dialogRef = this.dialog.open(LoginComponent, {
               width: '410px',
               data: { email: this.email, password: this.password }
+            });
+            dialogRef.afterClosed().subscribe(result => {
+              if (this.authService.isAuthenticated()) {
+                this.dataSharingService.loggedIn.next(true); // pass data to header.component.ts
+              }
             });
           }
           else {
@@ -421,9 +445,14 @@ export class ContentDetailsComponent implements OnInit {
 
   onClickPostLikes() {
     if (!this.authService.isAuthenticated()) {
-      this.dialog.open(LoginComponent, {
+      const dialogRef = this.dialog.open(LoginComponent, {
         width: '410px',
         data: { email: this.email, password: this.password }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (this.authService.isAuthenticated()) {
+          this.dataSharingService.loggedIn.next(true); // pass data to header.component.ts
+        }
       });
       return;
     }
@@ -480,9 +509,14 @@ export class ContentDetailsComponent implements OnInit {
               panelClass: ['warning-snackbar']
             });
             this.authService.logout();
-            this.dialog.open(LoginComponent, {
+            const dialogRef = this.dialog.open(LoginComponent, {
               width: '410px',
               data: { email: this.email, password: this.password }
+            });
+            dialogRef.afterClosed().subscribe(result => {
+              if (this.authService.isAuthenticated()) {
+                this.dataSharingService.loggedIn.next(true); // pass data to header.component.ts
+              }
             });
           }
           else if (error.status === 404) {
@@ -495,11 +529,16 @@ export class ContentDetailsComponent implements OnInit {
       );
   }
 
-  onClickCommentLikes(videoCommentId: number) {
+  onClickCommentLikes(videoCommentId: number) {    
     if (!this.authService.isAuthenticated()) {
-      this.dialog.open(LoginComponent, {
+      const dialogRef = this.dialog.open(LoginComponent, {
         width: '410px',
         data: { email: this.email, password: this.password }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (this.authService.isAuthenticated()) {
+          this.dataSharingService.loggedIn.next(true); // pass data to header.component.ts
+        }
       });
       return;
     }
@@ -516,7 +555,6 @@ export class ContentDetailsComponent implements OnInit {
                 this.dataService.addCommentLike(body)
                   .subscribe(res => {
                     if (res.status === 201) {
-                      console.log(res)
                       this.dataService.getVideoComment(videoCommentId)
                         .subscribe(res => {
                           if (res.status === 200) {
@@ -559,9 +597,14 @@ export class ContentDetailsComponent implements OnInit {
               panelClass: ['warning-snackbar']
             });
             this.authService.logout();
-            this.dialog.open(LoginComponent, {
+            const dialogRef = this.dialog.open(LoginComponent, {
               width: '410px',
               data: { email: this.email, password: this.password }
+            });
+            dialogRef.afterClosed().subscribe(result => {
+              if (this.authService.isAuthenticated()) {
+                this.dataSharingService.loggedIn.next(true); // pass data to header.component.ts
+              }
             });
           }
           else if (error.status === 404) {
@@ -576,9 +619,14 @@ export class ContentDetailsComponent implements OnInit {
 
   onClickCommentReplyLikes(videoCommentReplyId: number) {
     if (!this.authService.isAuthenticated()) {
-      this.dialog.open(LoginComponent, {
+      const dialogRef = this.dialog.open(LoginComponent, {
         width: '410px',
         data: { email: this.email, password: this.password }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (this.authService.isAuthenticated()) {
+          this.dataSharingService.loggedIn.next(true); // pass data to header.component.ts
+        }
       });
       return;
     }
@@ -641,9 +689,14 @@ export class ContentDetailsComponent implements OnInit {
               panelClass: ['warning-snackbar']
             });
             this.authService.logout();
-            this.dialog.open(LoginComponent, {
+            const dialogRef = this.dialog.open(LoginComponent, {
               width: '410px',
               data: { email: this.email, password: this.password }
+            });
+            dialogRef.afterClosed().subscribe(result => {
+              if (this.authService.isAuthenticated()) {
+                this.dataSharingService.loggedIn.next(true); // pass data to header.component.ts
+              }
             });
           }
           else if (error.status === 404) {
@@ -666,9 +719,14 @@ export class ContentDetailsComponent implements OnInit {
 
   onClickCommentDelete(videoCommentId: number) {
     if (!this.authService.isAuthenticated()) {
-      this.dialog.open(LoginComponent, {
+      const dialogRef = this.dialog.open(LoginComponent, {
         width: '410px',
         data: { email: this.email, password: this.password }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (this.authService.isAuthenticated()) {
+          this.dataSharingService.loggedIn.next(true); // pass data to header.component.ts
+        }
       });
       return;
     }
@@ -702,9 +760,14 @@ export class ContentDetailsComponent implements OnInit {
                   panelClass: ['warning-snackbar']
                 });
                 this.authService.logout();
-                this.dialog.open(LoginComponent, {
+                const dialogRef = this.dialog.open(LoginComponent, {
                   width: '410px',
                   data: { email: this.email, password: this.password }
+                });
+                dialogRef.afterClosed().subscribe(result => {
+                  if (this.authService.isAuthenticated()) {
+                    this.dataSharingService.loggedIn.next(true); // pass data to header.component.ts
+                  }
                 });
               }
               else {
@@ -721,9 +784,14 @@ export class ContentDetailsComponent implements OnInit {
 
   onClickCommentReplyDelete(videoCommentId: number, videoCommentReplyId: number) {
     if (!this.authService.isAuthenticated()) {
-      this.dialog.open(LoginComponent, {
+      const dialogRef = this.dialog.open(LoginComponent, {
         width: '410px',
         data: { email: this.email, password: this.password }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (this.authService.isAuthenticated()) {
+          this.dataSharingService.loggedIn.next(true); // pass data to header.component.ts
+        }
       });
       return;
     }
@@ -760,9 +828,14 @@ export class ContentDetailsComponent implements OnInit {
                   panelClass: ['warning-snackbar']
                 });
                 this.authService.logout();
-                this.dialog.open(LoginComponent, {
+                const dialogRef = this.dialog.open(LoginComponent, {
                   width: '410px',
                   data: { email: this.email, password: this.password }
+                });
+                dialogRef.afterClosed().subscribe(result => {
+                  if (this.authService.isAuthenticated()) {
+                    this.dataSharingService.loggedIn.next(true); // pass data to header.component.ts
+                  }
                 });
               }
               else {
@@ -779,8 +852,15 @@ export class ContentDetailsComponent implements OnInit {
 
   onClickPriceInfoDetail(country: string) {
     const dialogRef = this.dialog.open(PriceInfoDetailDialog, {
-      width: '450px',
+      width: '500px',
       data: { country: country }
+    });
+  }
+
+  onClickHelp(country: string, countryInEng: string, baseCurrency: string) {
+    const dialogRef = this.dialog.open(AddMinimumColDialog, {
+      width: '500px',
+      data: { country: country, countryInEng: countryInEng, baseCurrency: baseCurrency }
     });
   }
 }
