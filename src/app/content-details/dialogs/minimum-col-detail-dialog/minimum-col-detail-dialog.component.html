@@ -1,0 +1,59 @@
+<h1 mat-dialog-title>각 도시 매월 최소 생활비 ({{data.baseCurrency}})</h1>
+<div *ngIf="!isMinimumCoLLoaded">
+  <mdb-spinner spinnerType="big" spinnerColor="yellow"></mdb-spinner>
+</div>
+
+<div class="table table w-auto">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+          <div class="md-form">
+            <input type="text" [(ngModel)]="searchText" class="form-control" id="search" mdbInputDirective>
+            <label for="search">검색</label>
+          </div>
+        </div>
+      </div>
+  <table mdbTable class="z-depth-1">
+    <thead>
+      <tr>
+        <th *ngFor="let head of headElements; let i = index" scope="col" class="th-sm" style="text-align: center;">
+          <span *ngIf="head === '룸쉐어'">
+              {{head}} 
+              <i class="fa fa-info-circle" matTooltip="아파트 방 하나 룸메이트와 공유"
+              matTooltipPosition="above" aria-hidden="true"></i>
+          </span>   
+          <span *ngIf="head !== '룸쉐어'">{{head}}</span>      
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let el of minimumCoL | 
+      searchFilter: {nickName: searchText, dateCreated: searchText, city: searchText, rent: searchText, transporation: searchText, food: searchText, cell: searchText, internet: searchText, total: searchText} | 
+      paginate: { itemsPerPage: 5, currentPage: page }; let i = index">
+        <th style="text-align: center;">
+          {{el.nickName}}
+          <img *ngIf="el.country" src="./../../assets/images/countries/{{el.country}}-square16.png" style="margin-bottom: 3px;">
+        </th>
+        <td style="text-align: center;">{{el.dateCreated | date:'y-MM-dd'}}</td>
+        <td style="text-align: center;">{{el.city}}</td>
+        <td style="text-align: center;">{{el.rent | currency:el.currency:'symbol-narrow'}}</td>
+        <th style="text-align: center;">{{el.transportation | currency:el.currency:'symbol-narrow'}}</th>
+        <td style="text-align: center;">{{el.food | currency:el.currency:'symbol-narrow'}}</td>
+        <td style="text-align: center;">{{el.cell | currency:el.currency:'symbol-narrow'}}</td>
+        <td style="text-align: center;">{{el.internet | currency:el.currency:'symbol-narrow'}}</td>
+        <td style="text-align: center;">
+          <span class="pointer" style="color: #007ad9;" matTooltip="{{el.etc}}" matTooltipPosition="above">보기</span>      
+        </td>
+        <td style="text-align: center;">{{el.total | currency:el.currency:'symbol-narrow'}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="text-align: center;">
+      <pagination-controls (pageChange)="page = $event"></pagination-controls>
+    </div>
+</div>
+<mat-card-actions>
+  <button mat-raised-button class="stick-to-right-side" (click)="onCancelClick()" color="primary" style="margin-right: 16px;">
+    닫기
+  </button>
+</mat-card-actions>

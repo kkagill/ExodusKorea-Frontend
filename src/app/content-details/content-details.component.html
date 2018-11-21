@@ -1,4 +1,3 @@
-<br /><br />
 <section class="magazine-section my-5">
   <div class="row">
     <div class="col-lg-8 col-md-12">
@@ -64,7 +63,7 @@
                       <mat-form-field appearance="outline" class="full-width">
                         <textarea matInput #replyInput maxlength="500" (mouseup)="onClickCommentBox()" placeholder="로그인 하셔야 댓글 작성이 가능합니다."
                           formControlName="comment"></textarea>
-                        <mat-hint align="start"><strong>근거없는 비방/비하/욕설 시 무기한 차단 대상이 됩니다.</strong> </mat-hint>
+                        <mat-hint align="start"><strong>근거없는 비방/비하/욕설 시 무기한 차단 대상이 됩니다.</strong></mat-hint>
                         <mat-hint align="end">{{replyInput.value.length}} / 500</mat-hint>
                         <mat-error *ngIf="commentReplyForm.controls['comment'].hasError('minlength')">
                           최소 5글자를 입력해 주세요.
@@ -120,7 +119,7 @@
                           <mat-form-field appearance="outline" class="full-width">
                             <textarea matInput #replyInput maxlength="500" (mouseup)="onClickCommentBox()" placeholder="로그인 하셔야 댓글 작성이 가능합니다."
                               formControlName="comment"></textarea>
-                            <mat-hint align="start"><strong>근거없는 비방/비하/욕설 시 무기한 차단 대상이 됩니다.</strong> </mat-hint>
+                            <mat-hint align="start"><strong>근거없는 비방/비하/욕설 시 무기한 차단 대상이 됩니다.</strong></mat-hint>
                             <mat-hint align="end">{{replyInput.value.length}} / 500</mat-hint>
                             <mat-error *ngIf="commentReplyForm.controls['comment'].hasError('minlength')">
                               최소 5글자를 입력해 주세요.
@@ -234,23 +233,25 @@
           </div>
 
           <div class="col-md-6">
-            <mat-card class="example-card" *ngIf="isCurrencyInfoLoaded" style="height: 95%;">
+            <mat-card class="example-card" *ngIf="isMinimumCoLInfoLoaded" style="height: 95%;">
               <mat-card-header>
                 <mat-card-title><b>최소 생활비</b></mat-card-title>
               </mat-card-header>
               <mat-card-content class="left-align-panel">
                 <p style="font-size: 12px;">한달 평균</p>
-                <mat-label>
-                  <b>밴쿠버:</b> $1,705
-                </mat-label>
-                <mat-label>
-                  <b>토론토:</b> $2,105
-                </mat-label>
-                <br /><br />
-                <span class="pointer" style="color: #007ad9;">더 자세히..</span>
+                <mat-label *ngFor="let mcol of minimumCoLInfo.cityMinimums">
+                  <span>
+                    {{mcol.city}}:
+                    <span *ngIf="mcol.avgCostOfLiving === 0" class="thick" style="font-size: 13px;">자료없음</span>
+                    <span *ngIf="mcol.avgCostOfLiving !== 0" class="thick" style="font-size: 13px;">{{mcol.avgCostOfLiving | currency:minimumCoLInfo.baseCurrency:'symbol-narrow':'1.0-0'}}</span>
+                  </span>
+                  <br />
+                </mat-label>              
+                <br />
+                <span class="pointer" style="color: #007ad9;" (click)="onClickMinimumCoLDetail(minimumCoLInfo.countryInEng, minimumCoLInfo.baseCurrency)">더 자세히..</span>
                 <hr />
-                <p style="font-size: 12px;">{{priceInfo.country}}에 사세요?</p>
-                <button type="button" class="btn btn-outline-info waves-effect btn-sm" (click)="onClickHelp(priceInfo.country, countryInfo.countryInEng, currencyInfo.baseCurrency)"
+                <p style="font-size: 12px;">{{minimumCoLInfo.country}}에 사세요?</p>
+                <button type="button" class="btn btn-outline-info waves-effect btn-sm" (click)="onClickHelp(minimumCoLInfo.country, minimumCoLInfo.countryInEng, minimumCoLInfo.baseCurrency)"
                   style="margin-top: -20px;">HELP!</button>
               </mat-card-content>
             </mat-card>

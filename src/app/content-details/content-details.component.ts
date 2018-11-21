@@ -1,10 +1,10 @@
 import { AddMinimumColDialog } from './dialogs/add-minimum-col-dialog/add-minimum-col-dialog.component';
 import { DataSharingService } from './../shared/services/data-sharing.service';
 import { DeleteCommentDialog } from './dialogs/delete-comment-dialog/delete-comment-dialog.component';
-import { ICountryInfo, IPriceInfo, ICurrencyInfo, IVideoComment, IVideoCommentReply, ISalaryInfo } from './../shared/interfaces';
+import { ICountryInfo, IPriceInfo, ICurrencyInfo, IVideoComment, IVideoCommentReply, ISalaryInfo, IMinimumCoLInfo } from './../shared/interfaces';
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../shared/services/data.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ItemsService } from '../shared/utils/items.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Validators, FormBuilder } from '@angular/forms';
@@ -13,6 +13,7 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { LoginComponent } from 'src/app/auth/login/login.component';
 import { isNumber } from 'util';
 import { PriceInfoDetailDialog } from './dialogs/price-info-detail-dialog/price-info-detail-dialog.component';
+import { MinimumColDetailDialog } from './dialogs/minimum-col-detail-dialog/minimum-col-detail-dialog.component';
 
 @Component({
   selector: 'app-content-details',
@@ -28,11 +29,13 @@ export class ContentDetailsComponent implements OnInit {
   countryInfo: ICountryInfo;
   salaryInfo: ISalaryInfo;
   priceInfo: IPriceInfo;
+  minimumCoLInfo: IMinimumCoLInfo;
   currencyInfo: ICurrencyInfo;
   videoComments: IVideoComment[];
   isCountryInfoLoaded: boolean = false;
   isSalaryInfoLoaded: boolean = false;
   isPriceInfoLoaded: boolean = false;
+  isMinimumCoLInfoLoaded: boolean = false;
   isCurrencyInfoLoaded: boolean = false;
   isYouTubeLikesLoaded: boolean = false;
   isVideoCommentsLoaded: boolean = false;
@@ -45,7 +48,7 @@ export class ContentDetailsComponent implements OnInit {
 
   constructor(private dataService: DataService,
     private authService: AuthService,
-    private activedRoute: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private itemsService: ItemsService,
     private sanitizer: DomSanitizer,
     private formBuilder: FormBuilder,
@@ -71,15 +74,18 @@ export class ContentDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.videoPostId = this.activedRoute.snapshot.paramMap.get('id1');
-    this.youtubeId = this.activedRoute.snapshot.paramMap.get('id2');
-    this.safeURL = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${this.youtubeId}${'?autoplay=1'}`);
-    this.loadCountryInfo();
-    this.loadSalaryInfo();
-    this.loadPriceInfo();
-    this.loadCurrencyInfo();
-    this.loadPostLikes();
-    this.loadVideoComments();
+    this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
+      this.videoPostId = params.get('id1');
+      this.youtubeId = params.get('id2');
+      this.safeURL = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${this.youtubeId}${'?autoplay=1'}`);
+      this.loadCountryInfo();
+      this.loadSalaryInfo();
+      this.loadPriceInfo();
+      this.loadMinimumCoLInfo();
+      this.loadCurrencyInfo();
+      this.loadPostLikes();
+      this.loadVideoComments();     
+    });
   }
 
   loadCountryInfo() {
@@ -122,6 +128,23 @@ export class ContentDetailsComponent implements OnInit {
         if (res.status === 200) {
           this.isPriceInfoLoaded = true;
           this.priceInfo = this.itemsService.getSerialized<IPriceInfo>(res.body);
+        }
+      },
+        error => {
+          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exodusKorea.com으로 연락주시기 바랍니다.', '', {
+            duration: 60000,
+            panelClass: ['error-snackbar']
+          });
+        }
+      );
+  }
+
+  loadMinimumCoLInfo() {
+    this.dataService.getMinimumCoLInfo(this.videoPostId)
+      .subscribe(res => {
+        if (res.status === 200) {
+          this.isMinimumCoLInfoLoaded = true;
+          this.minimumCoLInfo = this.itemsService.getSerialized<IMinimumCoLInfo>(res.body);
         }
       },
         error => {
@@ -861,6 +884,13 @@ export class ContentDetailsComponent implements OnInit {
     const dialogRef = this.dialog.open(AddMinimumColDialog, {
       width: '500px',
       data: { country: country, countryInEng: countryInEng, baseCurrency: baseCurrency }
+    });
+  }
+
+  onClickMinimumCoLDetail(countryInEng: string, baseCurrency: string) {
+    const dialogRef = this.dialog.open(MinimumColDetailDialog, {
+      width: '1100px',
+      data: { countryInEng: countryInEng, baseCurrency: baseCurrency }
     });
   }
 }

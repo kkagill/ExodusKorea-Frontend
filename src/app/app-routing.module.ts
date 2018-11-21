@@ -1,3 +1,4 @@
+import { UploadVideoComponent } from './upload-video/upload-video.component';
 import { ContentDetailsComponent } from './content-details/content-details.component';
 import { Routes, RouterModule } from '@angular/router'; 
 import { ErrorComponent } from './core/error/error.component';
@@ -8,6 +9,7 @@ import { HomeComponent } from './core/home/home.component';
 const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'content-details/:id1/:id2', component: ContentDetailsComponent },
+    { path: 'upload-video', component: UploadVideoComponent },
     { path: 'error', component: ErrorComponent },
     { path: '**', component: NotFoundComponent }    
 ];

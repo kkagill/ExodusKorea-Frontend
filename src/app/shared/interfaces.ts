@@ -40,6 +40,18 @@ export interface IPriceInfo {
     restaurantPriceIcon: string;
 }
 
+export interface IMinimumCoLInfo {  
+    country: string;
+    countryInEng: string;
+    baseCurrency: string;
+    cityMinimums: ICityMinimum[];
+}
+
+export interface ICityMinimum {   
+    city: string;
+    avgCostOfLiving: number;
+}
+
 export interface IPriceInfoDetail {  
     city: string;
     currency: string;
@@ -56,14 +68,20 @@ export interface ICity {
 }
 
 export interface IMinimumCOL {  
+    country: string;
+    cityId: number;
     city: string;
     rent: number;
     transportation: number;
-    rice: number;
-    ramyun: number;
-    kimchi: number;
+    food: number;
     cell: number;
     internet: number;
+    etc: number;
+    nickName: string;
+    total: number;
+    dateCreated: Date;
+    
+    currency: string;   
 }
 
 export interface IPI_Rent { 

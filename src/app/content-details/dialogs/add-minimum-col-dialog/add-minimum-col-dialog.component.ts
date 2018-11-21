@@ -78,7 +78,7 @@ export class AddMinimumColDialog implements OnInit {
       return;
     }
 
-    if (value.rent <= 0 || value.transportation <= 0 || value.food <= 0 || value.cell <= 0 || value.internet <= 0) {
+    if (value.rent <= 0 || value.transportation <= -1 || value.food <= 0 || value.cell <= -1 || value.internet <= -1) {
       this.snackBar.open('0.00 보다 큰 값을 입력해 주세요.', '', {
         duration: 3000,
         panelClass: ['warning-snackbar']

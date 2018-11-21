@@ -33,7 +33,6 @@ export class PriceInfoDetailDialog implements OnInit {
         if (res.status === 200) {
           this.isPriceInfoDetailLoaded = true;
           this.priceInfoDetail = this.itemsService.getSerialized<IPriceInfoDetail[]>(res.body);
-          console.log(this.priceInfoDetail)
         }
       },
         error => {

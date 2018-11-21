@@ -31,6 +31,9 @@ import { DeleteCommentDialog } from './content-details/dialogs/delete-comment-di
 import { PriceInfoDetailDialog } from './content-details/dialogs/price-info-detail-dialog/price-info-detail-dialog.component';
 import { NotifCommentDialog } from './core/header/dialogs/notif-comment-dialog.component';
 import { AddMinimumColDialog } from './content-details/dialogs/add-minimum-col-dialog/add-minimum-col-dialog.component';
+import { MinimumColDetailDialog } from './content-details/dialogs/minimum-col-detail-dialog/minimum-col-detail-dialog.component';
+import { SearchFilterPipe } from './shared/pipes/search-filter.pipe';
+import { UploadVideoComponent } from './upload-video/upload-video.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -43,13 +46,17 @@ export function tokenGetter() {
     DeleteCommentDialog,
     PriceInfoDetailDialog,
     NotifCommentDialog,
-    AddMinimumColDialog
+    AddMinimumColDialog,
+    MinimumColDetailDialog,
+    SearchFilterPipe,
+    UploadVideoComponent
   ],
   entryComponents: [
     DeleteCommentDialog,
     PriceInfoDetailDialog,
     NotifCommentDialog,
-    AddMinimumColDialog
+    AddMinimumColDialog,
+    MinimumColDetailDialog
   ],
   imports: [
     CoreModule,

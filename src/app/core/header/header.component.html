@@ -8,9 +8,14 @@
     </mdb-navbar-brand>
     <links>
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active waves-light" mdbWavesEffect>
+        <li class="nav-item waves-light" mdbWavesEffect>
           <a class="nav-link" [routerLink]="['']">
-            Home <span class="sr-only">(current)</span>
+            홈 <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item waves-light" mdbWavesEffect>
+          <a class="nav-link" [routerLink]="['upload-video']">
+            영상 만들기
           </a>
         </li>
       </ul>
@@ -24,21 +29,22 @@
       </ul>
       <ul *ngIf="authService.isAuthenticated()" class="navbar-nav nav-flex-icons">
         <li class="nav-item dropdown" dropdown>
-          <a dropdownToggle mdbWavesEffect type="button" class="nav-link waves-light" mdbWavesEffect>            
+          <a dropdownToggle mdbWavesEffect type="button" class="nav-link waves-light" mdbWavesEffect>
             <i *ngIf="isNotificationLoaded" matBadge="{{newNotifications}}" matBadgeColor="warn" class="fa fa-bell"></i>
             <i *ngIf="!isNotificationLoaded" class="fa fa-bell"></i>
           </a>
-          <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" style="overflow-y: scroll; height: 400px;" role="menu">
-            <div *ngFor="let n of notifications" class="dropdown-item waves-effect waves-light" 
-            (click)="onClickNotification(n.notificationId, n.videoPostId, n.youTubeVideoId, n.videoCommentId, n.videoCommentReplyId)" mdbWavesEffect>             
-              <span>{{n.nickName}}님의 답글 
-                <img *ngIf="!n.hasRead" src="./../../assets/images/new.png" alt="new" style="margin-bottom: 3px;">     
-              </span> 
-              <span class="thick limit-text">"{{n.comment}}"</span>                     
+          <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" style="overflow-y: scroll; height: 400px;"
+            role="menu">
+            <div *ngFor="let n of notifications" class="dropdown-item waves-effect waves-light" (click)="onClickNotification(n.notificationId, n.videoPostId, n.youTubeVideoId, n.videoCommentId, n.videoCommentReplyId)"
+              mdbWavesEffect>
+              <span>{{n.nickName}}님의 답글
+                <img *ngIf="!n.hasRead" src="./../../assets/images/new.png" alt="new" style="margin-bottom: 3px;">
+              </span>
+              <span class="thick limit-text">"{{n.comment}}"</span>
               <span style="font-size: 11px;">{{n.dateCreated | date:'y년 M월 d일 HH시 mm분'}}</span>
-            </div>            
+            </div>
           </div>
-        </li>       
+        </li>
         <li class="nav-item dropdown" dropdown>
           <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
             <i class="fa fa-user"></i>
@@ -67,38 +73,20 @@
       </div>
     </div>
   </div>
-</header>
 
-<!-- <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav
-    #drawer
-    class="sidenav"
-    [ngClass]="{hidden: !(isHandset$ | async)}"
-    fixedInViewport="true"
-    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'"
-    [opened]="!(isHandset$ | async)">
-    <mat-toolbar color="primary">Menu</mat-toolbar>
-    <mat-nav-list>
-      <a mat-list-item href="javascript:void(0);" (click)="openRegisterDialog()">회원가입</a>
-      <a mat-list-item href="javascript:void(0);" (click)="openLoginDialog()">로그인</a>
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-      <span>엑소더스 코리아</span>
-      <span class="spacer"></span>
-      <a href="javascript:void(0);" fxHide.xs (click)="openRegisterDialog()">회원가입</a>
-      <a href="javascript:void(0);" fxHide.xs (click)="openLoginDialog()">로그인</a>
-    </mat-toolbar>
-    <ng-content></ng-content>
-  </mat-sidenav-content>
-</mat-sidenav-container> -->
+  <div class="view intro-2" *ngIf="router.url === '/upload-video'">
+    <div class="full-bg-img">
+      <div class="mask flex-center">
+        <!-- rgba-purple-light  -->
+        <div class="container text-center white-text wow fadeInUp">
+          <br><br><br><br><br>
+          <h1>해외 취업 성공사례를 나눠주세요</h1>
+          <br>
+          <h5>열심히 노력했던 그대.. 힘든 과정을 이겨낸 승리자</h5>
+          <h6>여러분의 스토리를 앞으로 해외 취업을 꿈꾸는 모든 분들께 공유할 수 있습니다.</h6>
+          <h6>멘토링 역할을 할 수 있는 기회를 꼭 만들어 보세요.</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

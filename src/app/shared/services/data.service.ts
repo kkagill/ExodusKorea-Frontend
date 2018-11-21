@@ -85,6 +85,30 @@ export class DataService {
       );
   }
 
+  getMinimumCoLInfo(videoPostId: number): Observable<any> {
+    return this.http.get(this._baseUrl + `carddetail/${videoPostId}/minimum-col-info`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  getMinimumCoLDetail(country: string): Observable<any> {
+    return this.http.get(this._baseUrl + `carddetail/${country}/minimum-col-detail`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
   getCitiesByCountry(country: string): Observable<any> {
     return this.http.get(this._baseUrl + `carddetail/${country}/cities-by-country`, { observe: "response" })
       .pipe(
