@@ -5,6 +5,36 @@ export interface IApplicationUser {
     lockoutEnd: Date;
 }
 
+export interface IMainCurrencies {
+    usd: number;
+    cad: number;
+    aud: number;
+    nzd: number;
+    today: Date;
+}
+
+export interface INews {
+    newsId: number;
+    topic: string;
+    newsDetails: INewsDetail[];
+}
+
+export interface INewsDetail {
+    newsDetailId: number;
+    subject: string;
+    country: string;
+    department: string;
+    creator: string;
+    body: string;
+    dateCreated: Date;
+    views: number;
+    thumbnail: string;
+    newsId: number;
+
+    index: number;
+    createdDate: string;
+}
+
 export interface IVideoPost {
     videoPostId: number;
     uploader: string;

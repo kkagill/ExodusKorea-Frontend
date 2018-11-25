@@ -36,7 +36,7 @@ export class PriceInfoDetailDialog implements OnInit {
         }
       },
         error => {
-          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exodusKorea.com으로 연락주시기 바랍니다.', '', {
+          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
             duration: 60000,
             panelClass: ['error-snackbar']
           });

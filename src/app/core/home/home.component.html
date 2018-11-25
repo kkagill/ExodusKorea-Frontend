@@ -1,3 +1,83 @@
+<section class="magazine-section my-5">
+	<div class="row">
+		<div class="col-lg-9 col-md-12">
+			<div class="single-news mb-lg-0 mb-4">
+				<h4>World News</h4>
+				<p>전 세계 경제와 일자리 동향을 신속하고 정확하게 전달해드립니다.</p>
+				<hr />
+				<section class="magazine-section my-5">
+					<div class="row" *ngFor="let mn of mainNews">
+						<div class="col-lg-12	col-md-12">
+							<div class="row pointer" (click)="onNewsDetailClick(mn.newsDetailId, mn.newsId)">
+								<div class="col-md-3">
+									<div class="view overlay rounded z-depth-1 mb-4">
+										<img class="news-image" src="{{mn.thumbnail}}">
+										<a>
+											<div class="mask rgba-white-slight waves-light" mdbWavesEffect></div>
+										</a>
+									</div>
+								</div>
+								<div class="col-md-9 left-align">
+									<p class="font-weight-bold dark-grey-text">
+										{{mn.subject}}
+										<img *ngIf="mn.createdDate === today" src="./../../assets/images/new.png" alt="new">
+									</p>
+									<div class="d-flex justify-content-between">
+										<div class="col-11 text-truncate pl-0 mb-3">
+											<div class="dark-grey-text">{{mn.country}}</div>
+											<div class="dark-grey-text">{{mn.dateCreated | date:'y-MM-dd'}}</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="center">
+						<button mdbBtn type="button" color="info" outline="true" (click)="onMoreNewsClick()" mdbWavesEffect>더 보기</button>
+					</div>
+				</section>
+			</div>
+		</div>
+		<div class="col-lg-3 col-md-12">
+			<div class="single-news mb-lg-0 mb-4">
+				<h4>추천 영상</h4>
+				<div *ngIf="isRecommendedVideoLoaded">
+					<mat-card class="card card-body mb-3" (click)="onMatCardClick(recommendedVideo.videoPostId, recommendedVideo.youTubeVideoId)"
+					 style="cursor:pointer;">
+						<mat-card-header>
+							<div mat-card-avatar class="example-header-image" [ngStyle]="{'background-image':'url(' + backgroundUrl + recommendedVideo.countryInEng +'.png' + ')'}"></div>
+							<mat-card-title>{{recommendedVideo.uploader}}</mat-card-title>
+							<mat-card-subtitle>{{recommendedVideo.uploadedDate | date:'y년 M월 d일'}}</mat-card-subtitle>
+						</mat-card-header>
+						<img mat-card-image src="https://img.youtube.com/vi/{{recommendedVideo.youTubeVideoId}}/hqdefault.jpg" alt="ECE">
+						<mat-card-content>
+							<h6><strong>{{recommendedVideo.country}} {{recommendedVideo.title}}</strong></h6>
+						</mat-card-content>
+					</mat-card>
+				</div>
+			</div>
+
+			<div class="single-news mb-lg-0 mb-4">
+				<div *ngIf="isMainCurrenciesLoaded">
+					<mat-card class="example-card">
+						<h5>TODAY 환율</h5>
+						<hr />
+						<mat-card-content class="left-align-panel">
+							<p style="font-size: 12px;">{{mainCurrencies.today | date:'y년 M월 d일' }}</p>
+							<mat-label>
+								<p>미국 USD: <span class="thick">{{mainCurrencies.usd}}</span></p>
+								<p>캐나다 CAD: <span class="thick">{{mainCurrencies.cad}}</span></p>
+								<p>호주 AUD: <span class="thick">{{mainCurrencies.aud}}</span></p>
+								<p>뉴질랜드 NZD: <span class="thick">{{mainCurrencies.nzd}}</span></p>
+							</mat-label>
+						</mat-card-content>
+					</mat-card>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
 <!-- <h4 class="stick-to-left-side busan-bada">새로운 소식</h4> -->
 <br />
 <div *ngIf="!isVideoPostLoaded">
@@ -101,3 +181,89 @@
 		<button mdbBtn type="button" color="info" outline="true" mdbWavesEffect>더 보기</button>
 	</div>
 </div>
+
+
+
+<!-- <section class="magazine-section my-5">
+	<h3 class="h3-responsive font-weight-bold text-center my-5">해외시장 뉴스</h3>
+	<p class="text-center w-responsive mx-auto mb-5">전 세계 경제와 일자리 동향을 신속하고 정확하게 전달해드립니다.</p>
+	<div class="row">
+		<div class="col-lg-4 col-md-12 mb-lg-0 mb-5">
+			<div class="single-news mb-3">
+				<div class="view overlay rounded z-depth-2 mb-4">
+					<img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/86.jpg" alt="Sample image">
+					<a>
+						<div class="mask rgba-white-slight waves-light" mdbWavesEffect></div>
+					</a>
+				</div>
+				<div class="row mb-3">
+					<div class="col-12">
+						<p class="font-weight-bold">일자리 동향</p>
+					</div>
+				</div>
+			</div>
+			<div class="single-news mb-3">
+				<div class="d-flex justify-content-between">
+					<div class="col-11 text-truncate pl-0 mb-3">
+						<a>24 Food Swaps That Slash Calories.</a>
+					</div>
+					<a>
+						<i class="fa fa-angle-double-right"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg-4 col-md-6 mb-md-0 mb-5">
+			<div class="single-news mb-3">
+				<div class="view overlay rounded z-depth-2 mb-4">
+					<img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/31.jpg" alt="Sample image">
+					<a>
+						<div class="mask rgba-white-slight waves-light" mdbWavesEffect></div>
+					</a>
+				</div>
+				<div class="row mb-3">
+					<div class="col-12">
+						<p class="font-weight-bold">경제/무역</p>
+					</div>
+				</div>
+			</div>
+			<div class="single-news mb-3">
+				<div class="d-flex justify-content-between">
+					<div class="col-11 text-truncate pl-0 mb-3">
+						<a>Trends in the blogosphere for 2016.</a>
+					</div>
+					<a>
+						<i class="fa fa-angle-double-right"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg-4 col-md-6 mb-0">
+			<div class="single-news mb-3">
+				<div class="view overlay rounded z-depth-2 mb-4">
+					<img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/52.jpg" alt="Sample image">
+					<a>
+						<div class="mask rgba-white-slight waves-light" mdbWavesEffect></div>
+					</a>
+				</div>
+				<div class="row mb-3">
+					<div class="col-12">
+						<p class="font-weight-bold">통상/규제</p>
+					</div>
+				</div>
+			</div>
+			<div class="single-news mb-3">
+				<div class="d-flex justify-content-between">
+					<div class="col-11 text-truncate pl-0 mb-3">
+						<a>How to recognize the footsteps of wild animals?</a>
+					</div>
+					<a>
+						<i class="fa fa-angle-double-right"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section> -->

@@ -1,0 +1,49 @@
+<section class="magazine-section my-5">
+  <div class="row">
+    <div class="col-lg-2 col-md-12">
+      <div id="list-example" class="list-group">
+        <div class="list-group-item list-group-item-action pointer" (click)="loadNewsList(1)">경제/무역</div>
+        <div class="list-group-item list-group-item-action pointer" (click)="loadNewsList(2)">통상/규제</div>
+        <div class="list-group-item list-group-item-action pointer" (click)="loadNewsList(3)">일자리 동향</div>
+      </div>
+    </div>
+    <div class="col-lg-10 col-md-12">
+      <div class="single-news mb-lg-0 mb-4">
+        <div *ngIf="!isNewsDetailLoaded">
+          <mdb-spinner spinnerType="big" spinnerColor="yellow"></mdb-spinner>
+        </div>
+        <div *ngIf="isNewsDetailLoaded" mat-dialog-content>
+          <section class="magazine-section my-5">
+            <div class="row">
+              <div class="col-lg-12	col-md-12 right-align">
+                <h5 class="font-weight-bold dark-grey-text">{{newsDetail.subject}}</h5>
+                <p>{{newsDetail.country}} {{newsDetail.department}}</p>
+                <p>{{newsDetail.dateCreated | date:'y-MM-dd'}}</p>
+                <p style="margin-top: -10px;">{{newsDetail.creator}}</p>
+                <p style="margin-top: -10px;">조회수: {{newsDetail.views}}</p>
+                <hr />
+              </div>
+            </div>
+            <div class="row" class="left-align">
+              <div class="col-lg-12	col-md-12 left-align">
+                <br />
+                <div [innerHTML]="newsDetail.body"></div>
+                <hr />
+                <div class="right-align">
+                  <button mdbBtn type="button" color="info" outline="true" (click)="backToList()" mdbWavesEffect>목록</button>
+                </div>
+                <hr />
+                <p style="font-size: 13px;">
+                  본 저작물은 KOTRA에서 <span>{{newsDetail.dateCreated | date:'y년 M월 d일'}}</span>
+                  작성하여 공공누리 제 1유형으로 개방한 '<span>[{{newsDetail.subject}}]</span>
+                  <span>(작성자: {{newsDetail.creator}})</span>'를 이용하였으며,
+                  해당 저작물은 KOTRA 해외시장뉴스(news.kotra.or.kr)에서 무료로 열람 가능합니다.
+                </p>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

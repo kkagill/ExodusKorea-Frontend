@@ -4,24 +4,23 @@
 </div>
 
 <div class="table table w-auto">
-    <div class="row">
-        <div class="col-md-6 mx-auto">
-          <div class="md-form">
-            <input type="text" [(ngModel)]="searchText" class="form-control" id="search" mdbInputDirective>
-            <label for="search">검색</label>
-          </div>
-        </div>
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <div class="md-form">
+        <input type="text" [(ngModel)]="searchText" class="form-control" id="search" mdbInputDirective>
+        <label for="search">검색</label>
       </div>
+    </div>
+  </div>
   <table mdbTable class="z-depth-1">
     <thead>
       <tr>
         <th *ngFor="let head of headElements; let i = index" scope="col" class="th-sm" style="text-align: center;">
           <span *ngIf="head === '룸쉐어'">
-              {{head}} 
-              <i class="fa fa-info-circle" matTooltip="아파트 방 하나 룸메이트와 공유"
-              matTooltipPosition="above" aria-hidden="true"></i>
-          </span>   
-          <span *ngIf="head !== '룸쉐어'">{{head}}</span>      
+            {{head}}
+            <i class="fa fa-info-circle" matTooltip="아파트 방 하나 룸메이트와 공유" matTooltipPosition="above" aria-hidden="true"></i>
+          </span>
+          <span *ngIf="head !== '룸쉐어'">{{head}}</span>
         </th>
       </tr>
     </thead>
@@ -41,7 +40,7 @@
         <td style="text-align: center;">{{el.cell | currency:el.currency:'symbol-narrow'}}</td>
         <td style="text-align: center;">{{el.internet | currency:el.currency:'symbol-narrow'}}</td>
         <td style="text-align: center;">
-          <span class="pointer" style="color: #007ad9;" matTooltip="{{el.etc}}" matTooltipPosition="above">보기</span>      
+          <span class="pointer" style="color: #007ad9;" matTooltip="{{el.etc}}" matTooltipPosition="above">보기</span>
         </td>
         <td style="text-align: center;">{{el.total | currency:el.currency:'symbol-narrow'}}</td>
       </tr>
@@ -49,8 +48,8 @@
   </table>
 
   <div style="text-align: center;">
-      <pagination-controls (pageChange)="page = $event"></pagination-controls>
-    </div>
+    <pagination-controls (pageChange)="page = $event"></pagination-controls>
+  </div>
 </div>
 <mat-card-actions>
   <button mat-raised-button class="stick-to-right-side" (click)="onCancelClick()" color="primary" style="margin-right: 16px;">

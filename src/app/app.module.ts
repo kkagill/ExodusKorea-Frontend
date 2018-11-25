@@ -34,6 +34,8 @@ import { AddMinimumColDialog } from './content-details/dialogs/add-minimum-col-d
 import { MinimumColDetailDialog } from './content-details/dialogs/minimum-col-detail-dialog/minimum-col-detail-dialog.component';
 import { SearchFilterPipe } from './shared/pipes/search-filter.pipe';
 import { UploadVideoComponent } from './upload-video/upload-video.component';
+import { NewsComponent } from './news/news.component';
+import { NewsDetailComponent } from './news-detail/news-detail.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -49,7 +51,9 @@ export function tokenGetter() {
     AddMinimumColDialog,
     MinimumColDetailDialog,
     SearchFilterPipe,
-    UploadVideoComponent
+    UploadVideoComponent,
+    NewsComponent,
+    NewsDetailComponent
   ],
   entryComponents: [
     DeleteCommentDialog,

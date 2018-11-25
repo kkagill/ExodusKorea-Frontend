@@ -13,6 +13,78 @@ export class DataService {
     this._baseUrl = this.configService.getApiURI();
   }
   
+  getAllNews(): Observable<any> {
+    return this.http.get(this._baseUrl + `news/all-news`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  getMainNews(): Observable<any> {
+    return this.http.get(this._baseUrl + `news/main-news`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  getRecommendedVideo(): Observable<any> {
+    return this.http.get(this._baseUrl + `home/recommended-video`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  getMainCurrencies(): Observable<any> {
+    return this.http.get(this._baseUrl + `home/main-currencies`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  getNewsDetail(newsDetailId: number): Observable<any> {
+    return this.http.get(this._baseUrl + `news/${newsDetailId}/news-detail`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  getNewsList(newsId: number): Observable<any> {
+    return this.http.get(this._baseUrl + `news/${newsId}/news-list`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
   getVideoPosts(): Observable<any> {
     return this.http.get(this._baseUrl + `home/new-videos`, { observe: "response" })
       .pipe(
