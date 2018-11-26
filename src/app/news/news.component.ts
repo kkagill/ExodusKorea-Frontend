@@ -17,34 +17,38 @@ export class NewsComponent implements OnInit {
   //news: INews[];
   page: number = 1;
   newsList: INewsDetail[];
+  popularNews: INewsDetail[];
   isNewsLoaded: boolean = false;
+  isPopularNewsLoaded: boolean = false;
   searchText: string;
   topic: string;
 
   public constructor(private router: Router,
     public snackBar: MatSnackBar,
     private dataService: DataService,
-    private itemService: ItemsService) { }
+    private itemsService: ItemsService) { }
 
   ngOnInit() {
     //this.loadAllNews();
-    let newsId = localStorage.getItem('newsId');   
-    let index = localStorage.getItem('index'); 
-    
+    let newsId = localStorage.getItem('newsId');
+    let index = localStorage.getItem('index');
+
     if (newsId != null && +newsId > 0) {
-      this.loadNewsList(+newsId);  
+      this.loadNewsList(+newsId);
       localStorage.removeItem('newsId');
-      
+
       if (index != null && +index > 0) {
-        let pIndex = Math.floor(((+index - 1) / 10) + 1); // Calculate the current page  
+        let pIndex = Math.floor(((+index - 1) / 5) + 1); // Calculate the current page  
         this.page = pIndex;
         //this.p = [pIndex]; // set the current page where the user came from
         //this.staticTabs.setActiveTab(2);
         localStorage.removeItem('index');
-      }   
+      }
     } else {
       this.loadNewsList(1); // initial landing
     }
+
+    this.loadPopularNews();
   }
 
   loadNewsList(newsId: number) {
@@ -52,7 +56,7 @@ export class NewsComponent implements OnInit {
       .subscribe(res => {
         if (res.status === 200) {
           this.isNewsLoaded = true;
-          this.newsList = this.itemService.getSerialized<INewsDetail[]>(res.body);
+          this.newsList = this.itemsService.getSerialized<INewsDetail[]>(res.body);
           let count = 1;
           for (let nl of this.newsList) {
             nl.index = count; // Manually add index for each item
@@ -81,12 +85,33 @@ export class NewsComponent implements OnInit {
       );
   }
 
+  loadPopularNews() {
+    this.dataService.getPopularNews()
+      .subscribe(res => {
+        if (res.status === 200) {
+          this.isPopularNewsLoaded = true;
+          this.popularNews = this.itemsService.getSerialized<INewsDetail[]>(res.body);
+        }
+      },
+        error => {
+          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
+            duration: 60000,
+            panelClass: ['error-snackbar']
+          });
+        }
+      );
+  }
+
+  onPopularNewsClick(newsDetailId: number, newsId: number) {
+    this.router.navigate(['news-detail', newsDetailId, newsId, 0]);
+  }
+
   // loadAllNews() {
   //   this.dataService.getAllNews()
   //   .subscribe(res => {
   //     if (res.status === 200) {
   //       this.isNewsLoaded = true;
-  //       this.news = this.itemService.getSerialized<INews[]>(res.body);
+  //       this.news = this.itemsService.getSerialized<INews[]>(res.body);
   //       for (let n of this.news) {
   //         let count = 1;
   //         for (let nd of n.newsDetails) {

@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col-lg-9 col-md-12">
 			<div class="single-news mb-lg-0 mb-4">
-				<h4>World News</h4>
+				<p class="thick">World News</p>
 				<p>전 세계 경제와 일자리 동향을 신속하고 정확하게 전달해드립니다.</p>
 				<hr />
 				<section class="magazine-section my-5">
@@ -40,10 +40,11 @@
 		</div>
 		<div class="col-lg-3 col-md-12">
 			<div class="single-news mb-lg-0 mb-4">
-				<h4>추천 영상</h4>
 				<div *ngIf="isRecommendedVideoLoaded">
 					<mat-card class="card card-body mb-3" (click)="onMatCardClick(recommendedVideo.videoPostId, recommendedVideo.youTubeVideoId)"
 					 style="cursor:pointer;">
+						<p class="thick">추천 영상</p>
+						<hr />
 						<mat-card-header>
 							<div mat-card-avatar class="example-header-image" [ngStyle]="{'background-image':'url(' + backgroundUrl + recommendedVideo.countryInEng +'.png' + ')'}"></div>
 							<mat-card-title>{{recommendedVideo.uploader}}</mat-card-title>
@@ -56,11 +57,10 @@
 					</mat-card>
 				</div>
 			</div>
-
 			<div class="single-news mb-lg-0 mb-4">
 				<div *ngIf="isMainCurrenciesLoaded">
 					<mat-card class="example-card">
-						<h5>TODAY 환율</h5>
+						<p class="thick">TODAY 환율</p>
 						<hr />
 						<mat-card-content class="left-align-panel">
 							<p style="font-size: 12px;">{{mainCurrencies.today | date:'y년 M월 d일' }}</p>
@@ -97,11 +97,7 @@
 					<img mat-card-image src="https://img.youtube.com/vi/{{card.youTubeVideoId}}/hqdefault.jpg" alt="ECE">
 					<mat-card-content>
 						<h6><strong>{{card.country}} {{card.title}}</strong></h6>
-					</mat-card-content>
-					<!-- <mat-card-actions>
-						<i class="fa fa-thumbs-o-up"></i> {{card.likes}}
-						<button mat-button><i class="fa fa-comment"></i> 89</button>
-					</mat-card-actions> -->
+					</mat-card-content>			
 				</mat-card>
 			</div>
 		</mdb-carousel-item>

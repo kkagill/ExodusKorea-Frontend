@@ -13,6 +13,26 @@ export interface IMainCurrencies {
     today: Date;
 }
 
+export interface IPromisingField {
+    content: string;   
+    country: string;
+}
+
+export interface ISettlementGuide {
+    content: string;   
+    country: string;
+}
+
+export interface ILivingCondition {
+    content: string;   
+    country: string;
+}
+
+export interface IImmigrationVisa {
+    content: string;   
+    country: string;
+}
+
 export interface INews {
     newsId: number;
     topic: string;

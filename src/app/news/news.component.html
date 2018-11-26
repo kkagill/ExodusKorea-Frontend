@@ -6,7 +6,23 @@
         <div class="list-group-item list-group-item-action pointer" (click)="loadNewsList(2)">통상/규제</div>
         <div class="list-group-item list-group-item-action pointer" (click)="loadNewsList(3)">일자리 동향</div>
       </div>
+      <br />
+      <div class="single-news mb-lg-0 mb-4">
+        <div *ngIf="isPopularNewsLoaded">
+          <mat-card class="example-card">
+            <p class="thick">많이 본 뉴스</p>
+            <hr />
+            <mat-card-content class="left-align-panel">
+              <mat-label *ngFor="let pn of popularNews; let i = index">
+                <p class="popular-news pointer left-align" (click)="onPopularNewsClick(pn.newsDetailId, pn.newsId)">{{i+1}}.
+                  {{pn.subject}}</p>
+              </mat-label>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
     </div>
+
     <div class="col-lg-10 col-md-12">
       <br />
       <h3>{{topic}}</h3>
@@ -23,7 +39,7 @@
           <mdb-spinner spinnerType="big" spinnerColor="yellow"></mdb-spinner>
         </div>
         <div *ngIf="isNewsLoaded" mat-dialog-content>
-          <div class="col-12" *ngFor="let nl of newsList | searchFilter: {subject: searchText, country: searchText, department: searchText, dateCreated: searchText} | paginate: { itemsPerPage: 10, currentPage: page }">
+          <div class="col-12" *ngFor="let nl of newsList | searchFilter: {subject: searchText, country: searchText, department: searchText, dateCreated: searchText} | paginate: { itemsPerPage: 5, currentPage: page }">
             <section class="magazine-section my-5">
               <div class="row">
                 <div class="col-lg-12	col-md-12">

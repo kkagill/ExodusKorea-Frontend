@@ -59,6 +59,54 @@ export class DataService {
           return throwError(err);
         })
       );
+  } 
+
+  getAllPromisingFields(): Observable<any> {
+    return this.http.get(this._baseUrl + `countryinfo/promising-fields`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  getAllSettlementGuides(): Observable<any> {
+    return this.http.get(this._baseUrl + `countryinfo/settlement-guides`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  getAllLivingConditions(): Observable<any> {
+    return this.http.get(this._baseUrl + `countryinfo/living-conditions`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  getAllImmigrationVisa(): Observable<any> {
+    return this.http.get(this._baseUrl + `countryinfo/immigration-visas`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
   }
 
   getNewsDetail(newsDetailId: number): Observable<any> {
@@ -75,6 +123,18 @@ export class DataService {
 
   getNewsList(newsId: number): Observable<any> {
     return this.http.get(this._baseUrl + `news/${newsId}/news-list`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  getPopularNews(): Observable<any> {
+    return this.http.get(this._baseUrl + `news/popular-news`, { observe: "response" })
       .pipe(
         map(res => {
           return res;
@@ -451,6 +511,18 @@ export class DataService {
       'Authorization': 'Bearer ' + localStorage.getItem('access_token')
     };
     return this.http.post<any>(this._baseUrl + 'carddetail/add-minimum-col', body, { headers: header, observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  updateNewsViewsCount(newsDetailId: number): Observable<any> {      
+    return this.http.put<any>(this._baseUrl + `news/${newsDetailId}/update-views-count`, newsDetailId, { observe: "response" })
       .pipe(
         map(res => {
           return res;

@@ -36,6 +36,11 @@ import { SearchFilterPipe } from './shared/pipes/search-filter.pipe';
 import { UploadVideoComponent } from './upload-video/upload-video.component';
 import { NewsComponent } from './news/news.component';
 import { NewsDetailComponent } from './news-detail/news-detail.component';
+import { PromisingFieldComponent } from './promising-field/promising-field.component';
+import { SafeHtmlPipe } from './shared/pipes/safe-html.pipe';
+import { SettlementGuideComponent } from './settlement-guide/settlement-guide.component';
+import { LivingConditionComponent } from './living-condition/living-condition.component';
+import { ImmigrationVisaComponent } from './immigration-visa/immigration-visa.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -53,7 +58,12 @@ export function tokenGetter() {
     SearchFilterPipe,
     UploadVideoComponent,
     NewsComponent,
-    NewsDetailComponent
+    NewsDetailComponent,
+    PromisingFieldComponent,
+    SafeHtmlPipe,
+    SettlementGuideComponent,
+    LivingConditionComponent,
+    ImmigrationVisaComponent
   ],
   entryComponents: [
     DeleteCommentDialog,
