@@ -6,7 +6,7 @@ import { IMinimumCOL } from 'src/app/shared/interfaces';
 import { MdbTableService } from 'ng-uikit-pro-standard';
 
 export interface DialogData {
-  countryInEng: string;
+  countryEN: string;
   baseCurrency: string;
 }
 
@@ -35,7 +35,7 @@ export class MinimumColDetailDialog implements OnInit {
   }
 
   loadMinimumColDetail() {
-    this.dataService.getMinimumCoLDetail(this.data.countryInEng)
+    this.dataService.getMinimumCoLDetail(this.data.countryEN)
       .subscribe(res => {
         if (res.status === 200) {
           this.minimumCoL = this.itemsService.getSerialized<IMinimumCOL[]>(res.body);

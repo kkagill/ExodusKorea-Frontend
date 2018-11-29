@@ -41,7 +41,7 @@
                 <mat-label class="thick">
                   {{vc.authorDisplayName}}
                   <img *ngIf="vc.isYouTubeComment" src="./../../assets/images/youtube.png" alt="유튜브" style="margin-bottom: 3px;">
-                  <img *ngIf="!vc.isYouTubeComment && vc.country" src="./../../assets/images/countries/{{vc.country}}-square16.png"
+                  <img *ngIf="!vc.isYouTubeComment && vc.countryEN" src="./../../assets/images/countries/{{vc.countryEN}}-square16.png"
                     style="margin-bottom: 3px;">
                 </mat-label>
                 <br />
@@ -95,7 +95,7 @@
                       <mat-label class="thick">
                         {{vcr.authorDisplayName}}
                         <img *ngIf="vcr.isYouTubeComment" src="./../../assets/images/youtube.png" alt="유튜브" style="margin-bottom: 3px;">
-                        <img *ngIf="!vcr.isYouTubeComment && vcr.country" src="./../../assets/images/countries/{{vcr.country}}-square16.png"
+                        <img *ngIf="!vcr.isYouTubeComment && vcr.countryEN" src="./../../assets/images/countries/{{vcr.countryEN}}-square16.png"
                           style="margin-bottom: 3px;">
                       </mat-label>
                       <br />
@@ -163,9 +163,9 @@
                 <mat-card-title><b>국가정보 (2018)</b></mat-card-title>
               </mat-card-header>
               <mat-card-content class="left-align-panel">
-                <mat-label><b>국명:</b> {{countryInfo.country}}</mat-label><br />
+                <mat-label><b>국명:</b> {{countryInfo.countryKR}}</mat-label><br />
                 <mat-label><b>수도:</b> {{countryInfo.capitalCity}}
-                  <img src="./../../assets/images/countries/{{countryInfo.countryInEng}}-square24.png" style="margin-top: -5px;">
+                  <img src="./../../assets/images/countries/{{countryInfo.countryEN}}-square24.png" style="margin-top: -5px;">
                 </mat-label><br />
                 <mat-label><b>언어:</b> {{countryInfo.languages}}</mat-label><br />
                 <mat-label><b>인구:</b> {{countryInfo.population}}</mat-label><br />
@@ -211,7 +211,7 @@
                 <mat-card-title><b>물가 (2018)</b></mat-card-title>
               </mat-card-header>
               <mat-card-content class="left-align-panel">
-                <p style="font-size: 12px;">{{priceInfo.country}} 전국 평균</p>
+                <p style="font-size: 12px;">{{priceInfo.countryKR}} 전국 평균</p>
                 <p style="font-size: 11px;"> (한국 물가 대비)</p>
                 <mat-label>
                   <b>생활비:</b> {{priceInfo.costOfLiving}} <mdb-icon [icon]="priceInfo.costOfLivingIcon"></mdb-icon>
@@ -226,7 +226,7 @@
                   <b>외식비:</b> {{priceInfo.restaurantPrice}} <mdb-icon [icon]="priceInfo.restaurantPriceIcon"></mdb-icon>
                 </mat-label>
                 <br /><br />
-                <span class="pointer" style="color: #007ad9;" (click)="onClickPriceInfoDetail(priceInfo.countryInEng)">더
+                <span class="pointer" style="color: #007ad9;" (click)="onClickPriceInfoDetail(priceInfo.countryEN)">더
                   자세히..</span>
               </mat-card-content>
             </mat-card>
@@ -248,10 +248,10 @@
                   <br />
                 </mat-label>              
                 <br />
-                <span class="pointer" style="color: #007ad9;" (click)="onClickMinimumCoLDetail(minimumCoLInfo.countryInEng, minimumCoLInfo.baseCurrency)">더 자세히..</span>
+                <span class="pointer" style="color: #007ad9;" (click)="onClickMinimumCoLDetail(minimumCoLInfo.countryEN, minimumCoLInfo.baseCurrency)">더 자세히..</span>
                 <hr />
-                <p style="font-size: 12px;">{{minimumCoLInfo.country}}에 사세요?</p>
-                <button type="button" class="btn btn-outline-info waves-effect btn-sm" (click)="onClickHelp(minimumCoLInfo.country, minimumCoLInfo.countryInEng, minimumCoLInfo.baseCurrency)"
+                <p style="font-size: 12px;">{{minimumCoLInfo.countryKR}}에 사세요?</p>
+                <button type="button" class="btn btn-outline-info waves-effect btn-sm" (click)="onClickHelp(minimumCoLInfo.countryId, minimumCoLInfo.countryKR, minimumCoLInfo.countryEN, minimumCoLInfo.baseCurrency)"
                   style="margin-top: -20px;">HELP!</button>
               </mat-card-content>
             </mat-card>

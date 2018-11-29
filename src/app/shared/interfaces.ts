@@ -5,6 +5,15 @@ export interface IApplicationUser {
     lockoutEnd: Date;
 }
 
+export interface ICountry {
+    countryId: number;
+    nameKR: string;
+}
+
+export interface ICareer {
+    name;
+}
+
 export interface IMainCurrencies {
     usd: number;
     cad: number;
@@ -55,6 +64,11 @@ export interface INewsDetail {
     createdDate: string;
 }
 
+export interface IAllVideos {
+    countryKR: string;
+    videoPosts: IVideoPost[];
+}
+
 export interface IVideoPost {
     videoPostId: number;
     uploader: string;
@@ -62,24 +76,24 @@ export interface IVideoPost {
     title: string;
     likes: number;
     youTubeVideoId: string;
-    country: string;
-    countryInEng: string;  
+    countryEN: string;
+    countryKR: string;  
 }
 
 export interface ICountryInfo {
-    country: string;
+    countryKR: string;
+    countryEN: string;
     capitalCity: Date;
     majorCities: string;
     population: string;
     perCapitaGDP: number;
-    currency: number;
-    countryInEng: string;
+    currency: number;   
     countryLink: string;
 }
 
 export interface IPriceInfo {
-    country: string;
-    countryInEng: string;
+    countryKR: string;
+    countryEN: string;
     costOfLiving: Date;
     costOfLivingIcon: string;
     rent: string;
@@ -91,8 +105,8 @@ export interface IPriceInfo {
 }
 
 export interface IMinimumCoLInfo {  
-    country: string;
-    countryInEng: string;
+    countryKR: string;
+    countryEN: string;
     baseCurrency: string;
     cityMinimums: ICityMinimum[];
 }
@@ -130,6 +144,7 @@ export interface IMinimumCOL {
     nickName: string;
     total: number;
     dateCreated: Date;
+    authorCountryEN: string;
     
     currency: string;   
 }
@@ -179,7 +194,7 @@ export interface IVideoComment {
     dateUpdated: Date;
     likes: number;
     userId: string;
-    country: string;
+    countryEN: string;
     isYouTubeComment: boolean;
     videoPostId: number;
     videoCommentReplies: IVideoCommentReply[];
@@ -194,7 +209,7 @@ export interface IVideoCommentReply {
     dateUpdated: Date;
     likes: number;
     userId: string;
-    country: string;
+    countryEN: string;
     repliedTo: string;
 }
 

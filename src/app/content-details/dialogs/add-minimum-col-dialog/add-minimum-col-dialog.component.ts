@@ -8,8 +8,9 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { LoginComponent } from 'src/app/auth/login/login.component';
 
 export interface DialogData {
-  country: string;
-  countryInEng: string;
+  countryId: number;
+  countryKR: string;
+  countryEN: string;
   baseCurrency: string;
 }
 
@@ -40,7 +41,7 @@ export class AddMinimumColDialog implements OnInit {
   }
 
   loadCities() {
-    this.dataService.getCitiesByCountry(this.data.country)
+    this.dataService.getCitiesByCountryId(this.data.countryId)
       .subscribe(res => {
         if (res.status === 200) {
           this.isCitiesLoaded = true;
@@ -86,7 +87,7 @@ export class AddMinimumColDialog implements OnInit {
       return;
     }
     let body = {
-      'country': this.data.countryInEng,
+      'country': this.data.countryEN,
       'cityId': value.cityId,
       'city': value.city,
       'rent': value.rent,

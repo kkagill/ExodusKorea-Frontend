@@ -880,17 +880,17 @@ export class ContentDetailsComponent implements OnInit {
     });
   }
 
-  onClickHelp(country: string, countryInEng: string, baseCurrency: string) {
+  onClickHelp(countryId: number, countryKR: string, countryEN: string, baseCurrency: string) {
     const dialogRef = this.dialog.open(AddMinimumColDialog, {
       width: '500px',
-      data: { country: country, countryInEng: countryInEng, baseCurrency: baseCurrency }
+      data: { countryId: countryId, countryKR: countryKR, countryEN: countryEN, baseCurrency: baseCurrency }
     });
   }
 
-  onClickMinimumCoLDetail(countryInEng: string, baseCurrency: string) {
+  onClickMinimumCoLDetail(countryEN: string, baseCurrency: string) {
     const dialogRef = this.dialog.open(MinimumColDetailDialog, {
       width: '1100px',
-      data: { countryInEng: countryInEng, baseCurrency: baseCurrency }
+      data: { countryEN: countryEN, baseCurrency: baseCurrency }
     });
   }
 }

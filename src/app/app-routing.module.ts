@@ -11,10 +11,12 @@ import { PromisingFieldComponent } from './promising-field/promising-field.compo
 import { SettlementGuideComponent } from './settlement-guide/settlement-guide.component';
 import { LivingConditionComponent } from './living-condition/living-condition.component';
 import { ImmigrationVisaComponent } from './immigration-visa/immigration-visa.component';
+import { SearchVideosComponent } from './search-videos/search-videos.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'content-details/:id1/:id2', component: ContentDetailsComponent },
+    { path: 'search-videos', component: SearchVideosComponent },
     { path: 'news', component: NewsComponent },
     { path: 'news-detail/:id1/:id2/:id3', component: NewsDetailComponent },
     { path: 'promising-field', component: PromisingFieldComponent },

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { INews, INewsDetail } from '../shared/interfaces';
+import { INewsDetail } from '../shared/interfaces';
 import { Router } from '@angular/router';
 import { DataService } from '../shared/services/data.service';
 import { ItemsService } from '../shared/utils/items.service';

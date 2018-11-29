@@ -1,4 +1,4 @@
-import { IVideoPost, INewsDetail, IMainCurrencies } from './../../shared/interfaces';
+import { IVideoPost, INewsDetail, IMainCurrencies, IAllVideos } from './../../shared/interfaces';
 import { ItemsService } from './../../shared/utils/items.service';
 import { DataService } from './../../shared/services/data.service';
 import { Component, OnInit } from '@angular/core';
@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
   recommendedVideo: IVideoPost;
   mainCurrencies: IMainCurrencies;
   allVideoPosts: IVideoPost[];
+  allVideosByCountry: IAllVideos[];
   videosUSA: IVideoPost[];
   videosCanada: IVideoPost[];
   videosAustralia: IVideoPost[];
@@ -26,9 +27,10 @@ export class HomeComponent implements OnInit {
   isRecommendedVideoLoaded: boolean = false;
   isMainCurrenciesLoaded: boolean = false;
   isVideoPostLoaded: boolean = false;
-  isUSALoaded: boolean = false;
-  isCanadaLoaded: boolean = false;
-  isAustraliaLoaded: boolean = false;  
+  isAllVideosLoaded: boolean = false;
+  // isUSALoaded: boolean = false;
+  // isCanadaLoaded: boolean = false;
+  // isAustraliaLoaded: boolean = false;  
   today: string;
 
   public constructor(private router: Router,
@@ -44,9 +46,7 @@ export class HomeComponent implements OnInit {
     this.loadRecommendedVideo();
     this.loadMainCurrencies();
     this.loadNewVideoPosts();
-    this.loadUSAVideoPosts();
-    this.loadCanadaVideoPosts();
-    this.loadAustraliaVideoPosts();
+    this.loadAllVideos();
   }
 
   loadMainNews() {
@@ -74,7 +74,7 @@ export class HomeComponent implements OnInit {
       .subscribe(res => {
         if (res.status === 200) {
           this.isRecommendedVideoLoaded = true;
-          this.recommendedVideo = this.itemService.getSerialized<IVideoPost>(res.body);         
+          this.recommendedVideo = this.itemService.getSerialized<IVideoPost>(res.body);   
         }
       },
         error => {
@@ -121,46 +121,12 @@ export class HomeComponent implements OnInit {
       );
   }
 
-  loadUSAVideoPosts() {
-    this.dataService.getVideosByCountry("unitedstates")
+  loadAllVideos() {
+    this.dataService.getAllVideos()
       .subscribe(res => {
         if (res.status === 200) {
-          this.isUSALoaded = true;
-          this.videosUSA = this.itemService.getSerialized<IVideoPost[]>(res.body);
-        }
-      },
-        error => {
-          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-            duration: 60000,
-            panelClass: ['error-snackbar']
-          });
-        }
-      );
-  }
-
-  loadCanadaVideoPosts() {
-    this.dataService.getVideosByCountry("canada")
-      .subscribe(res => {
-        if (res.status === 200) {
-          this.isCanadaLoaded = true;
-          this.videosCanada = this.itemService.getSerialized<IVideoPost[]>(res.body);
-        }
-      },
-        error => {
-          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-            duration: 60000,
-            panelClass: ['error-snackbar']
-          });
-        }
-      );
-  }
-
-  loadAustraliaVideoPosts() {
-    this.dataService.getVideosByCountry("australia")
-      .subscribe(res => {
-        if (res.status === 200) {
-          this.isAustraliaLoaded = true;
-          this.videosAustralia = this.itemService.getSerialized<IVideoPost[]>(res.body);
+          this.isAllVideosLoaded = true;
+          this.allVideosByCountry = this.itemService.getSerialized<IAllVideos[]>(res.body);
         }
       },
         error => {

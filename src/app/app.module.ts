@@ -41,6 +41,7 @@ import { SafeHtmlPipe } from './shared/pipes/safe-html.pipe';
 import { SettlementGuideComponent } from './settlement-guide/settlement-guide.component';
 import { LivingConditionComponent } from './living-condition/living-condition.component';
 import { ImmigrationVisaComponent } from './immigration-visa/immigration-visa.component';
+import { SearchVideosComponent } from './search-videos/search-videos.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -63,7 +64,8 @@ export function tokenGetter() {
     SafeHtmlPipe,
     SettlementGuideComponent,
     LivingConditionComponent,
-    ImmigrationVisaComponent
+    ImmigrationVisaComponent,
+    SearchVideosComponent
   ],
   entryComponents: [
     DeleteCommentDialog,

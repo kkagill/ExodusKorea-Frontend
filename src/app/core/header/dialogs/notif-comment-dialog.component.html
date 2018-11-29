@@ -13,7 +13,7 @@
     <div class="left-align">
       <mat-label class="thick">
         {{vc.authorDisplayName}}
-        <img *ngIf="vc.country" src="./../../assets/images/countries/{{vc.country}}-square16.png" style="margin-bottom: 3px;">
+        <img *ngIf="vc.countryEN" src="./../../assets/images/countries/{{vc.countryEN}}-square16.png" style="margin-bottom: 3px;">
       </mat-label>
       <br />
       <mat-label [innerHTML]="vc.comment"></mat-label>
@@ -63,7 +63,7 @@
             <div [ngStyle]="vcr.videoCommentReplyId === data.videoCommentReplyId ? {'background-color': 'rgba(0, 0, 0, 0.1)'} : {'background-color': ''}">
               <mat-label class="thick">
                 {{vcr.authorDisplayName}}
-                <img *ngIf="vcr.country" src="./../../assets/images/countries/{{vcr.country}}-square16.png" style="margin-bottom: 3px;">
+                <img *ngIf="vcr.countryEN" src="./../../assets/images/countries/{{vcr.countryEN}}-square16.png" style="margin-bottom: 3px;">
               </mat-label>
               <br />
               <mat-label>

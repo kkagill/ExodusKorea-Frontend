@@ -61,6 +61,42 @@ export class DataService {
       );
   } 
 
+  getAllCountries(): Observable<any> {
+    return this.http.get(this._baseUrl + `searchvideo/all-countries`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  } 
+
+  getAllSearchResult(): Observable<any> {
+    return this.http.get(this._baseUrl + `searchvideo/all-search-result`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  } 
+
+  getSearchResultByCountryId(countryId: number): Observable<any> {
+    return this.http.get(this._baseUrl + `searchvideo/${countryId}/search-result-country`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
   getAllPromisingFields(): Observable<any> {
     return this.http.get(this._baseUrl + `countryinfo/promising-fields`, { observe: "response" })
       .pipe(
@@ -157,8 +193,8 @@ export class DataService {
       );
   }
 
-  getVideosByCountry(country: string): Observable<any> {
-    return this.http.get(this._baseUrl + `home/${country}/videos-by-country`, { observe: "response" })
+  getAllVideos(): Observable<any> {
+    return this.http.get(this._baseUrl + `home/all-videos`, { observe: "response" })
       .pipe(
         map(res => {
           return res;
@@ -241,8 +277,8 @@ export class DataService {
       );
   }
 
-  getCitiesByCountry(country: string): Observable<any> {
-    return this.http.get(this._baseUrl + `carddetail/${country}/cities-by-country`, { observe: "response" })
+  getCitiesByCountryId(countryId: number): Observable<any> {
+    return this.http.get(this._baseUrl + `carddetail/${countryId}/cities-by-country`, { observe: "response" })
       .pipe(
         map(res => {
           return res;
