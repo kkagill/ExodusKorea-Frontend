@@ -15,7 +15,8 @@ export interface RegisterDialogData {
 
 @Component({
   selector: 'register',
-  templateUrl: './register.component.html'
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
   success = '';
@@ -32,9 +33,10 @@ export class RegisterComponent {
     public http: HttpClient,
     private authService: AuthService,
     private spinner: NgxSpinnerService,
-    public dialogRef: MatDialogRef<RegisterComponent>,
+    // public dialogRef: MatDialogRef<RegisterComponent>,
+    // @Inject(MAT_DIALOG_DATA) public data: RegisterDialogData,
     public snackBar: MatSnackBar,
-    @Inject(MAT_DIALOG_DATA) public data: RegisterDialogData) {
+   ) {
     this.emailFormControl = new FormControl('', [
       Validators.required,
       Validators.email,
@@ -154,7 +156,7 @@ export class RegisterComponent {
   onNoClick(event) {
     // Close only when it is clicked, not enter pressed
     if (event.x !== 0 && event.y !== 0) {
-      this.dialogRef.close();
+      //this.dialogRef.close();
     }
   }
 }

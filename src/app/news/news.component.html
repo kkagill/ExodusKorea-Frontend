@@ -1,11 +1,23 @@
 <section class="magazine-section my-5">
   <div class="row">
     <div class="col-lg-2 col-md-12">
-      <div id="list-example" class="list-group">
+      <mat-accordion>
+        <mat-expansion-panel *ngIf="isCategoriesLoaded" [expanded]="true">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              카테고리
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <p class="pointer" *ngFor="let c of categories" (click)="onSelectCategory(c)" [style.background-color]="c===selectedCategory ? '#94c3f4' : ''">
+            {{c.name}}
+          </p>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <!-- <div id="list-example" class="list-group">
         <div class="list-group-item list-group-item-action pointer" (click)="loadNewsList(1)">경제/무역</div>
         <div class="list-group-item list-group-item-action pointer" (click)="loadNewsList(2)">통상/규제</div>
         <div class="list-group-item list-group-item-action pointer" (click)="loadNewsList(3)">일자리 동향</div>
-      </div>
+      </div> -->
       <br />
       <div class="single-news mb-lg-0 mb-4">
         <div *ngIf="isPopularNewsLoaded">
@@ -24,8 +36,6 @@
     </div>
 
     <div class="col-lg-10 col-md-12">
-      <br />
-      <h3>{{topic}}</h3>
       <div class="row">
         <div class="col-md-10 mx-auto">
           <div class="md-form">
@@ -39,7 +49,7 @@
           <mdb-spinner spinnerType="big" spinnerColor="yellow"></mdb-spinner>
         </div>
         <div *ngIf="isNewsLoaded" mat-dialog-content>
-          <div class="col-12" *ngFor="let nl of newsList | searchFilter: {subject: searchText, country: searchText, department: searchText, dateCreated: searchText} | paginate: { itemsPerPage: 5, currentPage: page }">
+          <div class="col-12" *ngFor="let nl of newsList | searchFilter: {subject: searchText, country: searchText, department: searchText, dateCreated: searchText} | paginate: { itemsPerPage: 10, currentPage: page }">
             <section class="magazine-section my-5">
               <div class="row">
                 <div class="col-lg-12	col-md-12">

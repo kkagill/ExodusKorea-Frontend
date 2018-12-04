@@ -1,34 +1,32 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { DataService } from '../shared/services/data.service';
 import { ItemsService } from '../shared/utils/items.service';
 import { MatSnackBar } from '@angular/material';
-import { IImmigrationVisa } from '../shared/interfaces';
+import { ICountryInfoKOTRA } from '../shared/interfaces';
 
 @Component({
-  selector: 'app-immigration-visa',
-  templateUrl: './immigration-visa.component.html',
-  styleUrls: ['./immigration-visa.component.scss']
+  selector: 'app-country-info',
+  templateUrl: './country-info.component.html',
+  styleUrls: ['./country-info.component.scss']
 })
-export class ImmigrationVisaComponent implements OnInit {
-  isImmigrationVisaLoaded: boolean = false;
-  immigrationVisas: IImmigrationVisa[];
+export class CountryInfoComponent implements OnInit {
+  isCountryInfoCanadaLoaded: boolean = false;
+  countryInfoCanada: ICountryInfoKOTRA;
 
-  public constructor(private router: Router,
-    public snackBar: MatSnackBar,
+  public constructor(public snackBar: MatSnackBar,
     private dataService: DataService,
     private itemsService: ItemsService) { }
 
   ngOnInit() {
-    this.loadImmmigrationVisa();
+    this.loadCountryInfoCanada();
   }
 
-  loadImmmigrationVisa() {
-    this.dataService.getAllImmigrationVisa()
+  loadCountryInfoCanada() {
+    this.dataService.getCountryInfoCanada()
       .subscribe(res => {
         if (res.status === 200) {
-          this.isImmigrationVisaLoaded = true;
-          this.immigrationVisas = this.itemsService.getSerialized<IImmigrationVisa[]>(res.body);
+          this.isCountryInfoCanadaLoaded = true;
+          this.countryInfoCanada = this.itemsService.getSerialized<ICountryInfoKOTRA>(res.body);
         }
       },
         error => {

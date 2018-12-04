@@ -1,0 +1,20 @@
+.view {
+  background: url('../../../assets/images/register.jpeg') no-repeat center center;  
+  background-size: cover;
+  height: 65vh;
+}
+
+.input-size {
+  width: 92%;
+}
+
+@media screen and (min-width : 0px) and (max-width : 767px){
+  #picture {
+    visibility: hidden;
+    clear: both;
+    float: left;
+    margin: 10px auto 5px 20px;
+    width: 28%;
+    display: none;
+  }
+}

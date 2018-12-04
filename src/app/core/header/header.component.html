@@ -18,17 +18,10 @@
             World News
           </a>
         </li>
-        <!-- Dropdown -->
         <li class="nav-item dropdown" dropdown>
-          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
-            국가 정보<span class="caret"></span>
+          <a class="nav-link" [routerLink]="['country-info']">
+            캐나다 정보
           </a>
-          <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
-            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['promising-field']">취업유망분야</a>
-            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['settlement-guide']">이주정착 가이드</a>
-            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['living-condition']">생활여건</a>
-            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['immigration-visa']">출입국 및 비자제도</a>
-          </div>
         </li>
         <li class="nav-item waves-light" mdbWavesEffect>
           <a class="nav-link" [routerLink]="['upload-video']">
@@ -38,7 +31,7 @@
       </ul>
       <ul *ngIf="!authService.isAuthenticated()" class="navbar-nav nav-flex-icons">
         <li class="nav-item waves-light" mdbWavesEffect>
-          <a href="javascript:void(0);" class="nav-link" (click)="openRegisterDialog()">회원가입</a>
+          <a class="nav-link" [routerLink]="['register']">회원가입</a>
         </li>
         <li class="nav-item waves-light" mdbWavesEffect>
           <a href="javascript:void(0);" class="nav-link" (click)="openLoginDialog()">로그인</a>
@@ -81,7 +74,7 @@
         <!-- rgba-purple-light  -->
         <div class="container text-center white-text wow fadeInUp">
           <br><br><br><br><br>
-          <h1>해외취업의 모든 정보</h1>
+          <h1>캐나다 취업의 모든 정보</h1>
           <br>
           <h5>굿바이, 스펙경쟁... 나는 해외로 간다!</h5>
           <h6>경쟁이 치열한 국내 시장에서 눈을 돌리면 전 세계의 놀라운 시장이 보입니다.</h6>
@@ -99,63 +92,7 @@
           <br><br><br><br><br>
           <h1>World News</h1>
           <br>
-          <h5>해외 취업을 위한 전세계의 경제/통상/일자리 현황을 전달해 드립니다.</h5>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="view intro-2" *ngIf="router.url === '/promising-field'">
-    <div class="full-bg-img">
-      <div class="mask flex-center">
-        <!-- rgba-purple-light  -->
-        <div class="container text-center white-text wow fadeInUp">
-          <br><br><br><br><br>
-          <h1>국가 정보</h1>
-          <br>
-          <h5>취업 유망 분야 및 유의사항</h5>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="view intro-2" *ngIf="router.url === '/settlement-guide'">
-    <div class="full-bg-img">
-      <div class="mask flex-center">
-        <!-- rgba-purple-light  -->
-        <div class="container text-center white-text wow fadeInUp">
-          <br><br><br><br><br>
-          <h1>국가 정보</h1>
-          <br>
-          <h5>이주정착 가이드</h5>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="view intro-2" *ngIf="router.url === '/living-condition'">
-    <div class="full-bg-img">
-      <div class="mask flex-center">
-        <!-- rgba-purple-light  -->
-        <div class="container text-center white-text wow fadeInUp">
-          <br><br><br><br><br>
-          <h1>국가 정보</h1>
-          <br>
-          <h5>생활여건</h5>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="view intro-2" *ngIf="router.url === '/immigration-visa'">
-    <div class="full-bg-img">
-      <div class="mask flex-center">
-        <!-- rgba-purple-light  -->
-        <div class="container text-center white-text wow fadeInUp">
-          <br><br><br><br><br>
-          <h1>국가 정보</h1>
-          <br>
-          <h5>출입국 및 비자제도</h5>
+          <h5>전세계의 경제/통상/일자리 현황을 전달해 드립니다.</h5>
         </div>
       </div>
     </div>
@@ -167,7 +104,7 @@
         <!-- rgba-purple-light  -->
         <div class="container text-center white-text wow fadeInUp">
           <br><br><br><br><br>
-          <h1>해외 취업 성공사례를 나눠주세요</h1>
+          <h1>캐나다 취업 성공사례를 나눠주세요</h1>
           <br>
           <h5>열심히 노력했던 그대.. 힘든 과정을 이겨낸 승리자</h5>
           <h6>여러분의 스토리를 앞으로 해외 취업을 꿈꾸는 모든 분들께 공유할 수 있습니다.</h6>

@@ -1,7 +1,7 @@
-import { IVideoPost, INewsDetail, IMainCurrencies, IAllVideos } from './../../shared/interfaces';
+import { IVideoPost, INewsDetail, ICurrencyInfo } from './../../shared/interfaces';
 import { ItemsService } from './../../shared/utils/items.service';
 import { DataService } from './../../shared/services/data.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { DatePipe } from '@angular/common';
@@ -12,29 +12,24 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./home.component.scss'],
   providers: [DatePipe]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
   mainNews: INewsDetail[];
   recommendedVideo: IVideoPost;
-  mainCurrencies: IMainCurrencies;
-  allVideoPosts: IVideoPost[];
-  allVideosByCountry: IAllVideos[];
-  videosUSA: IVideoPost[];
-  videosCanada: IVideoPost[];
-  videosAustralia: IVideoPost[];
+  currencyInfo: ICurrencyInfo;
+  allVideos: IVideoPost[];
+  initial = [{},{}];
   slides: any = [[]];
   backgroundUrl = '../../../assets/images/countries/';
   isNewsLoaded: boolean = false;
   isRecommendedVideoLoaded: boolean = false;
-  isMainCurrenciesLoaded: boolean = false;
-  isVideoPostLoaded: boolean = false;
+  isCurrencyLoaded: boolean = false;
+  isNewVideosLoaded: boolean = false;
   isAllVideosLoaded: boolean = false;
-  // isUSALoaded: boolean = false;
-  // isCanadaLoaded: boolean = false;
-  // isAustraliaLoaded: boolean = false;  
   today: string;
 
   public constructor(private router: Router,
     private datePipe: DatePipe,
+    private renderer: Renderer2,
     public snackBar: MatSnackBar,
     private dataService: DataService,
     private itemService: ItemsService) {
@@ -44,9 +39,20 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.loadMainNews();
     this.loadRecommendedVideo();
-    this.loadMainCurrencies();
-    this.loadNewVideoPosts();
+    this.loadCurrency();
+    this.loadNewVideos();
     this.loadAllVideos();
+    this.slides = this.chunk(this.initial, 1); // 진짜 미스테리.. loadNewVideoPosts에서도 this.slides 대입하고 여기서도 이런식으로해야 비로소 ngAfterViewInit이 작동한다..
+  }
+  
+  ngAfterViewInit() {    
+    let controls = document.querySelector('.controls-top');
+    this.renderer.setStyle(controls.children[0], 'position', 'absolute');
+    this.renderer.setStyle(controls.children[0], 'top', '-30%');
+    this.renderer.setStyle(controls.children[0], 'right', '5%');
+    this.renderer.setStyle(controls.children[1], 'position', 'absolute');
+    this.renderer.setStyle(controls.children[1], 'top', '-30%');
+    this.renderer.setStyle(controls.children[1], 'left', '94%');
   }
 
   loadMainNews() {
@@ -74,7 +80,7 @@ export class HomeComponent implements OnInit {
       .subscribe(res => {
         if (res.status === 200) {
           this.isRecommendedVideoLoaded = true;
-          this.recommendedVideo = this.itemService.getSerialized<IVideoPost>(res.body);   
+          this.recommendedVideo = this.itemService.getSerialized<IVideoPost>(res.body);
         }
       },
         error => {
@@ -86,12 +92,12 @@ export class HomeComponent implements OnInit {
       );
   }
 
-  loadMainCurrencies() {
-    this.dataService.getMainCurrencies()
+  loadCurrency() {
+    this.dataService.getCurrency()
       .subscribe(res => {
         if (res.status === 200) {
-          this.isMainCurrenciesLoaded = true;
-          this.mainCurrencies = this.itemService.getSerialized<IMainCurrencies>(res.body);      
+          this.isCurrencyLoaded = true;
+          this.currencyInfo = this.itemService.getSerialized<ICurrencyInfo>(res.body);
         }
       },
         error => {
@@ -103,13 +109,13 @@ export class HomeComponent implements OnInit {
       );
   }
 
-  loadNewVideoPosts() {
+  loadNewVideos() {
     this.dataService.getVideoPosts()
       .subscribe(res => {
         if (res.status === 200) {
-          this.isVideoPostLoaded = true;
-          this.allVideoPosts = this.itemService.getSerialized<IVideoPost[]>(res.body);
-          this.slides = this.chunk(this.allVideoPosts, 4);
+          this.isNewVideosLoaded = true;
+          let newVideoPosts = this.itemService.getSerialized<IVideoPost[]>(res.body);
+          this.slides = this.chunk(newVideoPosts, 4);         
         }
       },
         error => {
@@ -126,7 +132,7 @@ export class HomeComponent implements OnInit {
       .subscribe(res => {
         if (res.status === 200) {
           this.isAllVideosLoaded = true;
-          this.allVideosByCountry = this.itemService.getSerialized<IAllVideos[]>(res.body);
+          this.allVideos = this.itemService.getSerialized<IVideoPost[]>(res.body);
         }
       },
         error => {
@@ -144,7 +150,7 @@ export class HomeComponent implements OnInit {
       R.push(arr.slice(i, i + chunkSize));
     }
     return R;
-  } 
+  }
 
   onMatCardClick(videoPostId, videoId) {
     this.router.navigate(['content-details', videoPostId, videoId]);
@@ -156,5 +162,9 @@ export class HomeComponent implements OnInit {
 
   onMoreNewsClick() {
     this.router.navigate(['news']);
+  }
+
+  onViewMoreClick() {   
+    this.router.navigate(['search-videos']);
   }
 }

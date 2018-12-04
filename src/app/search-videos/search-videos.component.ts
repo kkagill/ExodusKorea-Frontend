@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ICountry, ICareer, IVideoPost } from '../shared/interfaces';
+import { ICareer, IVideoPost, ICategory } from '../shared/interfaces';
 import { DataService } from '../shared/services/data.service';
 import { ItemsService } from '../shared/utils/items.service';
 import { MatSnackBar } from '@angular/material';
@@ -10,24 +10,21 @@ import { Router } from '@angular/router';
   templateUrl: './search-videos.component.html',
   styleUrls: ['./search-videos.component.scss']
 })
-export class SearchVideosComponent implements OnInit {  
+export class SearchVideosComponent implements OnInit {
   page: number = 1;
-  selectedCountry: ICountry;
+  selectedCategory: ICategory;
   selectedCareer: ICareer;
   all: string = '';
   searchResult: IVideoPost[];
-  countries: ICountry[];
+  categories: ICategory[];
+  careers: ICareer[];
   isSearchResultLoaded: boolean = false;
-  isCountriesLoaded: boolean = false;
+  isCategoriesLoaded: boolean = false;
+  isCareersLoaded: boolean = false;
   backgroundUrl = '../../../assets/images/countries/';
   searchText: string;
-
-  careers: ICareer[] = [
-    { name: '프로그래머' },
-    { name: '간호사' },
-    { name: '바리스타' },
-    { name: '목수' }
-  ];
+  expandCategory: boolean = false;
+  expandCareer: boolean = false;
 
   constructor(private router: Router,
     public snackBar: MatSnackBar,
@@ -35,17 +32,68 @@ export class SearchVideosComponent implements OnInit {
     private itemsService: ItemsService) { }
 
   ngOnInit() {
-    this.all = "initial";
-    this.loadAllCountries();
-    this.loadAllSearchResult();
+    let categoryId = localStorage.getItem('categoryId');
+    let careerId = localStorage.getItem('careerId');
+
+    if (categoryId != null) {
+      localStorage.removeItem('categoryId');
+      this.expandCategory = true;
+      this.loadAllCategories(+categoryId);
+      this.loadAllCareers(0);
+    } else if (careerId != null) {
+      localStorage.removeItem('careerId');
+      this.expandCareer = true;
+      this.loadAllCategories(0);
+      this.loadAllCareers(+careerId);
+    } else if (categoryId == null && careerId == null) {
+      this.all = "initial";
+      this.loadAllCategories(0);
+      this.loadAllCareers(0);
+      this.loadAllSearchResult();
+    }
   }
 
-  loadAllCountries() {
-    this.dataService.getAllCountries()
+  loadAllCategories(categoryId: number) {
+    this.dataService.getAllSearchVideoCategories()
       .subscribe(res => {
         if (res.status === 200) {
-          this.isCountriesLoaded = true;
-          this.countries = this.itemsService.getSerialized<ICountry[]>(res.body.result);
+          this.isCategoriesLoaded = true;
+          this.categories = this.itemsService.getSerialized<ICategory[]>(res.body);
+
+          if (categoryId > 0) {
+            for (let c of this.categories) {
+              if (c.categoryId === categoryId) {
+                this.selectedCategory = c;
+                this.loadSearchResultByCategory(c.categoryId);
+              }
+            }
+          }
+        }
+      },
+        error => {
+          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
+            duration: 60000,
+            panelClass: ['error-snackbar']
+          });
+        }
+      );
+  }
+
+  loadAllCareers(careerId: number) {
+    this.dataService.getAllCareers()
+      .subscribe(res => {
+        if (res.status === 200) {
+          this.isCareersLoaded = true;
+          this.careers = this.itemsService.getSerialized<ICareer[]>(res.body);
+
+          if (careerId > 0) {
+            for (let c of this.careers) {
+              if (c.careerId === careerId) {
+                this.selectedCareer = c;
+                this.loadSearchResultByCareer(c.careerId);
+              }
+            }
+          }
         }
       },
         error => {
@@ -74,18 +122,8 @@ export class SearchVideosComponent implements OnInit {
       );
   }
 
-  onSelectAll() {
-    this.selectedCareer = null;
-    this.selectedCountry = null;
-    this.all = "initial";
-    this.loadAllSearchResult();
-  }
-
-  onSelectCountry(country: ICountry) {
-    this.all = '';
-    this.selectedCareer = null;
-    this.selectedCountry = country;
-    this.dataService.getSearchResultByCountryId(country.countryId)
+  loadSearchResultByCategory(categoryId: number) {
+    this.dataService.getSearchResultByCategory(categoryId)
       .subscribe(res => {
         if (res.status === 200) {
           this.isSearchResultLoaded = true;
@@ -101,13 +139,53 @@ export class SearchVideosComponent implements OnInit {
       );
   }
 
-  onSelectCareer(career: ICareer) {
-    this.all = '';
-    this.selectedCountry = null;
-    this.selectedCareer = career;
+  loadSearchResultByCareer(careerId: number) {
+    this.dataService.getSearchResultByCareer(careerId)
+      .subscribe(res => {
+        if (res.status === 200) {
+          this.isSearchResultLoaded = true;
+          this.searchResult = this.itemsService.getSerialized<IVideoPost[]>(res.body);
+        }
+      },
+        error => {
+          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
+            duration: 60000,
+            panelClass: ['error-snackbar']
+          });
+        }
+      );
   }
 
-  onMatCardClick(videoPostId, videoId) {
+  onSelectAll() {
+    this.selectedCareer = null;
+    this.selectedCategory = null;
+    this.all = "initial";
+    this.expandCategory = false;
+    this.expandCareer = false;
+    this.loadAllSearchResult();
+  }
+
+  onSelectCategory(category: ICategory) {
+    this.all = '';
+    this.selectedCareer = null;
+    this.selectedCategory = category;
+    this.loadSearchResultByCategory(category.categoryId);
+  }
+
+  onSelectCareer(career: ICareer) {
+    this.all = '';
+    this.selectedCategory = null;
+    this.selectedCareer = career;
+    this.loadSearchResultByCareer(career.careerId);
+  }
+
+  onMatCardClick(videoPostId: number, videoId: string, categoryId: number) {
+    if (this.selectedCareer != null) {
+      let serializedCareer = this.itemsService.getSerialized<ICareer>(this.selectedCareer);
+      localStorage.setItem('careerId', serializedCareer.careerId.toString());
+    } else if (this.selectedCategory != null) {
+      localStorage.setItem('categoryId', categoryId.toString());
+    }
     this.router.navigate(['content-details', videoPostId, videoId]);
   }
 }

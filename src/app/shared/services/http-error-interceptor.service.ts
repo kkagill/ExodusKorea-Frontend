@@ -20,7 +20,7 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
       .pipe(
         tap(event => {
           if (event instanceof HttpResponse) {
-            console.log('succeed');
+            //console.log('succeed');
           }
         }, error => {
             console.log(error);

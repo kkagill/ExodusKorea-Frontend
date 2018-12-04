@@ -49,8 +49,8 @@ export class DataService {
       );
   }
 
-  getMainCurrencies(): Observable<any> {
-    return this.http.get(this._baseUrl + `home/main-currencies`, { observe: "response" })
+  getCurrency(): Observable<any> {
+    return this.http.get(this._baseUrl + `home/currency`, { observe: "response" })
       .pipe(
         map(res => {
           return res;
@@ -61,8 +61,20 @@ export class DataService {
       );
   } 
 
-  getAllCountries(): Observable<any> {
-    return this.http.get(this._baseUrl + `searchvideo/all-countries`, { observe: "response" })
+  getAllSearchVideoCategories(): Observable<any> {
+    return this.http.get(this._baseUrl + `searchvideo/all-categories`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  } 
+
+  getAllCareers(): Observable<any> {
+    return this.http.get(this._baseUrl + `searchvideo/all-careers`, { observe: "response" })
       .pipe(
         map(res => {
           return res;
@@ -85,8 +97,8 @@ export class DataService {
       );
   } 
 
-  getSearchResultByCountryId(countryId: number): Observable<any> {
-    return this.http.get(this._baseUrl + `searchvideo/${countryId}/search-result-country`, { observe: "response" })
+  getSearchResultByCategory(categoryId: number): Observable<any> {
+    return this.http.get(this._baseUrl + `searchvideo/${categoryId}/search-result-category`, { observe: "response" })
       .pipe(
         map(res => {
           return res;
@@ -97,8 +109,9 @@ export class DataService {
       );
   }
 
-  getAllPromisingFields(): Observable<any> {
-    return this.http.get(this._baseUrl + `countryinfo/promising-fields`, { observe: "response" })
+  
+  getSearchResultByCareer(careerId: number): Observable<any> {
+    return this.http.get(this._baseUrl + `searchvideo/${careerId}/search-result-career`, { observe: "response" })
       .pipe(
         map(res => {
           return res;
@@ -109,8 +122,8 @@ export class DataService {
       );
   }
 
-  getAllSettlementGuides(): Observable<any> {
-    return this.http.get(this._baseUrl + `countryinfo/settlement-guides`, { observe: "response" })
+  getCountryInfoCanada(): Observable<any> {
+    return this.http.get(this._baseUrl + `countryinfo/country-info-canada`, { observe: "response" })
       .pipe(
         map(res => {
           return res;
@@ -121,20 +134,8 @@ export class DataService {
       );
   }
 
-  getAllLivingConditions(): Observable<any> {
-    return this.http.get(this._baseUrl + `countryinfo/living-conditions`, { observe: "response" })
-      .pipe(
-        map(res => {
-          return res;
-        }),
-        catchError(err => {
-          return throwError(err);
-        })
-      );
-  }
-
-  getAllImmigrationVisa(): Observable<any> {
-    return this.http.get(this._baseUrl + `countryinfo/immigration-visas`, { observe: "response" })
+  getAllCategories(): Observable<any> {
+    return this.http.get(this._baseUrl + `news/all-categories`, { observe: "response" })
       .pipe(
         map(res => {
           return res;

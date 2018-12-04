@@ -10,6 +10,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MaterialModule } from '../shared/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   imports: [
@@ -25,10 +26,12 @@ import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
     HomeComponent,
     HeaderComponent,
     ErrorComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    FooterComponent
   ],
   exports: [  
-    HeaderComponent
+    HeaderComponent,
+    FooterComponent
   ]
 })
 export class CoreModule { }

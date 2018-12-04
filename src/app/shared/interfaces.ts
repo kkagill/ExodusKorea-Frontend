@@ -5,41 +5,14 @@ export interface IApplicationUser {
     lockoutEnd: Date;
 }
 
-export interface ICountry {
-    countryId: number;
-    nameKR: string;
-}
-
 export interface ICareer {
+    careerId: number;
     name;
 }
 
-export interface IMainCurrencies {
-    usd: number;
-    cad: number;
-    aud: number;
-    nzd: number;
-    today: Date;
-}
-
-export interface IPromisingField {
-    content: string;   
-    country: string;
-}
-
-export interface ISettlementGuide {
-    content: string;   
-    country: string;
-}
-
-export interface ILivingCondition {
-    content: string;   
-    country: string;
-}
-
-export interface IImmigrationVisa {
-    content: string;   
-    country: string;
+export interface ICategory {
+    categoryId: number;
+    name;
 }
 
 export interface INews {
@@ -64,11 +37,6 @@ export interface INewsDetail {
     createdDate: string;
 }
 
-export interface IAllVideos {
-    countryKR: string;
-    videoPosts: IVideoPost[];
-}
-
 export interface IVideoPost {
     videoPostId: number;
     uploader: string;
@@ -76,8 +44,10 @@ export interface IVideoPost {
     title: string;
     likes: number;
     youTubeVideoId: string;
+    categoryId: number;
     countryEN: string;
     countryKR: string;  
+    category: string;  
 }
 
 export interface ICountryInfo {
@@ -89,6 +59,14 @@ export interface ICountryInfo {
     perCapitaGDP: number;
     currency: number;   
     countryLink: string;
+}
+
+export interface ICountryInfoKOTRA {
+    promosingField: string;
+    settlementGuide: string;
+    livingCondition: string;
+    immigrationVisa: string;
+    countryId: number;
 }
 
 export interface IPriceInfo {
