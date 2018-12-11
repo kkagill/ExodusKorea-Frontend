@@ -29,7 +29,7 @@ export class NewsDetailComponent implements OnInit {
     private itemsService: ItemsService) { }
 
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe((params: ParamMap) => {     
+    this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
       this.newsDetailId = params.get('id1');
       this.newsId = params.get('id2');
       this.index = params.get('id3');
@@ -39,7 +39,7 @@ export class NewsDetailComponent implements OnInit {
       this.loadAllCategories(this.newsId);
       this.updateViewsCount();
       this.loadPopularNews();
-    });    
+    });
   }
 
   loadAllCategories(newsId: number) {
@@ -52,8 +52,8 @@ export class NewsDetailComponent implements OnInit {
         }
       },
         error => {
-          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-            duration: 60000,
+          this.snackBar.open('정보를 불러오는 과정에서 오류가 났습니다.', '', {
+            duration: 5000,
             panelClass: ['error-snackbar']
           });
         }
@@ -68,8 +68,8 @@ export class NewsDetailComponent implements OnInit {
         }
       },
         error => {
-          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-            duration: 60000,
+          this.snackBar.open('조회수를 업데이트하는 과정에서 오류가 났습니다.', '', {
+            duration: 5000,
             panelClass: ['error-snackbar']
           });
         }
@@ -85,8 +85,8 @@ export class NewsDetailComponent implements OnInit {
         }
       },
         error => {
-          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-            duration: 60000,
+          this.snackBar.open('정보를 불러오는 과정에서 오류가 났습니다.', '', {
+            duration: 5000,
             panelClass: ['error-snackbar']
           });
         }
@@ -98,12 +98,12 @@ export class NewsDetailComponent implements OnInit {
       .subscribe(res => {
         if (res.status === 200) {
           this.isPopularNewsLoaded = true;
-          this.popularNews = this.itemsService.getSerialized<INewsDetail[]>(res.body);        
+          this.popularNews = this.itemsService.getSerialized<INewsDetail[]>(res.body);
         }
       },
         error => {
-          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-            duration: 60000,
+          this.snackBar.open('정보를 불러오는 과정에서 오류가 났습니다.', '', {
+            duration: 5000,
             panelClass: ['error-snackbar']
           });
         }
@@ -115,11 +115,11 @@ export class NewsDetailComponent implements OnInit {
     this.router.navigate(['news']);
   }
 
-  onSelectCategory(category: ICategory) {  
+  onSelectCategory(category: ICategory) {
     this.loadNewsList(category.categoryId);
-  }  
+  }
 
-  onPopularNewsClick(newsDetailId: number, newsId: number) {   
+  onPopularNewsClick(newsDetailId: number, newsId: number) {
     this.router.navigate(['news-detail', newsDetailId, newsId, 0]);
   }
 

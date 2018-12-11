@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   recommendedVideo: IVideoPost;
   currencyInfo: ICurrencyInfo;
   allVideos: IVideoPost[];
-  initial = [{},{}];
+  initial = [{}, {}];
   slides: any = [[]];
   backgroundUrl = '../../../assets/images/countries/';
   isNewsLoaded: boolean = false;
@@ -44,8 +44,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.loadAllVideos();
     this.slides = this.chunk(this.initial, 1); // 진짜 미스테리.. loadNewVideoPosts에서도 this.slides 대입하고 여기서도 이런식으로해야 비로소 ngAfterViewInit이 작동한다..
   }
-  
-  ngAfterViewInit() {    
+
+  ngAfterViewInit() {
     let controls = document.querySelector('.controls-top');
     this.renderer.setStyle(controls.children[0], 'position', 'absolute');
     this.renderer.setStyle(controls.children[0], 'top', '-30%');
@@ -67,8 +67,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
         }
       },
         error => {
-          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-            duration: 60000,
+          this.snackBar.open('정보를 불러오는 과정에서 오류가 났습니다.', '', {
+            duration: 5000,
             panelClass: ['error-snackbar']
           });
         }
@@ -84,8 +84,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
         }
       },
         error => {
-          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-            duration: 60000,
+          this.snackBar.open('정보를 불러오는 과정에서 오류가 났습니다.', '', {
+            duration: 5000,
             panelClass: ['error-snackbar']
           });
         }
@@ -101,8 +101,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
         }
       },
         error => {
-          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-            duration: 60000,
+          this.snackBar.open('정보를 불러오는 과정에서 오류가 났습니다.', '', {
+            duration: 5000,
             panelClass: ['error-snackbar']
           });
         }
@@ -115,12 +115,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
         if (res.status === 200) {
           this.isNewVideosLoaded = true;
           let newVideoPosts = this.itemService.getSerialized<IVideoPost[]>(res.body);
-          this.slides = this.chunk(newVideoPosts, 4);         
+          this.slides = this.chunk(newVideoPosts, 4);
         }
       },
         error => {
-          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-            duration: 60000,
+          this.snackBar.open('정보를 불러오는 과정에서 오류가 났습니다.', '', {
+            duration: 5000,
             panelClass: ['error-snackbar']
           });
         }
@@ -136,8 +136,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
         }
       },
         error => {
-          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-            duration: 60000,
+          this.snackBar.open('정보를 불러오는 과정에서 오류가 났습니다.', '', {
+            duration: 5000,
             panelClass: ['error-snackbar']
           });
         }
@@ -164,7 +164,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.router.navigate(['news']);
   }
 
-  onViewMoreClick() {   
+  onViewMoreClick() {
     this.router.navigate(['search-videos']);
   }
 }

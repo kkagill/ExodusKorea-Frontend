@@ -53,8 +53,8 @@ export class AddMinimumColDialog implements OnInit {
         }
       },
         error => {
-          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-            duration: 60000,
+          this.snackBar.open('정보를 불러오는 과정에서 오류가 났습니다.', '', {
+            duration: 5000,
             panelClass: ['error-snackbar']
           });
         }
@@ -104,7 +104,7 @@ export class AddMinimumColDialog implements OnInit {
           this.isSubmitted = true;
           this.onCancelClick();
 
-          setTimeout(() => {           
+          setTimeout(() => {
             this.snackBar.open('소중한 정보 감사합니다.', '', {
               duration: 2000,
               panelClass: ['green-snackbar']
@@ -114,28 +114,6 @@ export class AddMinimumColDialog implements OnInit {
       },
         error => {
           this.isSubmitted = true;
-          if (error.status === 401 && this.authService.isTokenExpired()) {
-            this.snackBar.open('세션이 만료됐습니다. 다시 로그인을 해주세요.', '', {
-              duration: 10000,
-              panelClass: ['warning-snackbar']
-            });
-            this.authService.logout();
-            const dialogRef = this.dialog.open(LoginComponent, {
-              width: '410px',
-              data: { email: this.email, password: this.password }
-            });
-            dialogRef.afterClosed().subscribe(result => {
-              if (this.authService.isAuthenticated()) {
-                this.dataSharingService.loggedIn.next(true); // pass data to header.component.ts
-              }
-            });
-          }
-          else {
-            this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-              duration: 60000,
-              panelClass: ['error-snackbar']
-            });
-          }
         }
       );
   }

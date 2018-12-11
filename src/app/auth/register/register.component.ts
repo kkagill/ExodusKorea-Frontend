@@ -37,27 +37,16 @@ export class RegisterComponent {
     // @Inject(MAT_DIALOG_DATA) public data: RegisterDialogData,
     public snackBar: MatSnackBar,
    ) {
-    this.emailFormControl = new FormControl('', [
-      Validators.required,
-      Validators.email,
-    ]);
-    this.nickNameFormControl = new FormControl('', [
-      Validators.required,
-    ]);
-    this.passwordFormControl = new FormControl('', [
-      Validators.required,
-      Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$")
-    ]);
-    this.confirmPasswordFormControl = new FormControl('', [
-      Validators.required,
-      Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$")
-    ]);
+    this.emailFormControl = new FormControl('', [Validators.email]);
+    this.nickNameFormControl = new FormControl('', []);
+    this.passwordFormControl = new FormControl('', [Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$")]);
+    this.confirmPasswordFormControl = new FormControl('', [Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$")]);
     this.registerForm = new FormGroup({
       email: this.emailFormControl,
       nickName: this.nickNameFormControl,
       password: this.passwordFormControl,
       confirmPassword: this.confirmPasswordFormControl,
-      recaptcha: new FormControl(null, Validators.required)
+      recaptcha: new FormControl(null)
     });
   }
 
@@ -76,7 +65,11 @@ export class RegisterComponent {
   }
 
   onSubmit() {
-    if (this.registerForm.invalid) {
+    if (this.registerForm.invalid || 
+      this.registerForm.value.email === '' || 
+      this.registerForm.value.nickName === '' ||
+      this.registerForm.value.password === '' ||
+      this.registerForm.value.confirmPassword === '') {
       return;
     }
     if (!this.isCaptchaPassed) {

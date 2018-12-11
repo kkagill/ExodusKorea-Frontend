@@ -84,7 +84,7 @@ export class ContentDetailsComponent implements OnInit {
       this.loadMinimumCoLInfo();
       this.loadCurrencyInfo();
       this.loadPostLikes();
-      this.loadVideoComments();     
+      this.loadVideoComments();
     });
   }
 
@@ -95,14 +95,7 @@ export class ContentDetailsComponent implements OnInit {
           this.isCountryInfoLoaded = true;
           this.countryInfo = this.itemsService.getSerialized<ICountryInfo>(res.body);
         }
-      },
-        error => {
-          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-            duration: 60000,
-            panelClass: ['error-snackbar']
-          });
-        }
-      );
+      });
   }
 
   loadSalaryInfo() {
@@ -112,14 +105,7 @@ export class ContentDetailsComponent implements OnInit {
           this.isSalaryInfoLoaded = true;
           this.salaryInfo = this.itemsService.getSerialized<ISalaryInfo>(res.body);
         }
-      },
-        error => {
-          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-            duration: 60000,
-            panelClass: ['error-snackbar']
-          });
-        }
-      );
+      });
   }
 
   loadPriceInfo() {
@@ -129,14 +115,7 @@ export class ContentDetailsComponent implements OnInit {
           this.isPriceInfoLoaded = true;
           this.priceInfo = this.itemsService.getSerialized<IPriceInfo>(res.body);
         }
-      },
-        error => {
-          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-            duration: 60000,
-            panelClass: ['error-snackbar']
-          });
-        }
-      );
+      });
   }
 
   loadMinimumCoLInfo() {
@@ -146,14 +125,7 @@ export class ContentDetailsComponent implements OnInit {
           this.isMinimumCoLInfoLoaded = true;
           this.minimumCoLInfo = this.itemsService.getSerialized<IMinimumCoLInfo>(res.body);
         }
-      },
-        error => {
-          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-            duration: 60000,
-            panelClass: ['error-snackbar']
-          });
-        }
-      );
+      });
   }
 
   loadCurrencyInfo() {
@@ -163,14 +135,7 @@ export class ContentDetailsComponent implements OnInit {
           this.isCurrencyInfoLoaded = true;
           this.currencyInfo = this.itemsService.getSerialized<ICurrencyInfo>(res.body);
         }
-      },
-        error => {
-          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-            duration: 60000,
-            panelClass: ['error-snackbar']
-          });
-        }
-      );
+      });
   }
 
   loadPostLikes() {
@@ -180,14 +145,7 @@ export class ContentDetailsComponent implements OnInit {
           this.isYouTubeLikesLoaded = true;
           this.likes = this.itemsService.getSerialized<string>(res.body);
         }
-      },
-        error => {
-          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-            duration: 60000,
-            panelClass: ['error-snackbar']
-          });
-        }
-      );
+      });
   }
 
   loadVideoComments() {
@@ -197,14 +155,7 @@ export class ContentDetailsComponent implements OnInit {
           this.isVideoCommentsLoaded = true;
           this.videoComments = this.itemsService.getSerialized<IVideoComment[]>(res.body);
         }
-      },
-        error => {
-          this.isVideoCommentsLoaded = true;
-          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-            duration: 60000,
-            panelClass: ['error-snackbar']
-          });
-        })
+      });
   }
 
   onClickCommentBox() {
@@ -249,28 +200,6 @@ export class ContentDetailsComponent implements OnInit {
       },
         error => {
           this.isVideoCommentsLoaded = true;
-          if (error.status === 401 && this.authService.isTokenExpired()) {
-            this.snackBar.open('세션이 만료됐습니다. 다시 로그인을 해주세요.', '', {
-              duration: 10000,
-              panelClass: ['warning-snackbar']
-            });
-            this.authService.logout();
-            const dialogRef = this.dialog.open(LoginComponent, {
-              width: '410px',
-              data: { email: this.email, password: this.password }
-            });
-            dialogRef.afterClosed().subscribe(result => {
-              if (this.authService.isAuthenticated()) {
-                this.dataSharingService.loggedIn.next(true); // pass data to header.component.ts
-              }
-            });
-          }
-          else {
-            this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-              duration: 60000,
-              panelClass: ['error-snackbar']
-            });
-          }
         }
       );
   }
@@ -311,54 +240,9 @@ export class ContentDetailsComponent implements OnInit {
                   });
                 }, 500);
               }
-            },
-              error => {
-                if (error.status === 401 && this.authService.isTokenExpired()) {
-                  this.snackBar.open('세션이 만료됐습니다. 다시 로그인을 해주세요.', '', {
-                    duration: 10000,
-                    panelClass: ['warning-snackbar']
-                  });
-                  this.authService.logout();
-                  this.dialog.open(LoginComponent, {
-                    width: '410px',
-                    data: { email: this.email, password: this.password }
-                  });
-                }
-                else {
-                  this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-                    duration: 60000,
-                    panelClass: ['error-snackbar']
-                  });
-                }
-              }
-            );
+            });
         }
-      },
-        error => {
-          if (error.status === 401 && this.authService.isTokenExpired()) {
-            this.snackBar.open('세션이 만료됐습니다. 다시 로그인을 해주세요.', '', {
-              duration: 10000,
-              panelClass: ['warning-snackbar']
-            });
-            this.authService.logout();
-            const dialogRef = this.dialog.open(LoginComponent, {
-              width: '410px',
-              data: { email: this.email, password: this.password }
-            });
-            dialogRef.afterClosed().subscribe(result => {
-              if (this.authService.isAuthenticated()) {
-                this.dataSharingService.loggedIn.next(true); // pass data to header.component.ts
-              }
-            });
-          }
-          else {
-            this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-              duration: 60000,
-              panelClass: ['error-snackbar']
-            });
-          }
-        }
-      );
+      });
   }
 
   onSubmitReplyReply(videoCommentId: number, authorDisplayName: string, userId: string) {
@@ -398,54 +282,9 @@ export class ContentDetailsComponent implements OnInit {
                   });
                 }, 500);
               }
-            },
-              error => {
-                if (error.status === 401 && this.authService.isTokenExpired()) {
-                  this.snackBar.open('세션이 만료됐습니다. 다시 로그인을 해주세요.', '', {
-                    duration: 10000,
-                    panelClass: ['warning-snackbar']
-                  });
-                  this.authService.logout();
-                  this.dialog.open(LoginComponent, {
-                    width: '410px',
-                    data: { email: this.email, password: this.password }
-                  });
-                }
-                else {
-                  this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-                    duration: 60000,
-                    panelClass: ['error-snackbar']
-                  });
-                }
-              }
-            );
+            });
         }
-      },
-        error => {
-          if (error.status === 401 && this.authService.isTokenExpired()) {
-            this.snackBar.open('세션이 만료됐습니다. 다시 로그인을 해주세요.', '', {
-              duration: 10000,
-              panelClass: ['warning-snackbar']
-            });
-            this.authService.logout();
-            const dialogRef = this.dialog.open(LoginComponent, {
-              width: '410px',
-              data: { email: this.email, password: this.password }
-            });
-            dialogRef.afterClosed().subscribe(result => {
-              if (this.authService.isAuthenticated()) {
-                this.dataSharingService.loggedIn.next(true); // pass data to header.component.ts
-              }
-            });
-          }
-          else {
-            this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-              duration: 60000,
-              panelClass: ['error-snackbar']
-            });
-          }
-        }
-      );
+      });
   }
 
   onClickCommentReply(videoCommentId: number) {
@@ -497,62 +336,16 @@ export class ContentDetailsComponent implements OnInit {
                           if (res.status === 200) {
                             this.likes = this.itemsService.getSerialized<string>(res.body);
                           }
-                        },
-                          error => {
-                            this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-                              duration: 60000,
-                              panelClass: ['error-snackbar']
-                            });
-                          }
-                        );
+                        });
                     }
-                  },
-                    error => {
-                      this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-                        duration: 60000,
-                        panelClass: ['error-snackbar']
-                      });
-                    }
-                  );
+                  });
               }
-            },
-              error => {
-                this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-                  duration: 60000,
-                  panelClass: ['error-snackbar']
-                });
-              }
-            );
+            });
         }
-      },
-        error => {
-          if (error.status === 401 && this.authService.isTokenExpired()) {
-            this.snackBar.open('세션이 만료됐습니다. 다시 로그인을 해주세요.', '', {
-              duration: 10000,
-              panelClass: ['warning-snackbar']
-            });
-            this.authService.logout();
-            const dialogRef = this.dialog.open(LoginComponent, {
-              width: '410px',
-              data: { email: this.email, password: this.password }
-            });
-            dialogRef.afterClosed().subscribe(result => {
-              if (this.authService.isAuthenticated()) {
-                this.dataSharingService.loggedIn.next(true); // pass data to header.component.ts
-              }
-            });
-          }
-          else if (error.status === 404) {
-            this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-              duration: 60000,
-              panelClass: ['error-snackbar']
-            });
-          }
-        }
-      );
+      });
   }
 
-  onClickCommentLikes(videoCommentId: number) {    
+  onClickCommentLikes(videoCommentId: number) {
     if (!this.authService.isAuthenticated()) {
       const dialogRef = this.dialog.open(LoginComponent, {
         width: '410px',
@@ -585,59 +378,13 @@ export class ContentDetailsComponent implements OnInit {
                             let index = this.videoComments.indexOf(target);
                             this.videoComments[index] = res.body;
                           }
-                        },
-                          error => {
-                            this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-                              duration: 60000,
-                              panelClass: ['error-snackbar']
-                            });
-                          }
-                        );
+                        });
                     }
-                  },
-                    error => {
-                      this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-                        duration: 60000,
-                        panelClass: ['error-snackbar']
-                      });
-                    }
-                  );
+                  });
               }
-            },
-              error => {
-                this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-                  duration: 60000,
-                  panelClass: ['error-snackbar']
-                });
-              }
-            );
+            });
         }
-      },
-        error => {
-          if (error.status === 401 && this.authService.isTokenExpired()) {
-            this.snackBar.open('세션이 만료됐습니다. 다시 로그인을 해주세요.', '', {
-              duration: 10000,
-              panelClass: ['warning-snackbar']
-            });
-            this.authService.logout();
-            const dialogRef = this.dialog.open(LoginComponent, {
-              width: '410px',
-              data: { email: this.email, password: this.password }
-            });
-            dialogRef.afterClosed().subscribe(result => {
-              if (this.authService.isAuthenticated()) {
-                this.dataSharingService.loggedIn.next(true); // pass data to header.component.ts
-              }
-            });
-          }
-          else if (error.status === 404) {
-            this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-              duration: 60000,
-              panelClass: ['error-snackbar']
-            });
-          }
-        }
-      );
+      });
   }
 
   onClickCommentReplyLikes(videoCommentReplyId: number) {
@@ -677,59 +424,13 @@ export class ContentDetailsComponent implements OnInit {
                             let indexReply = replies.indexOf(targetReply);
                             replies[indexReply] = res.body;
                           }
-                        },
-                          error => {
-                            this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-                              duration: 60000,
-                              panelClass: ['error-snackbar']
-                            });
-                          }
-                        );
+                        });
                     }
-                  },
-                    error => {
-                      this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-                        duration: 60000,
-                        panelClass: ['error-snackbar']
-                      });
-                    }
-                  );
+                  });
               }
-            },
-              error => {
-                this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-                  duration: 60000,
-                  panelClass: ['error-snackbar']
-                });
-              }
-            );
+            });
         }
-      },
-        error => {
-          if (error.status === 401 && this.authService.isTokenExpired()) {
-            this.snackBar.open('세션이 만료됐습니다. 다시 로그인을 해주세요.', '', {
-              duration: 10000,
-              panelClass: ['warning-snackbar']
-            });
-            this.authService.logout();
-            const dialogRef = this.dialog.open(LoginComponent, {
-              width: '410px',
-              data: { email: this.email, password: this.password }
-            });
-            dialogRef.afterClosed().subscribe(result => {
-              if (this.authService.isAuthenticated()) {
-                this.dataSharingService.loggedIn.next(true); // pass data to header.component.ts
-              }
-            });
-          }
-          else if (error.status === 404) {
-            this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-              duration: 60000,
-              panelClass: ['error-snackbar']
-            });
-          }
-        }
-      );
+      });
   }
 
   findCommentIndexToUpdate(videoComment) {
@@ -777,28 +478,6 @@ export class ContentDetailsComponent implements OnInit {
           },
             error => {
               this.isVideoCommentsLoaded = true;
-              if (error.status === 401 && this.authService.isTokenExpired()) {
-                this.snackBar.open('세션이 만료됐습니다. 다시 로그인을 해주세요.', '', {
-                  duration: 10000,
-                  panelClass: ['warning-snackbar']
-                });
-                this.authService.logout();
-                const dialogRef = this.dialog.open(LoginComponent, {
-                  width: '410px',
-                  data: { email: this.email, password: this.password }
-                });
-                dialogRef.afterClosed().subscribe(result => {
-                  if (this.authService.isAuthenticated()) {
-                    this.dataSharingService.loggedIn.next(true); // pass data to header.component.ts
-                  }
-                });
-              }
-              else {
-                this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-                  duration: 60000,
-                  panelClass: ['error-snackbar']
-                });
-              }
             }
           );
       }
@@ -845,28 +524,6 @@ export class ContentDetailsComponent implements OnInit {
           },
             error => {
               this.isVideoCommentsLoaded = true;
-              if (error.status === 401 && this.authService.isTokenExpired()) {
-                this.snackBar.open('세션이 만료됐습니다. 다시 로그인을 해주세요.', '', {
-                  duration: 10000,
-                  panelClass: ['warning-snackbar']
-                });
-                this.authService.logout();
-                const dialogRef = this.dialog.open(LoginComponent, {
-                  width: '410px',
-                  data: { email: this.email, password: this.password }
-                });
-                dialogRef.afterClosed().subscribe(result => {
-                  if (this.authService.isAuthenticated()) {
-                    this.dataSharingService.loggedIn.next(true); // pass data to header.component.ts
-                  }
-                });
-              }
-              else {
-                this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-                  duration: 60000,
-                  panelClass: ['error-snackbar']
-                });
-              }
             }
           );
       }

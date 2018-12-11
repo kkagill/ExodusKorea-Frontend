@@ -1,3 +1,4 @@
+import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UploadVideoComponent } from './upload-video/upload-video.component';
 import { ContentDetailsComponent } from './content-details/content-details.component';
 import { Routes, RouterModule } from '@angular/router'; 
@@ -18,6 +19,7 @@ const routes: Routes = [
     { path: 'news-detail/:id1/:id2/:id3', component: NewsDetailComponent },
     { path: 'country-info', component: CountryInfoComponent },
     { path: 'upload-video', component: UploadVideoComponent },
+    { path: 'user-profile', component: UserProfileComponent },
     { path: 'error', component: ErrorComponent },
     { path: '**', component: NotFoundComponent }    
 ];

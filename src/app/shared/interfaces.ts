@@ -221,6 +221,12 @@ export interface Pagination {
     TotalPages: number;
 }
 
+export interface LoginResponse {
+    access_token : string;
+    refresh_token : string;
+    expires_in : number;
+}
+
 export class PaginatedResult<T> {
     result :  T;
     pagination : Pagination;

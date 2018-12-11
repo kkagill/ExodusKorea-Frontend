@@ -71,8 +71,8 @@ export class SearchVideosComponent implements OnInit {
         }
       },
         error => {
-          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-            duration: 60000,
+          this.snackBar.open('정보를 불러오는 과정에서 오류가 났습니다.', '', {
+            duration: 5000,
             panelClass: ['error-snackbar']
           });
         }
@@ -97,8 +97,8 @@ export class SearchVideosComponent implements OnInit {
         }
       },
         error => {
-          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-            duration: 60000,
+          this.snackBar.open('정보를 불러오는 과정에서 오류가 났습니다.', '', {
+            duration: 5000,
             panelClass: ['error-snackbar']
           });
         }
@@ -114,8 +114,8 @@ export class SearchVideosComponent implements OnInit {
         }
       },
         error => {
-          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-            duration: 60000,
+          this.snackBar.open('정보를 불러오는 과정에서 오류가 났습니다.', '', {
+            duration: 5000,
             panelClass: ['error-snackbar']
           });
         }
@@ -131,8 +131,8 @@ export class SearchVideosComponent implements OnInit {
         }
       },
         error => {
-          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-            duration: 60000,
+          this.snackBar.open('정보를 불러오는 과정에서 오류가 났습니다.', '', {
+            duration: 5000,
             panelClass: ['error-snackbar']
           });
         }
@@ -148,8 +148,8 @@ export class SearchVideosComponent implements OnInit {
         }
       },
         error => {
-          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-            duration: 60000,
+          this.snackBar.open('정보를 불러오는 과정에서 오류가 났습니다.', '', {
+            duration: 5000,
             panelClass: ['error-snackbar']
           });
         }

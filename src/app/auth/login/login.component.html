@@ -12,17 +12,11 @@
         <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
           유효한 이메일 주소를 입력해주세요.
         </mat-error>
-        <mat-error *ngIf="emailFormControl.hasError('required')">
-          작성이 필요한 필드입니다.
-        </mat-error>
       </mat-form-field>
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>비밀번호</mat-label>
         <input matInput type="password" placeholder="비밀번호" formControlName="password" [formControl]="passwordFormControl"
           [errorStateMatcher]="matcher" />
-        <mat-error *ngIf="passwordFormControl.hasError('required')">
-          작성이 필요한 필드입니다.
-        </mat-error>
       </mat-form-field>
       <a href="javascript:void(0);" (click)="goToForgotPwd()" class="remove-underline">비밀번호를 잊으셨나요?</a>
     </mat-card-content>

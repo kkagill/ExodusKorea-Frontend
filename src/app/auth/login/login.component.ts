@@ -31,13 +31,8 @@ export class LoginComponent {
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<LoginComponent>,
     @Inject(MAT_DIALOG_DATA) public data: LoginDialogData) {
-    this.emailFormControl = new FormControl('', [
-      Validators.required,
-      Validators.email,
-    ]);
-    this.passwordFormControl = new FormControl('', [
-      Validators.required
-    ]);
+    this.emailFormControl = new FormControl('', [Validators.email]);
+    this.passwordFormControl = new FormControl('', []);
     this.loginForm = new FormGroup({
       email: this.emailFormControl,
       password: this.passwordFormControl,
@@ -45,7 +40,7 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    if (this.loginForm.invalid) {
+    if (this.loginForm.invalid || this.loginForm.value.email === '' || this.loginForm.value.password === '') {
       return;
     }
     this.spinner.show();

@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { map, tap, catchError } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { ConfigService } from '../utils/config.service';
 import { throwError } from 'rxjs';
 import { JwtHelper } from 'angular2-jwt';
@@ -17,17 +17,22 @@ export class AuthService {
     this._baseAuthUrl = this.configService.getAuthURI();
   }
 
-  jwtHelper: JwtHelper = new JwtHelper();
+  jwtHelper: JwtHelper = new JwtHelper(); 
 
   login(email: string, password: string): Observable<boolean> {
-    const body = `username=${email}&password=${password}&grant_type=password`;
-    const header = { 'Content-Type': 'application/x-www-form-urlencoded' };
+    const body = new HttpParams()
+      .set('username', email)
+      .set('password', password)
+      .set('grant_type', "password")
+      .set('scope', "offline_access");
+    const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
 
-    return this.http.post<any>(this._baseAuthUrl + 'connect/token', body, { headers: header })
+    return this.http.post<any>(this._baseAuthUrl + 'connect/token', body, { headers })
       .pipe(
         map(res => {
-          if (res && res.access_token) {
-            localStorage.setItem('access_token', res.access_token);
+          if (res) {
+            this.setAccessToken(res.access_token);
+            this.setRefreshToken(res.refresh_token);
             return true;
           }
         }),
@@ -36,6 +41,27 @@ export class AuthService {
         })
       );
   }
+
+  refresh(): Observable<any> {
+    const body = new HttpParams()
+      .set('grant_type', "refresh_token")
+      .set('scope', "offline_access")
+      .set('refresh_token', this.getRefreshToken());
+    const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+
+    return this.http.post<any>(this._baseAuthUrl + 'connect/token', body, { headers })
+      .pipe(
+        map(res => {
+          if (res) {
+            this.setAccessToken(res.access_token);
+            return res;
+          }
+        }),
+        catchError(err => {       
+          return throwError(err);
+        })
+      );
+  } 
 
   forgotPassword(body: any): Observable<any> {
     return this.http.post<any>(this._baseUrl + 'account/forgot-password', body, { observe: "response" })
@@ -87,27 +113,49 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
   }
 
-  getToken() {
-    return localStorage.getItem('access_token');   
+  setAccessToken(accessToken: string) {
+    if (!accessToken) {
+      localStorage.removeItem('access_token');
+    } else {
+      localStorage.setItem('access_token', accessToken);
+    }
+  }
+
+  setRefreshToken(refreshToken: string) {
+    if (!refreshToken) {
+      localStorage.removeItem('refresh_token');
+    } else {
+      localStorage.setItem('refresh_token', refreshToken);
+    }
+  }
+
+  getAccessToken() {
+    return localStorage.getItem('access_token');
+  }
+
+  getRefreshToken() {
+    return localStorage.getItem('refresh_token');
   }
 
   isAuthenticated() {
-    return !!this.getToken();
-  } 
+    return !!this.getAccessToken();
+  }
 
-  decodeToken() {    
-    return this.jwtHelper.decodeToken(this.getToken());       
+  decodeToken() {
+    return this.jwtHelper.decodeToken(this.getAccessToken());
   }
 
   isTokenExpired() {
-    return this.jwtHelper.isTokenExpired(this.getToken());
+    return this.jwtHelper.isTokenExpired(this.getAccessToken());
   }
-  
+
   getUserId() {
     return this.decodeToken().sub;
   }
+
   // isAdmin() {
   //     return this.useJwtHelper().role == 'Admin' ? true : false;
   // }

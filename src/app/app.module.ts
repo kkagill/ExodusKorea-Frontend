@@ -2,7 +2,7 @@ import { MaterialModule } from './shared/material.module';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { JwtModule } from '@auth0/angular-jwt';
+import { JwtInterceptor, JwtModule } from '@auth0/angular-jwt';
 import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
 import { AuthModule } from './auth/auth.module';
@@ -39,6 +39,7 @@ import { NewsDetailComponent } from './news-detail/news-detail.component';
 import { SafeHtmlPipe } from './shared/pipes/safe-html.pipe';
 import { SearchVideosComponent } from './search-videos/search-videos.component';
 import { CountryInfoComponent } from './country-info/country-info.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -59,7 +60,8 @@ export function tokenGetter() {
     NewsDetailComponent,
     SafeHtmlPipe,
     SearchVideosComponent,
-    CountryInfoComponent
+    CountryInfoComponent,
+    UserProfileComponent
   ],
   entryComponents: [
     DeleteCommentDialog,
@@ -99,6 +101,7 @@ export function tokenGetter() {
   providers: [
     Title,  
     AuthService,
+    JwtInterceptor, // Providing JwtInterceptor allow to inject JwtInterceptor manually into RefreshTokenInterceptor    
     DataService,
     ItemsService,
     ConfigService,
@@ -106,6 +109,7 @@ export function tokenGetter() {
     MDBSpinningPreloader,
     DataSharingService,
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptorService, multi: true },
+    { provide: HTTP_INTERCEPTORS, useExisting: JwtInterceptor, multi: true },
     { provide: RECAPTCHA_LANGUAGE, useValue: 'ko' }
     // { provide: ErrorHandler, useClass: GlobalErrorHandlerService }
   ],

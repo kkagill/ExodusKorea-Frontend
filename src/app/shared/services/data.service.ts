@@ -371,6 +371,7 @@ export class DataService {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('access_token')
     };
+    
     return this.http.get<any>(this._baseUrl + 'carddetail/notifications-for-user', { headers: header, observe: "response" })
       .pipe(
         map(res => {
@@ -430,6 +431,22 @@ export class DataService {
       );
   }  
 
+  changePassword(body: any): Observable<any> {
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+    };
+    return this.http.post<any>(this._baseUrl + 'account/change-password', body, { headers: header, observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+  
   addNewComment(body: any): Observable<any> {
     const header = {
       'Content-Type': 'application/json',
@@ -632,7 +649,7 @@ export class DataService {
           return throwError(err);
         })
       );
-  }
+  }   
 
   deleteComment(id: number): Observable<any> {  
     const header = {

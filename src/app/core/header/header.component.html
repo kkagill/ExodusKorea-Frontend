@@ -60,7 +60,7 @@
             <i class="fa fa-user"></i>
           </a>
           <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
-            <a class="dropdown-item waves-effect waves-light" mdbWavesEffect href="javascript:;;">회원정보</a>
+            <a class="dropdown-item waves-effect waves-light" mdbWavesEffect (click)="onClickMyVideos()">My Videos</a>
             <a class="dropdown-item waves-effect waves-light" mdbWavesEffect (click)="onChangePassword()">비밀번호 변경</a>
             <a class="dropdown-item waves-effect waves-light" mdbWavesEffect (click)="onLogout()">로그아웃</a>
           </div>

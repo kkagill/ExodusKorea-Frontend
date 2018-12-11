@@ -80,14 +80,7 @@ export class HeaderComponent implements OnInit {
           }
           this.isNotificationLoaded = true;
         }
-      },
-        error => {
-          this.snackBar.open('오류가 났습니다. 페이지를 새로고침하고 다시 시도해주세요. 오류가 지속될시 admin@exoduscorea.com으로 연락주시기 바랍니다.', '', {
-            duration: 60000,
-            panelClass: ['error-snackbar']
-          });
-        }
-      );
+      });
   }
 
   findNotifIndexToUpdate(notification) {
@@ -120,16 +113,26 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  openRegisterDialog(): void {
-    const dialogRef = this.dialog.open(RegisterComponent, {
-      width: '410px',
-      data: { email: this.email, nickName: this.nickName, password: this.password, confirmPassword: this.confirmPassword }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The register dialog was closed');
-    });
+  onClickMyVideos() {
+    localStorage.setItem('userProfile', 'myVideos');
+    this.router.navigate(['user-profile']);
   }
+
+  onChangePassword() {
+    localStorage.setItem('userProfile', 'changePassword');
+    this.router.navigate(['user-profile']);
+  }
+
+  // openRegisterDialog(): void {
+  //   const dialogRef = this.dialog.open(RegisterComponent, {
+  //     width: '410px',
+  //     data: { email: this.email, nickName: this.nickName, password: this.password, confirmPassword: this.confirmPassword }
+  //   });
+
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log('The register dialog was closed');
+  //   });
+  // }
 
   onLogout() {
     this.authService.logout();

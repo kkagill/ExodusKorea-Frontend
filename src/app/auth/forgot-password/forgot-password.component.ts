@@ -25,17 +25,14 @@ export class ForgotPasswordComponent {
               public snackBar: MatSnackBar,
               public dialogRef: MatDialogRef<ForgotPasswordComponent>,
               @Inject(MAT_DIALOG_DATA) public data: ForgotPwdDialogData) {
-    this.emailFormControl = new FormControl('', [
-      Validators.required,
-      Validators.email,
-    ]);
+    this.emailFormControl = new FormControl('', [Validators.email]);
     this.forgotPwdForm = new FormGroup({
       email: this.emailFormControl
     });
   }
 
   onSubmit() {
-    if (this.forgotPwdForm.invalid) {
+    if (this.forgotPwdForm.invalid || this.forgotPwdForm.value.email === '') {
       return;
     }
     this.spinner.show();
