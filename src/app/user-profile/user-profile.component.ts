@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ICategory, IVideoPost } from '../shared/interfaces';
-import { Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { IVideoPost } from '../shared/interfaces';
+import { Router, ParamMap, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { DataService } from '../shared/services/data.service';
 import { ItemsService } from '../shared/utils/items.service';
@@ -13,10 +14,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class UserProfileComponent implements OnInit {
   page: number = 1;
-  myVideos: boolean = false;
-  changePassword: boolean = false;
+  selectedMyVideos: boolean = false;
+  selectedChangePassword: boolean = false;
   searchResult: IVideoPost[];
-  categories: ICategory[];
   isMyVideosLoaded: boolean = false;
   isChangePasswordLoaded: boolean = false;
   backgroundUrl = '../../../assets/images/countries/';
@@ -31,6 +31,8 @@ export class UserProfileComponent implements OnInit {
   constructor(private router: Router,
     public snackBar: MatSnackBar,
     private dataService: DataService,
+    private location: Location,
+    private activatedRoute: ActivatedRoute,
     private itemsService: ItemsService) {
     this.oldPasswordFormControl = new FormControl('', [
       Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$")
@@ -49,36 +51,44 @@ export class UserProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    let userProfile = localStorage.getItem('userProfile');
-
-    if (userProfile != null && userProfile === 'myVideos') {
-      localStorage.removeItem('userProfile');
-      this.myVideos = true;
-      //this.loadMyVideos();
-    } else if (userProfile != null && userProfile === 'changePassword') {
-      localStorage.removeItem('userProfile');
-      this.changePassword = true;
-      this.isChangePasswordLoaded = true;
-    }
+    this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
+      let category = params.get('id');  
+      let myVideos = localStorage.getItem('myVideos');
+      
+      if (myVideos === 'true') {
+        localStorage.removeItem('myVideos');
+        this.selectedMyVideos = true;
+        this.loadMyVideos();
+      } else if (category != null && category === 'my-videos' && myVideos == null) {
+        this.selectedMyVideos = true;
+        this.selectedChangePassword = false;
+        this.isChangePasswordLoaded = false;
+        this.loadMyVideos();
+      } else if (category != null && category === 'change-password' && myVideos == null) {
+        this.selectedMyVideos = false;
+        this.selectedChangePassword = true;
+        this.isChangePasswordLoaded = true;
+        this.isMyVideosLoaded = false;
+      }
+    });   
   }
 
-  // loadMyVideos() {
-  //   this.dataService.getMyVideos()
-  //     .subscribe(res => {
-  //       if (res.status === 200) {
-  //         this.isMyVideosLoaded = true;
-  //         this.categories = this.itemsService.getSerialized<ICategory[]>(res.body);
-
-  //       }
-  //     },
-  //       error => {
-  //         this.snackBar.open('정보를 불러오는 과정에서 오류가 났습니다.', '', {
-  //           duration: 5000,
-  //           panelClass: ['error-snackbar']
-  //         });
-  //       }
-  //     );
-  // }
+  loadMyVideos() {
+    this.dataService.getMyVideos()
+      .subscribe(res => {
+        if (res.status === 200) {
+          this.isMyVideosLoaded = true;
+          this.searchResult = this.itemsService.getSerialized<IVideoPost[]>(res.body);
+        }
+      },
+        error => {
+          this.snackBar.open('정보를 불러오는 과정에서 오류가 났습니다.', '', {
+            duration: 5000,
+            panelClass: ['error-snackbar']
+          });
+        }
+      );
+  }
 
   onSubmit() {
     if (this.changePasswordForm.invalid ||
@@ -118,16 +128,24 @@ export class UserProfileComponent implements OnInit {
       );
   }
 
+  onMatCardClick(videoPostId: number, videoId: string) {
+    localStorage.setItem('myVideos', 'true');
+    this.router.navigate(['content-details', videoPostId, videoId]);
+  }
+  
   onSelectMyVideos() {
-    this.changePassword = false;
-    this.myVideos = true;
+    this.location.go('account-info/my-videos');    
+    this.selectedChangePassword = false;
+    this.selectedMyVideos = true;
     this.isChangePasswordLoaded = false;
-    //this.loadMyVideos();
+    this.loadMyVideos();
   }
 
   onSelectChangePassword() {
-    this.changePassword = true;
-    this.myVideos = false;
+    this.location.go('account-info/change-password');
+    this.selectedChangePassword = true;
+    this.selectedMyVideos = false;
+    this.isMyVideosLoaded = false;
     this.isChangePasswordLoaded = true;
   }
 }

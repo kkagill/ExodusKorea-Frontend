@@ -2,9 +2,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from './../../shared/services/auth.service';
 import { Router } from '@angular/router';
 import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatDialog } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpClient } from '@angular/common/http';
+import { TermsOfServiceDialog } from './dialog/terms-of-service/terms-of-service.component';
 
 export interface RegisterDialogData {
   email: string;
@@ -26,6 +27,7 @@ export class RegisterComponent {
   nickNameFormControl;
   passwordFormControl;
   confirmPasswordFormControl;
+  tandsFormControl;
   recaptchaFormControl;
   registerForm: FormGroup;
 
@@ -33,6 +35,7 @@ export class RegisterComponent {
     public http: HttpClient,
     private authService: AuthService,
     private spinner: NgxSpinnerService,
+    public dialog: MatDialog,
     // public dialogRef: MatDialogRef<RegisterComponent>,
     // @Inject(MAT_DIALOG_DATA) public data: RegisterDialogData,
     public snackBar: MatSnackBar,
@@ -41,12 +44,14 @@ export class RegisterComponent {
     this.nickNameFormControl = new FormControl('', []);
     this.passwordFormControl = new FormControl('', [Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$")]);
     this.confirmPasswordFormControl = new FormControl('', [Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$")]);
+    this.tandsFormControl = new FormControl('', []);
     this.registerForm = new FormGroup({
       email: this.emailFormControl,
       nickName: this.nickNameFormControl,
       password: this.passwordFormControl,
       confirmPassword: this.confirmPasswordFormControl,
-      recaptcha: new FormControl(null)
+      recaptcha: new FormControl(null),
+      tands: this.tandsFormControl
     });
   }
 
@@ -69,7 +74,9 @@ export class RegisterComponent {
       this.registerForm.value.email === '' || 
       this.registerForm.value.nickName === '' ||
       this.registerForm.value.password === '' ||
-      this.registerForm.value.confirmPassword === '') {
+      this.registerForm.value.confirmPassword === '' ||
+      this.registerForm.value.tands === '' ||
+      this.registerForm.value.tands === false) {
       return;
     }
     if (!this.isCaptchaPassed) {
@@ -87,8 +94,8 @@ export class RegisterComponent {
         if (res.status === 201) {
           this.error = '';
           this.success = res.body.email +
-            '으로 인증 메일이 발송되었습니다. 3시간 이내로 인증을 받으셔야 가입이 완료됩니다.' + '<br/><br/>' +
-            '인증 메일을 받지 못하셨다면 인증메일을 재발송해주세요.' + '<br/><br/>';
+            '으로 인증메일이 발송되었습니다. 3시간 이내로 인증을 받으셔야 가입이 완료됩니다.' + '<br/><br/>' +
+            '인증메일을 받지 못하셨다면 인증메일을 재발송해주세요.' + '<br/><br/>';
 
           localStorage.setItem('email', res.body.email);
           this.spinner.hide();
@@ -101,6 +108,9 @@ export class RegisterComponent {
             }
             else if (error.error[0].code === "DuplicateUserName") {
               this.error = '이미 등록된 계정입니다.';
+            }
+            else if (error.error === "DuplicateNickName") {
+              this.error = '이미 등록된 닉네임입니다.';
             }
           }
           else {
@@ -118,8 +128,8 @@ export class RegisterComponent {
         if (res.status === 200) {
           this.error = '';
           this.success = email +
-            '으로 인증 메일이 재발송되었습니다. 3시간 이내로 인증을 받으셔야 가입이 완료됩니다.' + '<br/><br/>' +
-            '인증 메일을 받지 못하셨다면 인증메일을 재발송해주세요.' + '<br/><br/>';
+            '으로 인증메일이 재발송되었습니다. 3시간 이내로 인증을 받으셔야 가입이 완료됩니다.' + '<br/><br/>' +
+            '인증메일을 받지 못하셨다면 인증메일을 재발송해주세요.' + '<br/><br/>';
 
           this.snackBar.open('재발송되었습니다.', '', {
             duration: 3000,
@@ -151,5 +161,11 @@ export class RegisterComponent {
     if (event.x !== 0 && event.y !== 0) {
       //this.dialogRef.close();
     }
+  }
+
+  onClickTermsOfService() {
+    const dialogRef = this.dialog.open(TermsOfServiceDialog, {
+      width: '1000px'
+    });
   }
 }

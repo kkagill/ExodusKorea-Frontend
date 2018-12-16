@@ -30,7 +30,8 @@
       paginate: { itemsPerPage: 5, currentPage: page }; let i = index">
         <th style="text-align: center;">
           {{el.nickName}}
-          <img *ngIf="el.authorCountryEN" src="./../../assets/images/countries/{{el.authorCountryEN}}-square16.png" style="margin-bottom: 3px;">
+          <img *ngIf="el.authorCountryEN" src="./../../assets/images/countries/{{el.authorCountryEN}}-square16.png"
+            style="margin-bottom: 3px;">
         </th>
         <td style="text-align: center;">{{el.dateCreated | date:'y-MM-dd'}}</td>
         <td style="text-align: center;">{{el.city}}</td>

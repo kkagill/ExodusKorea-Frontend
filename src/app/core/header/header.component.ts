@@ -114,13 +114,11 @@ export class HeaderComponent implements OnInit {
   }
 
   onClickMyVideos() {
-    localStorage.setItem('userProfile', 'myVideos');
-    this.router.navigate(['user-profile']);
+    this.router.navigate(['account-info', "my-videos"]);
   }
 
   onChangePassword() {
-    localStorage.setItem('userProfile', 'changePassword');
-    this.router.navigate(['user-profile']);
+    this.router.navigate(['account-info', "change-password"]);
   }
 
   // openRegisterDialog(): void {

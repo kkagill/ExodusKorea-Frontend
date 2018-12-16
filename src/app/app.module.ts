@@ -40,6 +40,7 @@ import { SafeHtmlPipe } from './shared/pipes/safe-html.pipe';
 import { SearchVideosComponent } from './search-videos/search-videos.component';
 import { CountryInfoComponent } from './country-info/country-info.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { TermsOfServiceDialog } from './auth/register/dialog/terms-of-service/terms-of-service.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -68,7 +69,8 @@ export function tokenGetter() {
     PriceInfoDetailDialog,
     NotifCommentDialog,
     AddMinimumColDialog,
-    MinimumColDetailDialog
+    MinimumColDetailDialog,
+    TermsOfServiceDialog
   ],
   imports: [
     CoreModule,

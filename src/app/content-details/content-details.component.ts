@@ -550,4 +550,44 @@ export class ContentDetailsComponent implements OnInit {
       data: { countryEN: countryEN, baseCurrency: baseCurrency }
     });
   }
+
+  onClickFollow() {
+    if (!this.authService.isAuthenticated()) {
+      const dialogRef = this.dialog.open(LoginComponent, {
+        width: '410px',
+        data: { email: this.email, password: this.password }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (this.authService.isAuthenticated()) {
+          this.dataSharingService.loggedIn.next(true); // pass data to header.component.ts
+        }
+      });
+      return;
+    }
+    let body = {
+      'videoPostId': this.videoPostId
+    };
+    this.dataService.addToMyVideos(body)
+      .subscribe(res => {
+        if (res.status === 201) {
+          setTimeout(() => {
+            this.snackBar.open('내 찜한 영상에 추가되었습니다.', '', {
+              duration: 2000,
+              panelClass: ['green-snackbar']
+            });
+          }, 500);
+        }
+      },
+        error => {
+          if (error.status === 400 && error.error === "duplicate") {
+            setTimeout(() => {
+              this.snackBar.open('이미 내 찜한 영상에 추가되었습니다.', '', {
+                duration: 2000,
+                panelClass: ['warning-snackbar']
+              });
+            }, 500);
+          }
+        }
+      );
+  }
 }

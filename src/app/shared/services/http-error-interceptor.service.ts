@@ -11,6 +11,7 @@ import { AuthService } from './auth.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { LoginComponent } from 'src/app/auth/login/login.component';
 import { DataSharingService } from './data-sharing.service';
+import { DataService } from './data.service';
 
 @Injectable()
 export class HttpErrorInterceptorService implements HttpInterceptor {
@@ -19,6 +20,7 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
 
   constructor(private injector: Injector,
     private authService: AuthService,
+    private dataService: DataService,
     public snackBar: MatSnackBar,
     public dialog: MatDialog,
     private dataSharingService: DataSharingService) { }
@@ -32,8 +34,8 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
             //console.log('succeed');
           }
         }), catchError((err) => {
-          const errorResponse = err as HttpErrorResponse;
-
+          const errorResponse = err as HttpErrorResponse;        
+          // Internal server errors are logged in Log_SiteException from the server before it is intercepted. 
           if (errorResponse.status === 500) {
             router.navigate(['error']);
           }
@@ -77,8 +79,81 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
                   return throwError(err);
                 }));
           }
+          // Other error status (404 or 400) are logged in Log_HttpResponseException
+          else {
+            if (this.authService.isAuthenticated()) {
+              this.LogLoggedInHttpResponseException(err);
+            } else {
+              this.LogHttpResponseException(err);
+            }
+          }
+
           return throwError(err);
         })
       )
+  }
+
+  LogHttpResponseException(error: any) {
+    let body = {};
+    // 404 doesn't have error message
+    if (error.error == null) {
+      body = {
+        'Status': error.status,
+        'Error': "",
+        'Message': error.message
+      };
+      // When error contains description
+    } else if (error.error.error != null) {
+      body = {
+        'Status': error.status,
+        'Error': error.error.error + ", " + error.error.error_description,
+        'Message': error.message
+      };
+    } else {
+      body = {
+        'Status': error.status,
+        'Error': error.error,
+        'Message': error.message
+      };
+    }
+
+    this.dataService.logHttpResponseException(body)
+      .subscribe(res => {
+      });
+  }
+
+  LogLoggedInHttpResponseException(error: any) {
+    let body = {};
+    // 404 doesn't have error message
+    if (error.error == null) {
+      body = {
+        'Status': error.status,
+        'Error': "",
+        'Message': error.message,
+        'UserId': this.authService.getUserId(),
+        'Username': this.authService.getUserEmail()
+      };
+       // When error contains description
+    } else if (error.error.error != null) {
+      body = {
+        'Status': error.status,
+        'Error': error.error.error + ", " + error.error.error_description,
+        'Message': error.message,
+        'UserId': this.authService.getUserId(),
+        'Username': this.authService.getUserEmail()
+      };
+    } else {
+      body = {
+        'Status': error.status,
+        'Error': error.error,
+        'Message': error.message,
+        'UserId': this.authService.getUserId(),
+        'Username': this.authService.getUserEmail()
+      };
+    }
+
+    this.dataService.logLoggedInHttpResponseException(body)
+      .subscribe(res => {
+      });
   }
 }

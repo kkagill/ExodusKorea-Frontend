@@ -55,6 +55,10 @@
               <re-captcha (resolved)="$event && submit($event)" formControlName="recaptcha" siteKey="6Lf5B3YUAAAAACwH0L2VRaY-dA-BeK1k3NMmiP1U"></re-captcha>
             </div>
           </mat-card-content>
+          <div style="margin-top: 30px;">
+            <mat-checkbox formControlName="tands" [formControl]="tandsFormControl"></mat-checkbox>
+            <span class="terms-of-service pointer" style="margin-left: 10px;" (click)="onClickTermsOfService()">이용약관</span>에 동의합니다.
+          </div>
           <div>
             <br />
             <mat-toolbar>
@@ -62,14 +66,12 @@
                   registerForm.controls.nickName.valid &&
                   registerForm.controls.password.valid &&
                   registerForm.controls.confirmPassword.valid &&
-                  registerForm.controls.recaptcha.valid)"
+                  registerForm.controls.recaptcha.valid &&
+                  registerForm.controls.tands.valid)"
                 color="accent">
                 등록
               </button>
             </mat-toolbar>
-            <div style="margin-top: 20px;">
-              <p style="font-size: 11px;">* 등록버튼을 누르시면 이 약관에 동의하는 것으로 간주됩니다.</p>
-            </div>
           </div>
         </form>
       </div>

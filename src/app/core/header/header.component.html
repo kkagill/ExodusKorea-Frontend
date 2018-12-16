@@ -60,7 +60,9 @@
             <i class="fa fa-user"></i>
           </a>
           <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
-            <a class="dropdown-item waves-effect waves-light" mdbWavesEffect (click)="onClickMyVideos()">My Videos</a>
+            <div style="margin-top: 5px; font-weight: bold; text-align: center;">{{authService.getUserEmail()}}</div>
+            <hr />
+            <a class="dropdown-item waves-effect waves-light" mdbWavesEffect (click)="onClickMyVideos()">내 찜한 영상</a>
             <a class="dropdown-item waves-effect waves-light" mdbWavesEffect (click)="onChangePassword()">비밀번호 변경</a>
             <a class="dropdown-item waves-effect waves-light" mdbWavesEffect (click)="onLogout()">로그아웃</a>
           </div>

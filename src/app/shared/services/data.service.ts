@@ -383,6 +383,22 @@ export class DataService {
       );
   }
 
+  getMyVideos(): Observable<any> {
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+    };
+    return this.http.get(this._baseUrl + `carddetail/my-videos`, { headers: header, observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }    
+
   findUserLikedPost(id: number): Observable<any> {
     const header = {
       'Content-Type': 'application/json',
@@ -446,7 +462,35 @@ export class DataService {
         })
       );
   }
-  
+
+  logHttpResponseException(body: any): Observable<any> {   
+    return this.http.post<any>(this._baseUrl + 'httpresponse/log-http-response', body, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  logLoggedInHttpResponseException(body: any): Observable<any> {
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+    };
+    return this.http.post<any>(this._baseUrl + 'httpresponse/log-loggedin-http-response', body, { headers: header, observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
   addNewComment(body: any): Observable<any> {
     const header = {
       'Content-Type': 'application/json',
@@ -574,6 +618,22 @@ export class DataService {
         })
       );
   }
+
+  addToMyVideos(body: any): Observable<any> {
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+    };
+    return this.http.post<any>(this._baseUrl + `carddetail/add-my-videos`, body, { headers: header, observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }  
 
   updateNewsViewsCount(newsDetailId: number): Observable<any> {      
     return this.http.put<any>(this._baseUrl + `news/${newsDetailId}/update-views-count`, newsDetailId, { observe: "response" })

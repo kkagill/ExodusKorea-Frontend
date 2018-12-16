@@ -13,6 +13,7 @@ import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { TokenExpiredComponent } from './token-expired/token-expired.component';
 import { ConfirmedComponent } from './confirmed/confirmed.component';
+import { TermsOfServiceDialog } from './register/dialog/terms-of-service/terms-of-service.component';
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { ConfirmedComponent } from './confirmed/confirmed.component';
     RegisterComponent,
     ForgotPasswordComponent,
     ConfirmedComponent,
-    TokenExpiredComponent
+    TokenExpiredComponent,
+    TermsOfServiceDialog
   ]
 })
 export class AuthModule { }

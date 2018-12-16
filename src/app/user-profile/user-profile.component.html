@@ -5,13 +5,13 @@
         <mat-expansion-panel [expanded]="true">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              내 프로필
+              계정 정보
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <p class="pointer" (click)="onSelectMyVideos()" [style.background-color]="myVideos ? '#94c3f4' : ''">
-            My Videos
+          <p class="pointer" (click)="onSelectMyVideos()" [style.background-color]="selectedMyVideos ? '#94c3f4' : ''">
+            내 찜한 영상
           </p>
-          <p class="pointer" (click)="onSelectChangePassword()" [style.background-color]="changePassword ? '#94c3f4' : ''">
+          <p class="pointer" (click)="onSelectChangePassword()" [style.background-color]="selectedChangePassword ? '#94c3f4' : ''">
             비밀번호 변경
           </p>
         </mat-expansion-panel>
@@ -27,7 +27,7 @@
           </div>
         </div>
         <div class="col-md-3" *ngFor="let card of searchResult | searchFilter: {uploader: searchText, uploadedDate: searchText, countryKR: searchText, title: searchText} | paginate: { itemsPerPage: 8, currentPage: page }">
-          <mat-card class="card card-body mb-3" (click)="onMatCardClick(card.videoPostId, card.youTubeVideoId, card.categoryId)"
+          <mat-card class="card card-body mb-3" (click)="onMatCardClick(card.videoPostId, card.youTubeVideoId)"
             style="cursor:pointer;">
             <mat-card-header>
               <div mat-card-avatar class="example-header-image" [ngStyle]="{'background-image':'url(' + backgroundUrl + card.countryEN +'.png' + ')'}"></div>
@@ -47,9 +47,10 @@
       </div>
     </div>
 
-    <div class="col-lg-4 col-md-12">
-      <div class="row" *ngIf="isChangePasswordLoaded">
+    <div class="col-lg-4 col-md-12" *ngIf="isChangePasswordLoaded">
+      <div class="row">
         <form (ngSubmit)="onSubmit()" [formGroup]="changePasswordForm">
+          <br />
           <h2>비밀번호 변경</h2>
           <br />
           <div *ngIf="error" style="color: red;">

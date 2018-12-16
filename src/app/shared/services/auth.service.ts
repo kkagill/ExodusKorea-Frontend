@@ -156,6 +156,10 @@ export class AuthService {
     return this.decodeToken().sub;
   }
 
+  getUserEmail() {
+    return this.decodeToken().name;
+  }
+
   // isAdmin() {
   //     return this.useJwtHelper().role == 'Admin' ? true : false;
   // }

@@ -4,16 +4,20 @@
       <div class="single-news mb-lg-0 mb-4">
         <div *ngIf="safeURL">
           <iframe [src]='safeURL' allowfullscreen style="width: 100%; height: 460px; border: 0"></iframe>
-        </div>
-        <br />
-        <mat-card class="example-card" *ngIf="isCountryInfoLoaded">
-          <mat-card-content>
+        </div>      
+        <mat-card class="example-card">
+          <mat-card-content>          
             <div *ngIf="isYouTubeLikesLoaded" class="stick-to-right-side">
               <button mat-stroked-button color="accent" (click)="onClickPostLikes()">
                 <i class="fa fa-thumbs-o-up"></i> 추천 ({{likes}})
               </button>
             </div>
-            <br /><br />
+            <div class="stick-to-right-side" style="margin-right: 10px;">
+                <button mat-stroked-button color="accent" (click)="onClickFollow()">
+                  <i class="fa fa-smile-o"></i> 찜하기
+                </button>
+              </div>
+            <br /><br /><br />
             <form (ngSubmit)="onSubmitComment()" [formGroup]="commentForm">
               <mat-form-field appearance="outline" class="full-width">
                 <textarea matInput #commentInput maxlength="500" (mouseup)="onClickCommentBox()" placeholder="로그인 하셔야 댓글 작성이 가능합니다."
@@ -155,10 +159,10 @@
     </div>
 
     <div class="col-lg-4 col-md-12">
-      <div class="single-news mb-4">
+      <div class="single-news mb-4" *ngIf="isCountryInfoLoaded">
         <div class="row">
           <div class="col-md-12">
-            <mat-card class="example-card" *ngIf="isCountryInfoLoaded">
+            <mat-card class="example-card">
               <mat-card-header>
                 <mat-card-title><b>국가정보 (2018)</b></mat-card-title>
               </mat-card-header>
@@ -203,10 +207,10 @@
         </div>
       </div>
 
-      <div class="single-news mb-4">
+      <div class="single-news mb-4" *ngIf="isPriceInfoLoaded">
         <div class="row">
           <div class="col-md-6">
-            <mat-card class="example-card" *ngIf="isPriceInfoLoaded">
+            <mat-card class="example-card">
               <mat-card-header>
                 <mat-card-title><b>물가 (2018)</b></mat-card-title>
               </mat-card-header>
@@ -243,12 +247,14 @@
                   <span>
                     {{mcol.city}}:
                     <span *ngIf="mcol.avgCostOfLiving === 0" class="thick" style="font-size: 13px;">자료없음</span>
-                    <span *ngIf="mcol.avgCostOfLiving !== 0" class="thick" style="font-size: 13px;">{{mcol.avgCostOfLiving | currency:minimumCoLInfo.baseCurrency:'symbol-narrow':'1.0-0'}}</span>
+                    <span *ngIf="mcol.avgCostOfLiving !== 0" class="thick" style="font-size: 13px;">{{mcol.avgCostOfLiving
+                      | currency:minimumCoLInfo.baseCurrency:'symbol-narrow':'1.0-0'}}</span>
                   </span>
                   <br />
-                </mat-label>              
+                </mat-label>
                 <br />
-                <span class="pointer" style="color: #007ad9;" (click)="onClickMinimumCoLDetail(minimumCoLInfo.countryEN, minimumCoLInfo.baseCurrency)">더 자세히..</span>
+                <span class="pointer" style="color: #007ad9;" (click)="onClickMinimumCoLDetail(minimumCoLInfo.countryEN, minimumCoLInfo.baseCurrency)">더
+                  자세히..</span>
                 <hr />
                 <p style="font-size: 12px;">{{minimumCoLInfo.countryKR}}에 사세요?</p>
                 <button type="button" class="btn btn-outline-info waves-effect btn-sm" (click)="onClickHelp(minimumCoLInfo.countryId, minimumCoLInfo.countryKR, minimumCoLInfo.countryEN, minimumCoLInfo.baseCurrency)"
@@ -259,10 +265,10 @@
         </div>
       </div>
 
-      <div class="single-news mb-4" *ngIf="isSalaryInfoLoaded">
+      <div class="single-news mb-4" *ngIf="isCurrencyInfoLoaded">
         <div class="row">
           <div class="col-md-12">
-            <mat-card class="example-card" *ngIf="isCurrencyInfoLoaded">
+            <mat-card class="example-card">
               <mat-card-header>
                 <mat-card-title><b>환율</b></mat-card-title>
               </mat-card-header>
