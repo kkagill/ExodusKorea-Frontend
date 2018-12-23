@@ -44,7 +44,7 @@
             <div class="row">
               <div class="col-lg-12	col-md-12 right-align">
                 <h5 class="font-weight-bold dark-grey-text">{{newsDetail.subject}}</h5>
-                <p>{{newsDetail.country}} {{newsDetail.department}}</p>
+                <p>{{newsDetail.department}}</p>
                 <p>{{newsDetail.dateCreated | date:'y-MM-dd'}}</p>
                 <p style="margin-top: -10px;">{{newsDetail.creator}}</p>
                 <p style="margin-top: -10px;">조회수: {{newsDetail.views}}</p>
@@ -54,7 +54,7 @@
             <div class="row">
               <div class="col-lg-12	col-md-12">
                 <br />
-                <div [innerHTML]="newsDetail.body | safeHtml"></div>
+                <div class="left-align" [innerHTML]="newsDetail.body | safeHtml"></div>
                 <hr />
                 <div>
                   <button mdbBtn type="button" color="info" outline="true" (click)="backToList()" mdbWavesEffect>목록</button>

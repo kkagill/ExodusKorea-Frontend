@@ -15,7 +15,7 @@
         </li>
         <li class="nav-item waves-light" mdbWavesEffect>
           <a class="nav-link" [routerLink]="['news']">
-            World News
+            캐나다 시장 뉴스
           </a>
         </li>
         <li class="nav-item dropdown" dropdown>
@@ -43,15 +43,19 @@
             <i *ngIf="isNotificationLoaded" matBadge="{{newNotifications}}" matBadgeColor="warn" class="fa fa-bell"></i>
             <i *ngIf="!isNotificationLoaded" class="fa fa-bell"></i>
           </a>
-          <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" style="overflow-y: scroll; height: 400px;"
-            role="menu">
-            <div *ngFor="let n of notifications" class="dropdown-item waves-effect waves-light" (click)="onClickNotification(n.notificationId, n.videoPostId, n.youTubeVideoId, n.videoCommentId, n.videoCommentReplyId)"
-              mdbWavesEffect>
-              <span>{{n.nickName}}님의 답글
-                <img *ngIf="!n.hasRead" src="./../../assets/images/new.png" alt="new" style="margin-bottom: 3px;">
-              </span>
-              <span class="thick limit-text">"{{n.comment}}"</span>
-              <span style="font-size: 11px;">{{n.dateCreated | date:'y년 M월 d일 HH시 mm분'}}</span>
+          <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+            <div *ngIf="hasNotifications" style="overflow-y: scroll; height: 400px;">
+              <div *ngFor="let n of notifications" class="dropdown-item waves-effect waves-light" (click)="onClickNotification(n.notificationId, n.videoPostId, n.youTubeVideoId, n.videoCommentId, n.videoCommentReplyId)"
+                mdbWavesEffect>
+                <span>{{n.nickName}}님의 답글
+                  <img *ngIf="!n.hasRead" src="./../../assets/images/new.png" alt="new" style="margin-bottom: 3px;">
+                </span>
+                <span class="thick limit-text">"{{n.comment}}"</span>
+                <span style="font-size: 11px;">{{n.dateCreated | date:'y년 M월 d일 HH시 mm분'}}</span>
+              </div>
+            </div>
+            <div *ngIf="!hasNotifications">
+              <span>새 알림이 없습니다.</span>
             </div>
           </div>
         </li>
@@ -63,6 +67,7 @@
             <div style="margin-top: 5px; font-weight: bold; text-align: center;">{{authService.getUserEmail()}}</div>
             <hr />
             <a class="dropdown-item waves-effect waves-light" mdbWavesEffect (click)="onClickMyVideos()">내 찜한 영상</a>
+            <a class="dropdown-item waves-effect waves-light" mdbWavesEffect (click)="onClickProfile()">프로필</a>
             <a class="dropdown-item waves-effect waves-light" mdbWavesEffect (click)="onChangePassword()">비밀번호 변경</a>
             <a class="dropdown-item waves-effect waves-light" mdbWavesEffect (click)="onLogout()">로그아웃</a>
           </div>
@@ -78,9 +83,9 @@
           <br><br><br><br><br>
           <h1>캐나다 취업의 모든 정보</h1>
           <br>
-          <h5>굿바이, 스펙경쟁... 나는 해외로 간다!</h5>
-          <h6>경쟁이 치열한 국내 시장에서 눈을 돌리면 전 세계의 놀라운 시장이 보입니다.</h6>
-          <h6>글로벌 무대로 진출하고자 하는 당신을 위한 정보 공유</h6>
+          <h5>Goodbye 스펙경쟁 & 미세먼지.. 나는 해외로 간다!</h5>
+          <h6>경쟁이 치열한 국내 시장에서 눈을 돌리면 해외의 놀라운 시장이 보입니다.</h6>
+          <h6>글로벌 무대로 진출하고자 하는 당신을 위한 캐나다 취업 정보 공유</h6>
         </div>
       </div>
     </div>
@@ -92,9 +97,9 @@
         <!-- rgba-purple-light  -->
         <div class="container text-center white-text wow fadeInUp">
           <br><br><br><br><br>
-          <h1>World News</h1>
+          <h1>캐나다 시장 뉴스</h1>
           <br>
-          <h5>전세계의 경제/통상/일자리 현황을 전달해 드립니다.</h5>
+          <h5>캐나다의 경제, 산업, 통상, 투자 뉴스를 알려드립니다.</h5>
         </div>
       </div>
     </div>

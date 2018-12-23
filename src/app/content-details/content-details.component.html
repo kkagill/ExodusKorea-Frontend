@@ -4,19 +4,19 @@
       <div class="single-news mb-lg-0 mb-4">
         <div *ngIf="safeURL">
           <iframe [src]='safeURL' allowfullscreen style="width: 100%; height: 460px; border: 0"></iframe>
-        </div>      
+        </div>
         <mat-card class="example-card">
-          <mat-card-content>          
+          <mat-card-content>
             <div *ngIf="isYouTubeLikesLoaded" class="stick-to-right-side">
               <button mat-stroked-button color="accent" (click)="onClickPostLikes()">
                 <i class="fa fa-thumbs-o-up"></i> 추천 ({{likes}})
               </button>
             </div>
             <div class="stick-to-right-side" style="margin-right: 10px;">
-                <button mat-stroked-button color="accent" (click)="onClickFollow()">
-                  <i class="fa fa-smile-o"></i> 찜하기
-                </button>
-              </div>
+              <button mat-stroked-button color="accent" (click)="onClickFollow()">
+                <i class="fa fa-smile-o"></i> 찜하기
+              </button>
+            </div>
             <br /><br /><br />
             <form (ngSubmit)="onSubmitComment()" [formGroup]="commentForm">
               <mat-form-field appearance="outline" class="full-width">
@@ -192,7 +192,7 @@
                 <mat-card-title><b>{{salaryInfo.occupation}} 연봉 (2018)</b></mat-card-title>
               </mat-card-header>
               <mat-card-content class="left-align-panel">
-                <p style="font-size: 12px;">{{salaryInfo.country}} 전국 평균</p>
+                <p style="font-size: 12px;">{{salaryInfo.country}} 전국 평균 (CAD $)</p>
                 <div id="salary-chart">
                   <mat-label id="low-word">최저</mat-label>
                   <mat-label id="low">{{salaryInfo.low | currency:salaryInfo.currency:'symbol-narrow':'1.0'}}</mat-label>
@@ -242,7 +242,7 @@
                 <mat-card-title><b>최소 생활비</b></mat-card-title>
               </mat-card-header>
               <mat-card-content class="left-align-panel">
-                <p style="font-size: 12px;">한달 평균</p>
+                <p style="font-size: 12px;">한달 평균 (CAD $)</p>
                 <mat-label *ngFor="let mcol of minimumCoLInfo.cityMinimums">
                   <span>
                     {{mcol.city}}:
@@ -265,7 +265,105 @@
         </div>
       </div>
 
-      <div class="single-news mb-4" *ngIf="isCurrencyInfoLoaded">
+      <div class="single-news mb-4">
+        <div class="row">
+          <div class="col-md-12">
+            <mat-card class="example-card">
+              <mat-card-header>
+                <mat-card-title><b>일자리 정보 및 수요</b></mat-card-title>
+              </mat-card-header>
+              <mat-card-content class="left-align-panel" *ngIf="isJobSitesLoaded">
+                <p style="font-size: 12px;" *ngIf="isCareerInfoLoaded">검색창에 {{careerInfo.nameEN}} 입력</p>
+                <p style="font-size: 12px;">공통</p>
+                <hr />
+                <mat-label *ngFor="let js of jobSites">
+                  <a *ngIf="js.category === 'common'" href="{{js.link}}" target="_blank">{{js.name}}<br /></a>
+                </mat-label>
+                <br />
+                <p style="font-size: 12px;">브리티시 콜롬비아 주 (British Columbia)</p>
+                <hr />
+                <mat-label *ngFor="let js of jobSites">
+                  <a *ngIf="js.category === 'bc'" href="{{js.link}}" target="_blank">{{js.name}}<br /></a>
+                </mat-label>
+                <br />
+                <p style="font-size: 12px;">알버타 주 (Alberta)</p>
+                <hr />
+                <mat-label *ngFor="let js of jobSites">
+                  <a *ngIf="js.category === 'ab'" href="{{js.link}}" target="_blank">{{js.name}}<br /></a>
+                </mat-label>
+                <br />
+                <p style="font-size: 12px;">사스카츄완 주 (Saskatchewan)</p>
+                <hr />
+                <mat-label *ngFor="let js of jobSites">
+                  <a *ngIf="js.category === 'sk'" href="{{js.link}}" target="_blank">{{js.name}}<br /></a>
+                </mat-label>
+                <br />
+                <p style="font-size: 12px;">마니토바 주 (Manitoba)</p>
+                <hr />
+                <mat-label *ngFor="let js of jobSites">
+                  <a *ngIf="js.category === 'mb'" href="{{js.link}}" target="_blank">{{js.name}}<br /></a>
+                </mat-label>
+                <br />
+                <p style="font-size: 12px;">온타리오 주 (Ontario)</p>
+                <hr />
+                <mat-label *ngFor="let js of jobSites">
+                  <a *ngIf="js.category === 'on'" href="{{js.link}}" target="_blank">{{js.name}}<br /></a>
+                </mat-label>
+                <br />
+                <p style="font-size: 12px;">퀘백 주 (Quebec)</p>
+                <hr />
+                <mat-label *ngFor="let js of jobSites">
+                  <a *ngIf="js.category === 'qc'" href="{{js.link}}" target="_blank">{{js.name}}<br /></a>
+                </mat-label>
+                <br />
+                <p style="font-size: 12px;">뉴펀들랜드 주 (Newfoundland and Labrador)</p>
+                <hr />
+                <mat-label *ngFor="let js of jobSites">
+                  <a *ngIf="js.category === 'nl'" href="{{js.link}}" target="_blank">{{js.name}}<br /></a>
+                </mat-label>
+                <br />
+                <p style="font-size: 12px;">뉴브런즈윅 주 (New Brunswick)</p>
+                <hr />
+                <mat-label *ngFor="let js of jobSites">
+                  <a *ngIf="js.category === 'nb'" href="{{js.link}}" target="_blank">{{js.name}}<br /></a>
+                </mat-label>
+                <br />
+                <p style="font-size: 12px;">노바스코샤 주 (Nova Scotia)</p>
+                <hr />
+                <mat-label *ngFor="let js of jobSites">
+                  <a *ngIf="js.category === 'ns'" href="{{js.link}}" target="_blank">{{js.name}}<br /></a>
+                </mat-label>
+                <br />
+                <p style="font-size: 12px;">프린스 에드워드 아일랜드 주 (Prince Edward Island)</p>
+                <hr />
+                <mat-label *ngFor="let js of jobSites">
+                  <a *ngIf="js.category === 'pe'" href="{{js.link}}" target="_blank">{{js.name}}<br /></a>
+                </mat-label>
+                <br />
+                <p style="font-size: 12px;">유콘 준주 (Yukon)</p>
+                <hr />
+                <mat-label *ngFor="let js of jobSites">
+                  <a *ngIf="js.category === 'yt'" href="{{js.link}}" target="_blank">{{js.name}}<br /></a>
+                </mat-label>
+                <br />
+                <p style="font-size: 12px;">노스웨스트 준주 (Northwest Territories)</p>
+                <hr />
+                <mat-label *ngFor="let js of jobSites">
+                  <a *ngIf="js.category === 'nt'" href="{{js.link}}" target="_blank">{{js.name}}<br /></a>
+                </mat-label>
+                <br />
+                <p style="font-size: 12px;">누나붓 준주 (Nunavut)</p>
+                <hr />
+                <mat-label *ngFor="let js of jobSites">
+                  <a *ngIf="js.category === 'nu'" href="{{js.link}}" target="_blank">{{js.name}}<br /></a>
+                </mat-label>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="single-news mb-4" *ngIf="isCurrencyInfoLoaded">
         <div class="row">
           <div class="col-md-12">
             <mat-card class="example-card">
@@ -283,7 +381,7 @@
             </mat-card>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </section>

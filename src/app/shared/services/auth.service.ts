@@ -5,6 +5,7 @@ import { map, catchError } from 'rxjs/operators';
 import { ConfigService } from '../utils/config.service';
 import { throwError } from 'rxjs';
 import { JwtHelper } from 'angular2-jwt';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthService {
@@ -12,12 +13,13 @@ export class AuthService {
   _baseAuthUrl: string = '';
 
   constructor(private http: HttpClient,
+    private router: Router,
     private configService: ConfigService) {
     this._baseUrl = this.configService.getApiURI();
     this._baseAuthUrl = this.configService.getAuthURI();
   }
 
-  jwtHelper: JwtHelper = new JwtHelper(); 
+  jwtHelper: JwtHelper = new JwtHelper();
 
   login(email: string, password: string): Observable<boolean> {
     const body = new HttpParams()
@@ -57,11 +59,11 @@ export class AuthService {
             return res;
           }
         }),
-        catchError(err => {       
+        catchError(err => {
           return throwError(err);
         })
       );
-  } 
+  }
 
   forgotPassword(body: any): Observable<any> {
     return this.http.post<any>(this._baseUrl + 'account/forgot-password', body, { observe: "response" })
@@ -111,9 +113,91 @@ export class AuthService {
       );
   }
 
+  getProfile(): Observable<any> {
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+    };
+    return this.http.get(this._baseUrl + `account/profile`, { headers: header, observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  changeNickName(nickName: string): Observable<any> {
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+    };
+    return this.http.put<any>(this._baseUrl + `account/${nickName}/change-nickName`, nickName, { headers: header, observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  changePassword(body: any): Observable<any> {
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+    };
+    return this.http.post<any>(this._baseUrl + 'account/change-password', body, { headers: header, observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  updateSubscription(hasCanceledSubscription: boolean): Observable<any> {
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+    };
+    return this.http.put<any>(this._baseUrl + `account/${hasCanceledSubscription}/update-subscription`, hasCanceledSubscription, { headers: header, observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  deleteAccount(reason: string, password: string): Observable<any> {  
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+    }; 
+    return this.http.delete<any>(this._baseUrl + `account/${reason}/${password}/delete-account`, { headers: header, observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
   logout() {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
+
+    this.router.navigate(['logout']);
   }
 
   setAccessToken(accessToken: string) {

@@ -1,7 +1,7 @@
 import { AddMinimumColDialog } from './dialogs/add-minimum-col-dialog/add-minimum-col-dialog.component';
 import { DataSharingService } from './../shared/services/data-sharing.service';
 import { DeleteCommentDialog } from './dialogs/delete-comment-dialog/delete-comment-dialog.component';
-import { ICountryInfo, IPriceInfo, ICurrencyInfo, IVideoComment, IVideoCommentReply, ISalaryInfo, IMinimumCoLInfo } from './../shared/interfaces';
+import { ICountryInfo, IPriceInfo, ICurrencyInfo, IVideoComment, IVideoCommentReply, ISalaryInfo, IMinimumCoLInfo, ICareer, IJobSite } from './../shared/interfaces';
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../shared/services/data.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
@@ -30,15 +30,19 @@ export class ContentDetailsComponent implements OnInit {
   salaryInfo: ISalaryInfo;
   priceInfo: IPriceInfo;
   minimumCoLInfo: IMinimumCoLInfo;
-  currencyInfo: ICurrencyInfo;
+  //currencyInfo: ICurrencyInfo;
+  careerInfo: ICareer;
+  jobSites: IJobSite[];
   videoComments: IVideoComment[];
   isCountryInfoLoaded: boolean = false;
   isSalaryInfoLoaded: boolean = false;
   isPriceInfoLoaded: boolean = false;
   isMinimumCoLInfoLoaded: boolean = false;
-  isCurrencyInfoLoaded: boolean = false;
+  isCareerInfoLoaded: boolean = false;
+  //isCurrencyInfoLoaded: boolean = false;
   isYouTubeLikesLoaded: boolean = false;
   isVideoCommentsLoaded: boolean = false;
+  isJobSitesLoaded: boolean = false;
   selectedVideoCommentId: number;
   selectedVideoCommentReplyId: number;
   commentForm: any;
@@ -82,7 +86,9 @@ export class ContentDetailsComponent implements OnInit {
       this.loadSalaryInfo();
       this.loadPriceInfo();
       this.loadMinimumCoLInfo();
-      this.loadCurrencyInfo();
+      this.loadCareerInfo();
+      this.loadJobSites();
+      // this.loadCurrencyInfo();
       this.loadPostLikes();
       this.loadVideoComments();
     });
@@ -128,15 +134,35 @@ export class ContentDetailsComponent implements OnInit {
       });
   }
 
-  loadCurrencyInfo() {
-    this.dataService.getCurrencyInfo(this.videoPostId)
+  loadCareerInfo() {
+    this.dataService.getCareerInfo(this.videoPostId)
       .subscribe(res => {
         if (res.status === 200) {
-          this.isCurrencyInfoLoaded = true;
-          this.currencyInfo = this.itemsService.getSerialized<ICurrencyInfo>(res.body);
+          this.isCareerInfoLoaded = true;
+          this.careerInfo = this.itemsService.getSerialized<ICareer>(res.body);
         }
       });
   }
+
+  loadJobSites() {
+    this.dataService.getJobSites()
+      .subscribe(res => {
+        if (res.status === 200) {
+          this.isJobSitesLoaded = true;
+          this.jobSites = this.itemsService.getSerialized<IJobSite[]>(res.body);
+        }
+      });
+  }
+
+  // loadCurrencyInfo() {
+  //   this.dataService.getCurrencyInfo(this.videoPostId)
+  //     .subscribe(res => {
+  //       if (res.status === 200) {
+  //         this.isCurrencyInfoLoaded = true;
+  //         this.currencyInfo = this.itemsService.getSerialized<ICurrencyInfo>(res.body);
+  //       }
+  //     });
+  // }
 
   loadPostLikes() {
     this.dataService.getPostLikesCombined(this.videoPostId, this.youtubeId)

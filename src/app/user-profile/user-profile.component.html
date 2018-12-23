@@ -11,8 +11,14 @@
           <p class="pointer" (click)="onSelectMyVideos()" [style.background-color]="selectedMyVideos ? '#94c3f4' : ''">
             내 찜한 영상
           </p>
+          <p class="pointer" (click)="onSelectProfile()" [style.background-color]="selectedProfile ? '#94c3f4' : ''">
+            프로필
+          </p>
           <p class="pointer" (click)="onSelectChangePassword()" [style.background-color]="selectedChangePassword ? '#94c3f4' : ''">
             비밀번호 변경
+          </p>
+          <p class="pointer" (click)="onSelectWithdrawMembership()" [style.background-color]="selectedWithdrawMembership ? '#94c3f4' : ''">
+            회원 탈퇴
           </p>
         </mat-expansion-panel>
       </mat-accordion>
@@ -27,8 +33,7 @@
           </div>
         </div>
         <div class="col-md-3" *ngFor="let card of searchResult | searchFilter: {uploader: searchText, uploadedDate: searchText, countryKR: searchText, title: searchText} | paginate: { itemsPerPage: 8, currentPage: page }">
-          <mat-card class="card card-body mb-3" (click)="onMatCardClick(card.videoPostId, card.youTubeVideoId)"
-            style="cursor:pointer;">
+          <mat-card class="card card-body mb-3" (click)="onMatCardClick(card.videoPostId, card.youTubeVideoId)" style="cursor:pointer;">
             <mat-card-header>
               <div mat-card-avatar class="example-header-image" [ngStyle]="{'background-image':'url(' + backgroundUrl + card.countryEN +'.png' + ')'}"></div>
               <mat-card-title>{{card.uploader}}</mat-card-title>
@@ -47,52 +52,121 @@
       </div>
     </div>
 
-    <div class="col-lg-4 col-md-12" *ngIf="isChangePasswordLoaded">
-      <div class="row">
+    <div class="col-lg-6 col-md-12" *ngIf="isProfileLoaded">
+      <mat-card class="card card-body mb-3">
+        <div>
+          <label class="thick">이메일</label>
+          <p>{{profile.email}}</p>
+        </div>
+        <div>
+          <label class="thick spacing">닉네임</label>
+          <div class="col-lg-8 col-md-12 center" *ngIf="isChangeNickNameClicked">
+            <input mdbInputDirective type="text" class="form-control" [(ngModel)]="nickNameChange">
+            <button class="center" mat-button color="accent" (click)="onClickCancel()">취소</button>
+            <button class="center" mat-button color="accent" (click)="onClickChangeNickName()">변경</button>
+          </div>
+          <div *ngIf="isChangeNickNameClicked == false">
+            <p>{{profile.nickName}} <button class="center" mat-button color="accent" (click)="onChangeNickName()">바꾸기</button></p>
+          </div>
+        </div>
+        <div>
+          <label class="thick spacing">가입일</label>
+          <p>{{profile.dateCreated | date:'y년 M월 d일'}}</p>
+        </div>
+        <div>
+          <label class="thick spacing">최근 접속일</label>
+          <p>{{profile.dateVisitedRecent | date:'y년 M월 d일 hh시 mm분'}} (UTC 시간)</p>
+        </div>
+        <div>
+          <label class="thick spacing">총 방문 횟수</label>
+          <p>{{profile.visitCount}}</p>
+        </div>
+        <div class="spacing">
+          <mat-checkbox [(ngModel)]="profile.hasCanceledSubscription" [checked]="profile.hasCanceledSubscription">이메일 구독 취소
+            <button mat-button color="accent" (click)="updateSubscription()">적용</button>
+          </mat-checkbox>
+        </div>
+      </mat-card>
+    </div>
+
+    <div class="col-lg-6 col-md-12" *ngIf="isChangePasswordLoaded">      
+      <mat-card class="card card-body mb-3">
+        <p>비밀번호 변경</p>
         <form (ngSubmit)="onSubmit()" [formGroup]="changePasswordForm">
-          <br />
-          <h2>비밀번호 변경</h2>
           <br />
           <div *ngIf="error" style="color: red;">
             {{error}}
             <br /><br />
           </div>
           <mat-card-content>
-            <mat-form-field appearance="outline" class="input-size">
-              <mat-label>현재 비밀번호</mat-label>
-              <input matInput type="password" placeholder="현재 비밀번호" formControlName="oldPassword" [formControl]="oldPasswordFormControl"
-                [errorStateMatcher]="matcher" />
-              <mat-error *ngIf="oldPasswordFormControl.hasError('pattern') && !oldPasswordFormControl.hasError('required')">
-                최소 8글자에 숫자, 대소문자를 섞어주세요.
-              </mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="input-size">
-              <mat-label>새로운 비밀번호</mat-label>
-              <input matInput type="password" placeholder="새로운 비밀번호" formControlName="newPassword" [formControl]="newPasswordFormControl"
-                [errorStateMatcher]="matcher" />
-              <mat-error *ngIf="newPasswordFormControl.hasError('pattern') && !newPasswordFormControl.hasError('required')">
-                최소 8글자에 숫자, 대소문자를 섞어주세요.
-              </mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="input-size">
-              <mat-label>비밀번호 재확인</mat-label>
-              <input matInput type="password" placeholder="비밀번호 재확인" formControlName="confirmPassword" [formControl]="confirmPasswordFormControl"
-                [errorStateMatcher]="matcher" />
-              <mat-error *ngIf="confirmPasswordFormControl.hasError('pattern') && !confirmPasswordFormControl.hasError('required')">
-                최소 8글자에 숫자, 대소문자를 섞어주세요.
-              </mat-error>
-            </mat-form-field>
+            <div class="row">            
+              <mat-form-field appearance="outline" class="input-size center">
+                <mat-label>현재 비밀번호</mat-label>
+                <input matInput type="password" placeholder="현재 비밀번호" formControlName="oldPassword" [formControl]="oldPasswordFormControl"
+                  [errorStateMatcher]="matcher" />
+                <mat-error *ngIf="oldPasswordFormControl.hasError('pattern') && !oldPasswordFormControl.hasError('required')">
+                  최소 8글자에 숫자, 대소문자를 섞어주세요.
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="row">
+              <mat-form-field appearance="outline" class="input-size center">
+                <mat-label>새로운 비밀번호</mat-label>
+                <input matInput type="password" placeholder="새로운 비밀번호" formControlName="newPassword" [formControl]="newPasswordFormControl"
+                  [errorStateMatcher]="matcher" />
+                <mat-error *ngIf="newPasswordFormControl.hasError('pattern') && !newPasswordFormControl.hasError('required')">
+                  최소 8글자에 숫자, 대소문자를 섞어주세요.
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="row">
+              <mat-form-field appearance="outline" class="input-size center">
+                <mat-label>비밀번호 재확인</mat-label>
+                <input matInput type="password" placeholder="비밀번호 재확인" formControlName="confirmPassword" [formControl]="confirmPasswordFormControl"
+                  [errorStateMatcher]="matcher" />
+                <mat-error *ngIf="confirmPasswordFormControl.hasError('pattern') && !confirmPasswordFormControl.hasError('required')">
+                  최소 8글자에 숫자, 대소문자를 섞어주세요.
+                </mat-error>
+              </mat-form-field>
+            </div>
           </mat-card-content>
           <div>
-            <button style="margin: auto;" mat-raised-button [disabled]="!(changePasswordForm.controls.oldPassword.valid && 
-            changePasswordForm.controls.newPassword.valid && 
-            changePasswordForm.controls.confirmPassword.valid)"
+            <button class="center" mat-raised-button [disabled]="!(changePasswordForm.controls.oldPassword.valid && 
+                    changePasswordForm.controls.newPassword.valid && 
+                    changePasswordForm.controls.confirmPassword.valid)"
               color="accent">
-              비밀번호 변경
+              제출
             </button>
           </div>
         </form>
-      </div>
+      </mat-card>
     </div>
+
+    <div class="col-lg-6 col-md-12" *ngIf="isWithdrawMembershipLoaded">
+      <mat-card class="card card-body mb-3">
+        <div style="text-align: left;">
+          <p>회원탈퇴 하기전에 아래의 사항을 반듯이 확인하시기 바랍니다.</p>
+          <br />
+          <ul>
+            <li>회원탈퇴 즉시 보유하고 있던 영상들은 다 삭제 됩니다.</li>
+            <li>회원탈퇴 후 남겨놓은 댓글들은 삭제되지 않습니다.</li>
+            <li>본 사이트는 탈퇴 후 개인정보를 보관하지 않습니다.</li>
+            <li>회원탈퇴 즉시 회원정보는 모두 삭제되고 재가입시에도 복원되지 않습니다.</li>
+          </ul>        
+        </div>
+        <label class="thick spacing">탈퇴 사유</label>
+        <div class="col-lg-8 col-md-12 center">        
+          <input mdbInputDirective type="text" class="form-control" [(ngModel)]="reason">         
+        </div>
+        <br />
+        <label class="thick spacing">계정 비밀번호 인증</label>
+        <div class="col-lg-8 col-md-12 center">        
+          <input mdbInputDirective type="password" class="form-control" [(ngModel)]="password">         
+        </div>
+        <br />
+        <button class="center" mat-raised-button color="accent" (click)="withdrawMembership()">탈퇴하기</button>
+      </mat-card>
+    </div>
+
   </div>
 </section>

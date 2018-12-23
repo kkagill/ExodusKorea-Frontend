@@ -26,6 +26,7 @@ export class HeaderComponent implements OnInit {
   notifications: INotification[];
   newNotifications: number = 0;
   isNotificationLoaded: boolean = false;
+  hasNotifications: boolean = false;
   // isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
   //   .pipe(
   //     map(result => result.matches)
@@ -72,12 +73,21 @@ export class HeaderComponent implements OnInit {
       .subscribe(res => {
         if (res.status === 200) {
           this.notifications = this.itemsService.getSerialized<INotification[]>(res.body);
+
+          if (this.notifications.length > 0) {
+            this.hasNotifications = true;
+          } else {
+            this.hasNotifications = false;
+          }
+
           this.newNotifications = 0;
+
           for (let n of this.notifications) {
             if (!n.hasRead) {
               this.newNotifications += 1;
             }
           }
+          
           this.isNotificationLoaded = true;
         }
       });
@@ -115,6 +125,10 @@ export class HeaderComponent implements OnInit {
 
   onClickMyVideos() {
     this.router.navigate(['account-info', "my-videos"]);
+  }
+
+  onClickProfile() {
+    this.router.navigate(['account-info', "profile"]);
   }
 
   onChangePassword() {

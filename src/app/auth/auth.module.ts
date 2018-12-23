@@ -14,6 +14,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { TokenExpiredComponent } from './token-expired/token-expired.component';
 import { ConfirmedComponent } from './confirmed/confirmed.component';
 import { TermsOfServiceDialog } from './register/dialog/terms-of-service/terms-of-service.component';
+import { LogoutComponent } from './logout/logout.component';
+import { WithdrawMembershipComponent } from './withdraw-membership/withdraw-membership.component';
 
 @NgModule({
   imports: [
@@ -38,7 +40,9 @@ import { TermsOfServiceDialog } from './register/dialog/terms-of-service/terms-o
     ForgotPasswordComponent,
     ConfirmedComponent,
     TokenExpiredComponent,
-    TermsOfServiceDialog
+    TermsOfServiceDialog,
+    LogoutComponent,
+    WithdrawMembershipComponent
   ]
 })
 export class AuthModule { }

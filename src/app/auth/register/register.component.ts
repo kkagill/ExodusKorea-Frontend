@@ -112,6 +112,12 @@ export class RegisterComponent {
             else if (error.error === "DuplicateNickName") {
               this.error = '이미 등록된 닉네임입니다.';
             }
+            else if (error.error === "NickName cannot be empty") {
+              this.error = '닉네임 필드가 필요합니다.'
+            }
+            else if (error.error === "NickName maxlength 10") {
+              this.error = '닉네임은 10글자 이하로 입력해주세요.'
+            }
           }
           else {
             this.error = '오류가 발생했습니다. 다시 시도해주세요.';

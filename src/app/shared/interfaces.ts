@@ -3,11 +3,19 @@ export interface IApplicationUser {
     firstName: string;
     lastName: string;   
     lockoutEnd: Date;
+    nickName: string;
 }
 
 export interface ICareer {
     careerId: number;
-    name;
+    name: string;
+    nameEN: string;
+}
+
+export interface IJobSite {
+    category: string;
+    name: string;
+    link: string;
 }
 
 export interface ICategory {
@@ -212,6 +220,15 @@ export interface INotification {
     comment: string;  
     dateCreated: Date;  
     hasRead: boolean;
+}
+
+export interface IProfile {
+    email : string;
+    nickName : string;
+    dateCreated : Date;
+    dateVisitedRecent: Date;
+    visitCount: number;
+    hasCanceledSubscription: boolean;
 }
 
 export interface Pagination {

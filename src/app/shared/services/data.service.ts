@@ -49,6 +49,30 @@ export class DataService {
       );
   }
 
+  getCareerInfo(videoPostId: number): Observable<any> {
+    return this.http.get(this._baseUrl + `carddetail/${videoPostId}/career-info`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  getJobSites(): Observable<any> {
+    return this.http.get(this._baseUrl + `carddetail/job-sites`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
   getCurrency(): Observable<any> {
     return this.http.get(this._baseUrl + `home/currency`, { observe: "response" })
       .pipe(
@@ -446,22 +470,6 @@ export class DataService {
         })
       );
   }  
-
-  changePassword(body: any): Observable<any> {
-    const header = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-    };
-    return this.http.post<any>(this._baseUrl + 'account/change-password', body, { headers: header, observe: "response" })
-      .pipe(
-        map(res => {
-          return res;
-        }),
-        catchError(err => {
-          return throwError(err);
-        })
-      );
-  }
 
   logHttpResponseException(body: any): Observable<any> {   
     return this.http.post<any>(this._baseUrl + 'httpresponse/log-http-response', body, { observe: "response" })
