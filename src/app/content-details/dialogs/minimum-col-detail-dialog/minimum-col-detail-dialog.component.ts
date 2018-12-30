@@ -1,9 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatDialog } from '@angular/material';
 import { DataService } from 'src/app/shared/services/data.service';
 import { ItemsService } from 'src/app/shared/utils/items.service';
 import { IMinimumCOL } from 'src/app/shared/interfaces';
 import { MdbTableService } from 'ng-uikit-pro-standard';
+import { EtcDialog } from './dialogs/etc-dialog/etc-dialog.component';
 
 export interface DialogData {
   countryEN: string;
@@ -26,6 +27,7 @@ export class MinimumColDetailDialog implements OnInit {
   constructor(private dataService: DataService,
     private itemsService: ItemsService,
     public snackBar: MatSnackBar,
+    public dialog: MatDialog,
     private tableService: MdbTableService,
     public dialogRef: MatDialogRef<MinimumColDetailDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
@@ -54,6 +56,13 @@ export class MinimumColDetailDialog implements OnInit {
           });
         }
       );
+  }
+
+  onClickDetail(etc: string) {
+    const dialogRef = this.dialog.open(EtcDialog, {
+      width: '500px',
+      data: { etc: etc }
+    });
   }
 
   onCancelClick() {

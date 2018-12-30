@@ -326,8 +326,8 @@ export class DataService {
       );
   }
 
-  getPostLikesCombined(videoPostId: number, videoId: string): Observable<any> {
-    return this.http.get(this._baseUrl + `carddetail/${videoPostId}/${videoId}/video-post-likes`, { observe: "response" })
+  getPostLikesCombined(videoPostId: number, videoId: string, vimeoId: number): Observable<any> {
+    return this.http.get(this._baseUrl + `carddetail/${videoPostId}/${videoId}/${vimeoId}/video-post-likes`, { observe: "response" })
       .pipe(
         map(res => {
           return res;
@@ -338,8 +338,8 @@ export class DataService {
       );
   }
 
-  getVideoComments(videoPostId: number, videoId: string): Observable<any> {
-    return this.http.get(this._baseUrl + `carddetail/${videoPostId}/${videoId}/video-comments-combined`, { observe: "response" })
+  getVideoComments(videoPostId: number, videoId: string, vimeoId: number): Observable<any> {
+    return this.http.get(this._baseUrl + `carddetail/${videoPostId}/${videoId}/${vimeoId}/video-comments-combined`, { observe: "response" })
       .pipe(
         map(res => {
           return res;
@@ -642,6 +642,18 @@ export class DataService {
         })
       );
   }  
+
+  uploadVideo(body: any): Observable<any> {   
+    return this.http.post<any>(this._baseUrl + 'uploadvideo/upload-video', body, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
 
   updateNewsViewsCount(newsDetailId: number): Observable<any> {      
     return this.http.put<any>(this._baseUrl + `news/${newsDetailId}/update-views-count`, newsDetailId, { observe: "response" })

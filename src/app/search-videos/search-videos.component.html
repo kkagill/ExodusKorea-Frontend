@@ -3,14 +3,14 @@
     <div class="col-lg-2 col-md-12">
       <!-- [multi]="true" -->
       <mat-accordion>
-        <div class="list-group-item all pointer" [style.background-color]="all === 'initial' ? '#94c3f4' : ''" (click)="onSelectAll()">
+        <!-- <div class="list-group-item all pointer" [style.background-color]="all === 'initial' ? '#94c3f4' : ''" (click)="onSelectAll()">
           전체
-        </div>   
+        </div>    -->
 
-        <mat-expansion-panel [expanded]="expandCategory" *ngIf="isCategoriesLoaded">  
+        <mat-expansion-panel expanded="true" *ngIf="isCategoriesLoaded">  
           <mat-expansion-panel-header>
             <mat-panel-title>
-              카테고리별
+              카테고리
             </mat-panel-title>
           </mat-expansion-panel-header>
           <p class="pointer" *ngFor="let c of categories" (click)="onSelectCategory(c)" [style.background-color]="c===selectedCategory ? '#94c3f4' : ''">
@@ -18,7 +18,7 @@
           </p>
         </mat-expansion-panel>
 
-        <mat-expansion-panel [expanded]="expandCareer" *ngIf="isCareersLoaded">
+        <!-- <mat-expansion-panel [expanded]="expandCareer" *ngIf="isCareersLoaded">
           <mat-expansion-panel-header>
             <mat-panel-title>
               직업별
@@ -27,7 +27,7 @@
           <p class="pointer" *ngFor="let c of careers" (click)="onSelectCareer(c)" [style.background-color]="c===selectedCareer ? '#94c3f4' : ''">
             {{c.name}}
           </p>
-        </mat-expansion-panel>
+        </mat-expansion-panel> -->
       </mat-accordion>
     </div>
 
@@ -43,7 +43,7 @@
           </div>
         </div>
         <div class="col-md-3" *ngFor="let card of searchResult | searchFilter: {uploader: searchText, uploadedDate: searchText, countryKR: searchText, title: searchText} | paginate: { itemsPerPage: 8, currentPage: page }">
-          <mat-card class="card card-body mb-3" (click)="onMatCardClick(card.videoPostId, card.youTubeVideoId, card.categoryId)" style="cursor:pointer;">
+          <mat-card class="card card-body mb-3" (click)="onMatCardClick(card.videoPostId, card.youTubeVideoId, card.categoryId, card.vimeoId)" style="cursor:pointer;">
             <mat-card-header>
               <div mat-card-avatar class="example-header-image" [ngStyle]="{'background-image':'url(' + backgroundUrl + card.countryEN +'.png' + ')'}"></div>
               <mat-card-title>{{card.uploader}}</mat-card-title>

@@ -52,7 +52,7 @@
               </mat-error>
             </mat-form-field>
             <div id="recaptcha" style="margin-left: 15px;">
-              <re-captcha (resolved)="$event && submit($event)" formControlName="recaptcha" siteKey="6Lf5B3YUAAAAACwH0L2VRaY-dA-BeK1k3NMmiP1U"></re-captcha>
+              <re-captcha (resolved)="$event && submit($event)" formControlName="recaptcha" siteKey={{siteKey}}></re-captcha>
             </div>
           </mat-card-content>
           <div style="margin-top: 30px;">

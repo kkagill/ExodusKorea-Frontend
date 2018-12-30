@@ -4,7 +4,7 @@ import { DeleteCommentDialog } from './dialogs/delete-comment-dialog/delete-comm
 import { ICountryInfo, IPriceInfo, ICurrencyInfo, IVideoComment, IVideoCommentReply, ISalaryInfo, IMinimumCoLInfo, ICareer, IJobSite } from './../shared/interfaces';
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../shared/services/data.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ItemsService } from '../shared/utils/items.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Validators, FormBuilder } from '@angular/forms';
@@ -26,6 +26,7 @@ export class ContentDetailsComponent implements OnInit {
   safeURL: any;
   videoPostId: any;
   youtubeId: any;
+  vimeoId: number;
   countryInfo: ICountryInfo;
   salaryInfo: ISalaryInfo;
   priceInfo: IPriceInfo;
@@ -44,13 +45,14 @@ export class ContentDetailsComponent implements OnInit {
   isVideoCommentsLoaded: boolean = false;
   isJobSitesLoaded: boolean = false;
   selectedVideoCommentId: number;
-  selectedVideoCommentReplyId: number;
+  selectedVideoCommentReplyId: number;  
   commentForm: any;
   commentReplyForm: any;
   email: string;
   password: string;
 
   constructor(private dataService: DataService,
+    private router: Router,
     private authService: AuthService,
     private activatedRoute: ActivatedRoute,
     private itemsService: ItemsService,
@@ -81,7 +83,17 @@ export class ContentDetailsComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
       this.videoPostId = params.get('id1');
       this.youtubeId = params.get('id2');
-      this.safeURL = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${this.youtubeId}${'?autoplay=1'}`);
+      this.vimeoId = +params.get('id3');
+      // Use Vimeo
+      if (this.vimeoId > 0 && this.authService.isAuthenticated()) {
+        this.safeURL = this.sanitizer.bypassSecurityTrustResourceUrl(`https://player.vimeo.com/video/${this.vimeoId}${'?autoplay=1'}${'&rel=0'}`); // rel=0, related videos will come from the same channel as the video that was just played. 
+      // Enter vimeoId in URL without being logged in
+      } else if (this.vimeoId > 0 && !this.authService.isAuthenticated()) {
+        this.router.navigate(['**']);
+      // Use YouTube
+      } else {
+        this.safeURL = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${this.youtubeId}${'?autoplay=1'}${'&rel=0'}`); // rel=0, related videos will come from the same channel as the video that was just played. 
+      }      
       this.loadCountryInfo();
       this.loadSalaryInfo();
       this.loadPriceInfo();
@@ -165,7 +177,7 @@ export class ContentDetailsComponent implements OnInit {
   // }
 
   loadPostLikes() {
-    this.dataService.getPostLikesCombined(this.videoPostId, this.youtubeId)
+    this.dataService.getPostLikesCombined(this.videoPostId, this.youtubeId, this.vimeoId)
       .subscribe(res => {
         if (res.status === 200) {
           this.isYouTubeLikesLoaded = true;
@@ -175,7 +187,7 @@ export class ContentDetailsComponent implements OnInit {
   }
 
   loadVideoComments() {
-    this.dataService.getVideoComments(this.videoPostId, this.youtubeId)
+    this.dataService.getVideoComments(this.videoPostId, this.youtubeId, this.vimeoId)
       .subscribe(res => {
         if (res.status === 200) {
           this.isVideoCommentsLoaded = true;
@@ -236,7 +248,8 @@ export class ContentDetailsComponent implements OnInit {
     }
     let body = {
       'comment': this.commentReplyForm.value.comment,
-      'videoCommentId': videoCommentId
+      'videoCommentId': videoCommentId,
+      'videoPostId': this.videoPostId
     };
     this.dataService.addNewCommentReply(body)
       .subscribe(res => {
@@ -246,6 +259,7 @@ export class ContentDetailsComponent implements OnInit {
             'videoCommentReplyId': res.body.videoCommentReplyId,
             'videoPostId': this.videoPostId,
             'youTubeVideoId': this.youtubeId,
+            'vimeoId': this.vimeoId,
             'userId': userId,
             'comment': this.commentReplyForm.value.comment
           };
@@ -278,6 +292,7 @@ export class ContentDetailsComponent implements OnInit {
     let body = {
       'comment': this.commentReplyForm.value.comment,
       'videoCommentId': videoCommentId,
+      'videoPostId': this.videoPostId,
       'authorDisplayName': authorDisplayName
     };
     this.dataService.addNewCommentReplyReply(body)
@@ -288,6 +303,7 @@ export class ContentDetailsComponent implements OnInit {
             'videoCommentReplyId': res.body.videoCommentReplyId,
             'videoPostId': this.videoPostId,
             'youTubeVideoId': this.youtubeId,
+            'vimeoId': this.vimeoId,
             'userId': userId,
             'comment': this.commentReplyForm.value.comment
           };
@@ -357,7 +373,7 @@ export class ContentDetailsComponent implements OnInit {
                 this.dataService.addPostLike(body)
                   .subscribe(res => {
                     if (res.status === 201) {
-                      this.dataService.getPostLikesCombined(this.videoPostId, this.youtubeId)
+                      this.dataService.getPostLikesCombined(this.videoPostId, this.youtubeId, this.vimeoId)
                         .subscribe(res => {
                           if (res.status === 200) {
                             this.likes = this.itemsService.getSerialized<string>(res.body);

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,9 +7,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Exodus Korea';
+  title = '엑소더스 코리아';
 
   constructor(private router: Router) {
-
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        (<any>window).ga('set', 'page', event.urlAfterRedirects);
+        (<any>window).ga('send', 'pageview');
+      }
+    });
   }
 }

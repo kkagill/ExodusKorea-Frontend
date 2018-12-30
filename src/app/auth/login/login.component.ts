@@ -79,6 +79,11 @@ export class LoginComponent {
     });
   }
 
+  goToRegister() {
+    this.dialogRef.close();
+    this.router.navigate(['register']);
+  }
+
   onNoClick(event) {
     // Close only when it is clicked, not enter pressed
     if (event.x !== 0 && event.y !== 0) {

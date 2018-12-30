@@ -15,6 +15,7 @@ export interface DialogData {
   notificationId: number,
   videoPostId: number,
   youTubeVideoId: string,
+  vimeoId: number,
   videoCommentId: number;
   videoCommentReplyId: number;
 }
@@ -285,7 +286,8 @@ export class NotifCommentDialog implements OnInit {
     }
     let body = {
       'comment': this.commentReplyForm.value.comment,
-      'videoCommentId': videoCommentId
+      'videoCommentId': videoCommentId,
+      'videoPostId': this.data.videoPostId,
     };
     this.dataService.addNewCommentReply(body)
       .subscribe(res => {
@@ -323,7 +325,8 @@ export class NotifCommentDialog implements OnInit {
     let body = {
       'comment': this.commentReplyForm.value.comment,
       'videoCommentId': videoCommentId,
-      'authorDisplayName': authorDisplayName
+      'authorDisplayName': authorDisplayName,
+      'videoPostId': this.data.videoPostId
     };
     this.dataService.addNewCommentReplyReply(body)
       .subscribe(res => {
@@ -392,6 +395,6 @@ export class NotifCommentDialog implements OnInit {
 
   onClickRedirect() {
     this.dialogRef.close();
-    this.router.navigate(['content-details', this.data.videoPostId, this.data.youTubeVideoId]);
+    this.router.navigate(['content-details', this.data.videoPostId, this.data.youTubeVideoId, this.data.vimeoId]);
   }
 }

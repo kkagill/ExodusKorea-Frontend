@@ -1,7 +1,8 @@
+<ngx-spinner bdColor="rgba(255,255,255,0.8)" size="large" color="#f7a233" type="timer"></ngx-spinner>
 <section>
 	<h2 class="h1 py-5 font-weight-bold text-center">SHARING YOUR STORY</h2>
 	<p class="px-5 mb-5 pb-3 lead grey-text text-center">
-		아무것도 모른채로 해외 취업에 뛰어든다면 이리저리 치일 수 밖에 없는 해외 취업 지망생들을 위해 도움이 필요합니다.
+		아무것도 모른채 해외 취업에 뛰어든다면 이리저리 치일 수 밖에 없는 해외 취업 지망생들을 위해
 		해외 취업에 성공한 <span class="thick">나의 노하우</span>를 영상을 통해 전달해 보세요!
 	</p>
 	<section class="team-section text-center my-5">
@@ -12,7 +13,7 @@
 		<div class="row text-center">
 			<div class="col-md-4 mb-md-0 mb-5">
 				<div class="avatar mx-auto">
-					<img class="img-fluid" src="./../../assets/images/upload-video/k.png" class="rounded z-depth-1-half">		
+					<img class="img-fluid" src="./../../assets/images/upload-video/k.png" class="rounded z-depth-1-half">
 				</div>
 				<h4 class="font-weight-bold dark-grey-text my-4">1. 영상 제작</h4>
 				<h6 class="text-uppercase grey-text mb-3">
@@ -21,7 +22,7 @@
 			</div>
 			<div class="col-md-4 mb-md-0 mb-5">
 				<div class="avatar mx-auto">
-					<img class="img-fluid" src="./../../assets/images/upload-video/i.jpg" class="rounded z-depth-1-half">					
+					<img class="img-fluid" src="./../../assets/images/upload-video/i.jpg" class="rounded z-depth-1-half">
 				</div>
 				<h4 class="font-weight-bold dark-grey-text my-4">2. 유튜브에 업로드</h4>
 				<h6 class="text-uppercase grey-text mb-3">
@@ -30,7 +31,7 @@
 			</div>
 			<div class="col-md-4">
 				<div class="avatar mx-auto">
-						<img class="img-fluid" src="./../../assets/images/upload-video/j.png" class="rounded z-depth-1-half">		
+					<img class="img-fluid" src="./../../assets/images/upload-video/j.png" class="rounded z-depth-1-half">
 				</div>
 				<h4 class="font-weight-bold dark-grey-text my-4">3. 유튜브 주소 제출</h4>
 				<h6 class="text-uppercase grey-text mb-3">
@@ -40,9 +41,8 @@
 		</div>
 		<br />
 		<p class="grey-text w-responsive mx-auto mb-5">
-			<span class="thick">admin@exoduscorea.com</span> 으로 주소를 제출해주세요.
-			<i class="fa fa-info-circle" matTooltip="해당 영상의 제작자인지 확인 후 업로드 완료합니다."
-			matTooltipPosition="above" aria-hidden="true"></i>
+			* 유튜브와 연동이 되어있어 조회수를 올리며 또 채널 홍보에 더 많은 도움이 될 것 입니다.
+			많은 이들이 여러분의 영상을 보고 꿈을 키울 수 있도록 홍보와 마케팅에 노력을 기하겠습니다.
 		</p>
 	</section>
 
@@ -118,6 +118,35 @@
 	</div>
 </section>
 
+<hr />
+
+<div class="col-lg-6 col-md-12 mb-lg-0 mb-5" style="margin: 0 auto;">
+	<h2 class="h2-responsive font-weight-bold my-5">양식 제출</h2>
+	<form class="text-center border border-light p-5" (ngSubmit)="onSubmit()">
+		<p class="grey-text w-responsive mx-auto mb-5">아주 간단해요.</p>
+		<p class="grey-text w-responsive mx-auto mb-5">기존에 있는 영상 or 새로운 영상 제작 완료 후</p>
+		<p>1. 엑소더스 코리아 회원가입에 쓰인 이메일 주소와</p>
+		<p>2. 유튜브에 업로드 된 영상 <span class="youtube-address" mdbTooltip="예: https://www.youtube.com/watch?v=JLigmxoSb30"
+			placement="top">주소</span>를 보내주시면 됩니다</p>
+		<br />
+		<p class="grey-text w-responsive mx-auto mb-5">
+			간단한 <span class="youtube-address" mdbTooltip="저희 측에서 해당 유튜브 영상에 코멘트를 남기면 답글을 달아주시면 됩니다." placement="top">확인절차</span>를
+			거친 후 엑소더스 코리아에 콘텐츠를 업로드 하게 됩니다.
+		</p>
+		<input type="email" [(ngModel)]="email" name="email" mdbInputDirective class="form-control mb-4"
+		 placeholder="이메일">
+		<input type="text" [(ngModel)]="youtubeAddress" name="youtubeAddress" mdbInputDirective class="form-control mb-4"
+		 placeholder="유튜브 주소">
+		<div class="custom-control custom-checkbox mb-4">
+			<div id="recaptcha">
+				<re-captcha (resolved)="$event && submit($event)" siteKey={{siteKey}}></re-captcha>
+			</div>
+		</div>
+		<button mdbBtn color="info" block="true" class="z-depth-0 my-4 waves-effect" mdbWavesEffect type="submit">제출</button>
+	</form>
+</div>
+
+<br />
 <hr />
 
 <section class="magazine-section my-5">

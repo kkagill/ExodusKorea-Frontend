@@ -54,3 +54,7 @@
 .carousel-item-prev { 
     display: flex; 
 }
+
+.mat-card-header .mat-card-subtitle:not(:first-child) {
+    margin-top: -18px !important;
+}

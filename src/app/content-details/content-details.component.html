@@ -43,13 +43,14 @@
             <div *ngIf="isVideoCommentsLoaded">
               <div class="left-align" *ngFor="let vc of videoComments | paginate: { itemsPerPage: 20, currentPage: page }">
                 <mat-label class="thick">
-                  {{vc.authorDisplayName}}
+                  <span *ngIf="vc.isSharer" class="sharer">&nbsp;{{vc.authorDisplayName}}&nbsp;</span>    
+                  <span *ngIf="!vc.isSharer">{{vc.authorDisplayName}}</span>                  
                   <img *ngIf="vc.isYouTubeComment" src="./../../assets/images/youtube.png" alt="유튜브" style="margin-bottom: 3px;">
-                  <img *ngIf="!vc.isYouTubeComment && vc.countryEN" src="./../../assets/images/countries/{{vc.countryEN}}-square16.png"
-                    style="margin-bottom: 3px;">
+                  <!-- <img *ngIf="!vc.isYouTubeComment && vc.countryEN" src="./../../assets/images/countries/{{vc.countryEN}}-square16.png"
+                    style="margin-bottom: 3px;"> -->
                 </mat-label>
                 <br />
-                <mat-label [innerHTML]="vc.comment"></mat-label>
+                <mat-label class="pre-wrap" [innerHTML]="vc.comment"></mat-label>
                 <br />
                 <mat-label>
                   {{vc.dateCreated | date:'y-MM-dd'}}
@@ -97,15 +98,16 @@
                   <div mdbCollapse #replies="bs-collapse" style="margin-left: 34px;">
                     <div class="left-align" *ngFor="let vcr of vc.videoCommentReplies">
                       <mat-label class="thick">
-                        {{vcr.authorDisplayName}}
+                        <span *ngIf="vcr.isSharer" class="sharer">&nbsp;{{vcr.authorDisplayName}}&nbsp;</span>    
+                        <span *ngIf="!vcr.isSharer">{{vcr.authorDisplayName}}</span>         
                         <img *ngIf="vcr.isYouTubeComment" src="./../../assets/images/youtube.png" alt="유튜브" style="margin-bottom: 3px;">
-                        <img *ngIf="!vcr.isYouTubeComment && vcr.countryEN" src="./../../assets/images/countries/{{vcr.countryEN}}-square16.png"
-                          style="margin-bottom: 3px;">
+                        <!-- <img *ngIf="!vcr.isYouTubeComment && vcr.countryEN" src="./../../assets/images/countries/{{vcr.countryEN}}-square16.png"
+                          style="margin-bottom: 3px;"> -->
                       </mat-label>
                       <br />
                       <mat-label>
                         <span *ngIf="vcr.repliedTo" style="color: #065fd4">@{{vcr.repliedTo}} </span>
-                        <span [innerHTML]="vcr.comment"></span>
+                        <span class="pre-wrap" [innerHTML]="vcr.comment"></span>
                       </mat-label>
                       <br />
                       <mat-label>

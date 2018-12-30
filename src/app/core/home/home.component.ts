@@ -1,10 +1,13 @@
+import { AuthService } from './../../shared/services/auth.service';
 import { IVideoPost, INewsDetail, ICurrencyInfo } from './../../shared/interfaces';
 import { ItemsService } from './../../shared/utils/items.service';
 import { DataService } from './../../shared/services/data.service';
 import { Component, OnInit, Renderer2, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { DatePipe } from '@angular/common';
+import { LoginComponent } from 'src/app/auth/login/login.component';
+import { DataSharingService } from 'src/app/shared/services/data-sharing.service';
 
 @Component({
   selector: 'home',
@@ -26,11 +29,16 @@ export class HomeComponent implements OnInit, AfterViewInit {
   isNewVideosLoaded: boolean = false;
   isAllVideosLoaded: boolean = false;
   today: string;
+  email: string;
+  password: string;
 
   public constructor(private router: Router,
+    private authService: AuthService,
     private datePipe: DatePipe,
     private renderer: Renderer2,
     public snackBar: MatSnackBar,
+    private dataSharingService: DataSharingService,
+    public dialog: MatDialog,
     private dataService: DataService,
     private itemService: ItemsService) {
     this.today = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
@@ -152,8 +160,21 @@ export class HomeComponent implements OnInit, AfterViewInit {
     return R;
   }
 
-  onMatCardClick(videoPostId, videoId) {
-    this.router.navigate(['content-details', videoPostId, videoId]);
+  onMatCardClick(videoPostId: number, videoId: string, vimeoId: number) {
+    if (vimeoId > 0 && !this.authService.isAuthenticated()) {
+      const dialogRef = this.dialog.open(LoginComponent, {
+        width: '410px',
+        data: { email: this.email, password: this.password }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (this.authService.isAuthenticated()) {
+          this.dataSharingService.loggedIn.next(true); // pass data to header.component.ts
+        }
+      });
+    } else {
+      this.router.navigate(['content-details', videoPostId, videoId, vimeoId]);
+    }    
   }
 
   onNewsDetailClick(newsDetailId: number, newsId: number) {

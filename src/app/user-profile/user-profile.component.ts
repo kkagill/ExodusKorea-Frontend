@@ -182,9 +182,9 @@ export class UserProfileComponent implements OnInit {
       );
   }
 
-  onMatCardClick(videoPostId: number, videoId: string) {
+  onMatCardClick(videoPostId: number, videoId: string, vimeoId: number) {
     localStorage.setItem('myVideos', 'true');
-    this.router.navigate(['content-details', videoPostId, videoId]);
+    this.router.navigate(['content-details', videoPostId, videoId, vimeoId]);
   }
 
   onSelectMyVideos() {

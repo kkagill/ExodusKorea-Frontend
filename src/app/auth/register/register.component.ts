@@ -1,11 +1,12 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from './../../shared/services/auth.service';
 import { Router } from '@angular/router';
-import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatDialog } from '@angular/material';
+import { Component } from '@angular/core';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpClient } from '@angular/common/http';
 import { TermsOfServiceDialog } from './dialog/terms-of-service/terms-of-service.component';
+import { environment } from '../../../environments/environment';
 
 export interface RegisterDialogData {
   email: string;
@@ -30,6 +31,7 @@ export class RegisterComponent {
   tandsFormControl;
   recaptchaFormControl;
   registerForm: FormGroup;
+  siteKey = environment.RecaptchaSiteKey; 
 
   constructor(public router: Router,
     public http: HttpClient,

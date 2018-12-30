@@ -4,8 +4,8 @@ import { Observable } from 'rxjs/Observable';
 import { map, catchError } from 'rxjs/operators';
 import { ConfigService } from '../utils/config.service';
 import { throwError } from 'rxjs';
-import { JwtHelper } from 'angular2-jwt';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class AuthService {
@@ -18,8 +18,6 @@ export class AuthService {
     this._baseUrl = this.configService.getApiURI();
     this._baseAuthUrl = this.configService.getAuthURI();
   }
-
-  jwtHelper: JwtHelper = new JwtHelper();
 
   login(email: string, password: string): Observable<boolean> {
     const body = new HttpParams()
@@ -229,11 +227,13 @@ export class AuthService {
   }
 
   decodeToken() {
-    return this.jwtHelper.decodeToken(this.getAccessToken());
+    const jwtHelper = new JwtHelperService();
+    return jwtHelper.decodeToken(this.getAccessToken());
   }
 
   isTokenExpired() {
-    return this.jwtHelper.isTokenExpired(this.getAccessToken());
+    const jwtHelper = new JwtHelperService();
+    return jwtHelper.isTokenExpired(this.getAccessToken());
   }
 
   getUserId() {

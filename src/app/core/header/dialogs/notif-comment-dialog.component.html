@@ -12,11 +12,12 @@
   <div *ngIf="isVideoCommentLoaded && vc">
     <div class="left-align">
       <mat-label class="thick">
-        {{vc.authorDisplayName}}
-        <img *ngIf="vc.countryEN" src="./../../assets/images/countries/{{vc.countryEN}}-square16.png" style="margin-bottom: 3px;">
+        <span *ngIf="vc.isSharer" class="sharer">&nbsp;{{vc.authorDisplayName}}&nbsp;</span>    
+        <span *ngIf="!vc.isSharer">{{vc.authorDisplayName}}</span>             
+        <!-- <img *ngIf="vc.countryEN" src="./../../assets/images/countries/{{vc.countryEN}}-square16.png" style="margin-bottom: 3px;"> -->
       </mat-label>
       <br />
-      <mat-label [innerHTML]="vc.comment"></mat-label>
+      <mat-label class="pre-wrap" [innerHTML]="vc.comment"></mat-label>
       <br />
       <mat-label>
         {{vc.dateCreated | date:'y-MM-dd'}}
@@ -62,13 +63,14 @@
           <div class="left-align" *ngFor="let vcr of vc.videoCommentReplies">
             <div [ngStyle]="vcr.videoCommentReplyId === data.videoCommentReplyId ? {'background-color': 'rgba(0, 0, 0, 0.1)'} : {'background-color': ''}">
               <mat-label class="thick">
-                {{vcr.authorDisplayName}}
-                <img *ngIf="vcr.countryEN" src="./../../assets/images/countries/{{vcr.countryEN}}-square16.png" style="margin-bottom: 3px;">
+                <span *ngIf="vcr.isSharer" class="sharer">&nbsp;{{vcr.authorDisplayName}}&nbsp;</span>    
+                <span *ngIf="!vcr.isSharer">{{vcr.authorDisplayName}}</span>             
+                <!-- <img *ngIf="vcr.countryEN" src="./../../assets/images/countries/{{vcr.countryEN}}-square16.png" style="margin-bottom: 3px;"> -->
               </mat-label>
               <br />
               <mat-label>
                 <span *ngIf="vcr.repliedTo" style="color: #065fd4">@{{vcr.repliedTo}} </span>
-                <span [innerHTML]="vcr.comment"></span>
+                <span class="pre-wrap" [innerHTML]="vcr.comment"></span>
               </mat-label>
               <br />
               <mat-label>

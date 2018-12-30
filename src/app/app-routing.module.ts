@@ -13,7 +13,7 @@ import { CountryInfoComponent } from './country-info/country-info.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
-    { path: 'content-details/:id1/:id2', component: ContentDetailsComponent },
+    { path: 'content-details/:id1/:id2/:id3', component: ContentDetailsComponent },
     { path: 'search-videos', component: SearchVideosComponent },
     { path: 'news', component: NewsComponent },
     { path: 'news-detail/:id1/:id2/:id3', component: NewsDetailComponent },

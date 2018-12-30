@@ -52,6 +52,7 @@ export interface IVideoPost {
     title: string;
     likes: number;
     youTubeVideoId: string;
+    vimeoId: number;
     categoryId: number;
     countryEN: string;
     countryKR: string;  
@@ -184,6 +185,7 @@ export interface IVideoComment {
     isYouTubeComment: boolean;
     videoPostId: number;
     videoCommentReplies: IVideoCommentReply[];
+    isSharer: boolean;
 }
 
 export interface IVideoCommentReply {
@@ -197,6 +199,7 @@ export interface IVideoCommentReply {
     userId: string;
     countryEN: string;
     repliedTo: string;
+    isSharer: boolean;
 }
 
 export interface ISalaryInfo {
@@ -215,6 +218,7 @@ export interface INotification {
     videoCommentReplyId: number;
     videoPostId: number;
     youTubeVideoId: string;
+    vimeoId: number;
     userId: string;
     nickName: string;
     comment: string;  
