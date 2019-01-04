@@ -1,7 +1,7 @@
 import { AddMinimumColDialog } from './dialogs/add-minimum-col-dialog/add-minimum-col-dialog.component';
 import { DataSharingService } from './../shared/services/data-sharing.service';
 import { DeleteCommentDialog } from './dialogs/delete-comment-dialog/delete-comment-dialog.component';
-import { ICountryInfo, IPriceInfo, ICurrencyInfo, IVideoComment, IVideoCommentReply, ISalaryInfo, IMinimumCoLInfo, ICareer, IJobSite } from './../shared/interfaces';
+import { ICountryInfo, IPriceInfo, ICurrencyInfo, IVideoComment, IVideoCommentReply, ISalaryInfo, IMinimumCoLInfo, ICareer, IJobSite, IVideoPostInfo } from './../shared/interfaces';
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../shared/services/data.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
@@ -35,21 +35,25 @@ export class ContentDetailsComponent implements OnInit {
   careerInfo: ICareer;
   jobSites: IJobSite[];
   videoComments: IVideoComment[];
+  youTubeReplies: IVideoComment[];
+  videoInfo: IVideoPostInfo;
   isCountryInfoLoaded: boolean = false;
   isSalaryInfoLoaded: boolean = false;
   isPriceInfoLoaded: boolean = false;
   isMinimumCoLInfoLoaded: boolean = false;
   isCareerInfoLoaded: boolean = false;
   //isCurrencyInfoLoaded: boolean = false;
-  isYouTubeLikesLoaded: boolean = false;
+  isVideoPostInfoLoaded: boolean = false;
+  isYouTubeRepliesLoaded: boolean = false;
   isVideoCommentsLoaded: boolean = false;
   isJobSitesLoaded: boolean = false;
   selectedVideoCommentId: number;
-  selectedVideoCommentReplyId: number;  
+  selectedVideoCommentReplyId: number;
   commentForm: any;
   commentReplyForm: any;
   email: string;
   password: string;
+  currentYear: Date;
 
   constructor(private dataService: DataService,
     private router: Router,
@@ -61,6 +65,7 @@ export class ContentDetailsComponent implements OnInit {
     private dataSharingService: DataSharingService,
     public snackBar: MatSnackBar,
     public dialog: MatDialog) {
+    this.currentYear = new Date();
     this.commentForm = this.formBuilder.group({
       comment: [null, Validators.compose(
         [
@@ -87,13 +92,13 @@ export class ContentDetailsComponent implements OnInit {
       // Use Vimeo
       if (this.vimeoId > 0 && this.authService.isAuthenticated()) {
         this.safeURL = this.sanitizer.bypassSecurityTrustResourceUrl(`https://player.vimeo.com/video/${this.vimeoId}${'?autoplay=1'}${'&rel=0'}`); // rel=0, related videos will come from the same channel as the video that was just played. 
-      // Enter vimeoId in URL without being logged in
+        // Enter vimeoId in URL without being logged in
       } else if (this.vimeoId > 0 && !this.authService.isAuthenticated()) {
         this.router.navigate(['**']);
-      // Use YouTube
+        // Use YouTube
       } else {
         this.safeURL = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${this.youtubeId}${'?autoplay=1'}${'&rel=0'}`); // rel=0, related videos will come from the same channel as the video that was just played. 
-      }      
+      }
       this.loadCountryInfo();
       this.loadSalaryInfo();
       this.loadPriceInfo();
@@ -101,7 +106,7 @@ export class ContentDetailsComponent implements OnInit {
       this.loadCareerInfo();
       this.loadJobSites();
       // this.loadCurrencyInfo();
-      this.loadPostLikes();
+      this.loadPostInfo();
       this.loadVideoComments();
     });
   }
@@ -157,7 +162,7 @@ export class ContentDetailsComponent implements OnInit {
   }
 
   loadJobSites() {
-    this.dataService.getJobSites()
+    this.dataService.getJobSites(this.videoPostId)
       .subscribe(res => {
         if (res.status === 200) {
           this.isJobSitesLoaded = true;
@@ -176,12 +181,12 @@ export class ContentDetailsComponent implements OnInit {
   //     });
   // }
 
-  loadPostLikes() {
-    this.dataService.getPostLikesCombined(this.videoPostId, this.youtubeId, this.vimeoId)
+  loadPostInfo() {
+    this.dataService.getPostInfo(this.videoPostId, this.youtubeId, this.vimeoId)
       .subscribe(res => {
         if (res.status === 200) {
-          this.isYouTubeLikesLoaded = true;
-          this.likes = this.itemsService.getSerialized<string>(res.body);
+          this.isVideoPostInfoLoaded = true;
+          this.videoInfo = this.itemsService.getSerialized<IVideoPostInfo>(res.body);
         }
       });
   }
@@ -195,6 +200,16 @@ export class ContentDetailsComponent implements OnInit {
         }
       });
   }
+
+  // loadYouTubeReplies(parentId: string) {
+  //   this.dataService.getYouTubeReplies(parentId)
+  //   .subscribe(res => {
+  //     if (res.status === 200) {
+  //       this.isYouTubeRepliesLoaded = true;
+  //       this.youTubeReplies = this.itemsService.getSerialized<IVideoComment[]>(res.body);
+  //     }
+  //   });
+  // }
 
   onClickCommentBox() {
     if (!this.authService.isAuthenticated()) {
@@ -373,10 +388,10 @@ export class ContentDetailsComponent implements OnInit {
                 this.dataService.addPostLike(body)
                   .subscribe(res => {
                     if (res.status === 201) {
-                      this.dataService.getPostLikesCombined(this.videoPostId, this.youtubeId, this.vimeoId)
+                      this.dataService.getPostInfo(this.videoPostId, this.youtubeId, this.vimeoId)
                         .subscribe(res => {
                           if (res.status === 200) {
-                            this.likes = this.itemsService.getSerialized<string>(res.body);
+                            this.videoInfo = this.itemsService.getSerialized<IVideoPostInfo>(res.body);
                           }
                         });
                     }

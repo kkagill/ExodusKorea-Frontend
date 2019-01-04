@@ -1,83 +1,87 @@
-<h1 mat-dialog-title>매월 최저 생존비용</h1>
-<p>여러분이 경험하신 매달 최대로 아낄 수 있는 비용을 캐나다 달러로 입력해주세요.</p>
-<form name="form" (ngSubmit)="f.form.valid && onSubmit(f.form.value)" #f="ngForm" novalidate>
-  <div class="form-row" *ngIf="isCitiesLoaded">
-    <div class="col-md-12">
-      <div class="md-form form-group">
-        <div *ngIf="!isCitiesLoaded">
-          <mdb-spinner spinnerType="small" spinnerColor="yellow"></mdb-spinner>
-        </div>      
-        <mdb-select [options]="cities" [(ngModel)]="cities.cityId" name="cityId" placeholder="도시 선택"></mdb-select>
-        <div *ngIf="cities.cityId === 0">
-          <br />
-          <input mdbInputDirective type="text" class="form-control" [(ngModel)]="model.city" #city="ngModel" name="city"
-            placeholder="도시 이름" required>
+<div>
+  <h1 mat-dialog-title>매월 최저 생존비용</h1>
+  <p>여러분이 경험하신 매달 최대로 아낄 수 있는 비용을 {{data.baseCurrency}}로 입력해주세요.</p>
+  <form name="form" (ngSubmit)="f.form.valid && onSubmit(f.form.value)" #f="ngForm" novalidate>
+    <div class="form-row" *ngIf="isCitiesLoaded">
+      <div class="col-md-12">
+        <div class="md-form form-group">
+          <div *ngIf="!isCitiesLoaded">
+            <mdb-spinner spinnerType="small" spinnerColor="yellow"></mdb-spinner>
+          </div>
+          <mdb-select [options]="cities" [(ngModel)]="cities.cityId" name="cityId" placeholder="도시 선택"></mdb-select>
+          <div *ngIf="cities.cityId === 0">
+            <br />
+            <input mdbInputDirective type="text" class="form-control" [(ngModel)]="model.city" #city="ngModel" name="city"
+              placeholder="도시 이름" required>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-md-12">
-      <div class="md-form form-group">
-        <input mdbInputDirective type="number" min="0" step='0.01' placeholder='0.00' class="form-control" [(ngModel)]="model.rent" #rent="ngModel" id="rent"
-          name="rent" required>
-        <label for="rent">룸쉐어 <i class="fa fa-info-circle" mdbTooltip="one bedroom 아파트/콘도 룸메이트와 공유"
-          placement="top" aria-hidden="true"></i></label>
-      </div>
-    </div>
-  </div>
-
-  <div class="form-row">
-    <div class="col-md-6">
-      <div class="md-form form-group">
-        <input mdbInputDirective type="number" min="0" step='0.01' placeholder='0.00' class="form-control" [(ngModel)]="model.transportation"
-          #transportation="ngModel" id="transportation" name="transportation" required>
-        <label for="transportation">교통비</label>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="md-form form-group">
+          <input mdbInputDirective type="number" min="0" step='0.01' placeholder='0.00' class="form-control"
+            [(ngModel)]="model.rent" #rent="ngModel" id="rent" name="rent" required>
+          <label for="rent">룸쉐어 <i class="fa fa-info-circle" mdbTooltip="one bedroom 아파트/콘도 룸메이트와 공유" placement="top"
+              aria-hidden="true"></i></label>
+        </div>
       </div>
     </div>
 
-    <div class="col-md-6">
-      <div class="md-form form-group">
-        <input mdbInputDirective type="number" min="0" step='0.01' placeholder='0.00' class="form-control" [(ngModel)]="model.food" #food="ngModel" id="food"
-          name="food" required>
-        <label for="food">식비</label>
+    <div class="form-row">
+      <div class="col-md-6">
+        <div class="md-form form-group">
+          <input mdbInputDirective type="number" min="0" step='0.01' placeholder='0.00' class="form-control"
+            [(ngModel)]="model.transportation" #transportation="ngModel" id="transportation" name="transportation"
+            required>
+          <label for="transportation">교통비</label>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <div class="form-row">
-    <div class="col-md-6">
-      <div class="md-form form-group">
-        <input mdbInputDirective type="number" min="0" step='0.01' placeholder='0.00' class="form-control" [(ngModel)]="model.cell" #cell="ngModel" id="cell"
-          name="cell" required>
-        <label for="cell">핸드폰비</label>
+      <div class="col-md-6">
+        <div class="md-form form-group">
+          <input mdbInputDirective type="number" min="0" step='0.01' placeholder='0.00' class="form-control"
+            [(ngModel)]="model.food" #food="ngModel" id="food" name="food" required>
+          <label for="food">식비</label>
+        </div>
       </div>
     </div>
 
-    <div class="col-md-6">
-      <div class="md-form form-group">
-        <input mdbInputDirective type="number" min="0" step='0.01' placeholder='0.00' class="form-control" [(ngModel)]="model.internet" #internet="ngModel"
-          id="internet" name="internet" required>
-        <label for="internet">인터넷비</label>
+    <div class="form-row">
+      <div class="col-md-6">
+        <div class="md-form form-group">
+          <input mdbInputDirective type="number" min="0" step='0.01' placeholder='0.00' class="form-control"
+            [(ngModel)]="model.cell" #cell="ngModel" id="cell" name="cell" required>
+          <label for="cell">핸드폰비</label>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="col-md-12">
-      <div class="md-form form-group">
-        <textarea mdbInputDirective type="text" #etcInput maxlength="250" class="form-control" [(ngModel)]="model.etc" #etc="ngModel" id="etc" name="etc"></textarea>
-        <mat-hint align="end">{{etcInput.value.length}} / 250</mat-hint>
-        <label for="etc">추가 설명</label>
+      <div class="col-md-6">
+        <div class="md-form form-group">
+          <input mdbInputDirective type="number" min="0" step='0.01' placeholder='0.00' class="form-control"
+            [(ngModel)]="model.internet" #internet="ngModel" id="internet" name="internet" required>
+          <label for="internet">인터넷비</label>
+        </div>
       </div>
     </div>
-  </div>
-  <mat-card-actions>
-    <button *ngIf="!isSubmitted" mat-raised-button class="stick-to-right-side" color="accent">제출</button>
-    <button *ngIf="isSubmitted" mat-raised-button class="stick-to-right-side" color="accent">
-      <mdb-spinner spinnerType="small" spinnerColor="yellow"></mdb-spinner>
-    </button>     
-    <button mat-raised-button class="stick-to-right-side" (click)="onCancelClick()" color="primary">닫기</button>
-  </mat-card-actions>
-</form>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="md-form form-group">
+          <textarea mdbInputDirective type="text" #etcInput maxlength="250" class="form-control" [(ngModel)]="model.etc"
+            #etc="ngModel" id="etc" name="etc"></textarea>
+          <mat-hint align="end">{{etcInput.value.length}} / 250</mat-hint>
+          <label for="etc">추가 설명</label>
+        </div>
+      </div>
+    </div>
+    <mat-card-actions>
+      <button *ngIf="!isSubmitted" mat-raised-button class="stick-to-right-side" color="accent">제출</button>
+      <button *ngIf="isSubmitted" mat-raised-button class="stick-to-right-side" color="accent">
+        <mdb-spinner spinnerType="small" spinnerColor="yellow"></mdb-spinner>
+      </button>
+      <button mat-raised-button class="stick-to-right-side" (click)="onCancelClick()" color="primary">닫기</button>
+    </mat-card-actions>
+  </form>
+</div>

@@ -7,22 +7,27 @@
         </div>
         <mat-card class="example-card">
           <mat-card-content>
-            <div *ngIf="isYouTubeLikesLoaded" class="stick-to-right-side">
-              <button mat-stroked-button color="accent" (click)="onClickPostLikes()">
-                <i class="fa fa-thumbs-o-up"></i> 추천 ({{likes}})
-              </button>
+            <div class="row">
+              <div *ngIf="isVideoPostInfoLoaded" class="stick-to-left-side" style="text-align: justify;">
+                <p class="thick">{{videoInfo.title}}</p>
+                <p class="stick-to-left-side">{{videoInfo.owner}}</p>
+              </div>
             </div>
-            <div class="stick-to-right-side" style="margin-right: 10px;">
-              <button mat-stroked-button color="accent" (click)="onClickFollow()">
-                <i class="fa fa-smile-o"></i> 찜하기
-              </button>
+            <div class="row" class="stick-to-right-side buttons">
+              <div *ngIf="isVideoPostInfoLoaded">
+                <button mat-stroked-button color="accent" style="margin-right: 10px;" (click)="onClickPostLikes()">
+                  추천 ({{videoInfo.likes}})
+                </button>
+                <button mat-stroked-button color="accent" (click)="onClickFollow()">
+                  찜하기
+                </button>
+              </div>
             </div>
-            <br /><br /><br />
             <form (ngSubmit)="onSubmitComment()" [formGroup]="commentForm">
               <mat-form-field appearance="outline" class="full-width">
                 <textarea matInput #commentInput maxlength="500" (mouseup)="onClickCommentBox()" placeholder="로그인 하셔야 댓글 작성이 가능합니다."
                   formControlName="comment"></textarea>
-                <mat-hint align="start"><strong>근거없는 비방/비하/욕설 시 무기한 차단 대상이 됩니다.</strong> </mat-hint>
+                <mat-hint align="start"><strong>근거없는 비방/비하/욕설 시 무기한 차단합니다.</strong> </mat-hint>
                 <mat-hint align="end">{{commentInput.value.length}} / 500</mat-hint>
                 <mat-error *ngIf="commentForm.controls['comment'].hasError('minlength')">
                   최소 5글자를 입력해 주세요.
@@ -43,9 +48,9 @@
             <div *ngIf="isVideoCommentsLoaded">
               <div class="left-align" *ngFor="let vc of videoComments | paginate: { itemsPerPage: 20, currentPage: page }">
                 <mat-label class="thick">
-                  <span *ngIf="vc.isSharer" class="sharer">&nbsp;{{vc.authorDisplayName}}&nbsp;</span>    
-                  <span *ngIf="!vc.isSharer">{{vc.authorDisplayName}}</span>                  
-                  <img *ngIf="vc.isYouTubeComment" src="./../../assets/images/youtube.png" alt="유튜브" style="margin-bottom: 3px;">
+                  <span *ngIf="vc.isSharer" class="sharer">&nbsp;{{vc.authorDisplayName}}&nbsp;</span>
+                  <span *ngIf="!vc.isSharer">{{vc.authorDisplayName}}</span>
+                  <img *ngIf="vc.isYouTubeComment" src="./../../assets/images/youtube.png" alt="유튜브" style="margin-left: 5px; margin-bottom: 3px;">
                   <!-- <img *ngIf="!vc.isYouTubeComment && vc.countryEN" src="./../../assets/images/countries/{{vc.countryEN}}-square16.png"
                     style="margin-bottom: 3px;"> -->
                 </mat-label>
@@ -88,9 +93,13 @@
                     <br />
                   </div>
                 </mat-label>
-                <div *ngIf="!vc.videoCommentReplies || vc.videoCommentReplies.length == 0">
-                  <br />
+
+                <div *ngIf="!vc.isYouTubeComment">
+                  <div *ngIf="!vc.videoCommentReplies || vc.videoCommentReplies.length === 0">
+                    <br />
+                  </div>
                 </div>
+
                 <div *ngIf="vc.videoCommentReplies && vc.videoCommentReplies.length > 0">
                   <p class="pointer" (click)="replies.toggle()" mdbWavesEffect>
                     답글 <span class="thick">{{vc.videoCommentReplies.length}}</span>개 보기 <i class="fa fa-chevron-down"></i>
@@ -98,9 +107,9 @@
                   <div mdbCollapse #replies="bs-collapse" style="margin-left: 34px;">
                     <div class="left-align" *ngFor="let vcr of vc.videoCommentReplies">
                       <mat-label class="thick">
-                        <span *ngIf="vcr.isSharer" class="sharer">&nbsp;{{vcr.authorDisplayName}}&nbsp;</span>    
-                        <span *ngIf="!vcr.isSharer">{{vcr.authorDisplayName}}</span>         
-                        <img *ngIf="vcr.isYouTubeComment" src="./../../assets/images/youtube.png" alt="유튜브" style="margin-bottom: 3px;">
+                        <span *ngIf="vcr.isSharer" class="sharer">&nbsp;{{vcr.authorDisplayName}}&nbsp;</span>
+                        <span *ngIf="!vcr.isSharer">{{vcr.authorDisplayName}}</span>
+                        <img *ngIf="vcr.isYouTubeComment" src="./../../assets/images/youtube.png" alt="유튜브" style="margin-left: 5px; margin-bottom: 3px;">
                         <!-- <img *ngIf="!vcr.isYouTubeComment && vcr.countryEN" src="./../../assets/images/countries/{{vcr.countryEN}}-square16.png"
                           style="margin-bottom: 3px;"> -->
                       </mat-label>
@@ -149,6 +158,39 @@
                   </div>
                   <br />
                 </div>
+
+                <div *ngIf="vc.isYouTubeComment">
+                  <div *ngIf="vc.totalReplyCount === 0">
+                    <br />
+                  </div>
+                </div>
+
+                <div *ngIf="vc.isYouTubeComment && vc.totalReplyCount > 0">
+                  <p class="pointer" (click)="replies.toggle();" mdbWavesEffect>
+                    답글 <span class="thick">{{vc.totalReplyCount}}</span>개 보기 <i class="fa fa-chevron-down"></i>
+                  </p>
+                  <div mdbCollapse #replies="bs-collapse" style="margin-left: 34px;">
+                    <div class="left-align" *ngFor="let ytcr of vc.youTubeCommentReplies">
+                      <mat-label class="thick">
+                        <span>{{ytcr.authorDisplayName}}</span>
+                        <img src="./../../assets/images/youtube.png" alt="유튜브" style="margin-left: 5px; margin-bottom: 3px;">
+                      </mat-label>
+                      <br />
+                      <mat-label>
+                        <!-- <span *ngIf="ytcr.repliedTo" style="color: #065fd4">@{{ytcr.repliedTo}} </span> -->
+                        <span class="pre-wrap" [innerHTML]="ytcr.comment"></span>
+                      </mat-label>
+                      <br />
+                      <mat-label>
+                        {{ytcr.dateCreated | date:'y-MM-dd'}}
+                        <button mat-icon-button color="accent" class="not-allowed">
+                          <i class="fa fa-thumbs-o-up"></i> {{ytcr.likes}}
+                        </button>
+                      </mat-label>
+                    </div>
+                  </div>
+                  <br />
+                </div>
               </div>
               <br />
               <div class="has-text-centered">
@@ -166,7 +208,7 @@
           <div class="col-md-12">
             <mat-card class="example-card">
               <mat-card-header>
-                <mat-card-title><b>국가정보 (2018)</b></mat-card-title>
+                <mat-card-title><b>국가정보 ({{currentYear.getFullYear()}})</b></mat-card-title>
               </mat-card-header>
               <mat-card-content class="left-align-panel">
                 <mat-label><b>국명:</b> {{countryInfo.countryKR}}</mat-label><br />
@@ -191,10 +233,10 @@
           <div class="col-md-12">
             <mat-card class="example-card" *ngIf="salaryInfo.isDisplayable">
               <mat-card-header>
-                <mat-card-title><b>{{salaryInfo.occupation}} 연봉 (2018)</b></mat-card-title>
+                <mat-card-title><b>{{salaryInfo.occupation}} 연봉 ({{currentYear.getFullYear()}})</b></mat-card-title>
               </mat-card-header>
               <mat-card-content class="left-align-panel">
-                <p style="font-size: 12px;">{{salaryInfo.country}} 전국 평균 (CAD $)</p>
+                <p style="font-size: 12px;">{{salaryInfo.country}} 전국 평균</p>
                 <div id="salary-chart">
                   <mat-label id="low-word">최저</mat-label>
                   <mat-label id="low">{{salaryInfo.low | currency:salaryInfo.currency:'symbol-narrow':'1.0'}}</mat-label>
@@ -214,7 +256,7 @@
           <div class="col-md-6">
             <mat-card class="example-card">
               <mat-card-header>
-                <mat-card-title><b>물가 (2018)</b></mat-card-title>
+                <mat-card-title><b>물가 ({{currentYear.getFullYear()}})</b></mat-card-title>
               </mat-card-header>
               <mat-card-content class="left-align-panel">
                 <p style="font-size: 12px;">{{priceInfo.countryKR}} 전국 평균</p>
@@ -244,7 +286,7 @@
                 <mat-card-title><b>최소 생활비</b></mat-card-title>
               </mat-card-header>
               <mat-card-content class="left-align-panel">
-                <p style="font-size: 12px;">한달 평균 (CAD $)</p>
+                <p style="font-size: 12px;">한달 평균 ({{minimumCoLInfo.baseCurrency}})</p>
                 <mat-label *ngFor="let mcol of minimumCoLInfo.cityMinimums">
                   <span>
                     {{mcol.city}}:
@@ -276,88 +318,9 @@
               </mat-card-header>
               <mat-card-content class="left-align-panel" *ngIf="isJobSitesLoaded">
                 <p style="font-size: 12px;" *ngIf="isCareerInfoLoaded">검색창에 {{careerInfo.nameEN}} 입력</p>
-                <p style="font-size: 12px;">공통</p>
                 <hr />
                 <mat-label *ngFor="let js of jobSites">
                   <a *ngIf="js.category === 'common'" href="{{js.link}}" target="_blank">{{js.name}}<br /></a>
-                </mat-label>
-                <br />
-                <p style="font-size: 12px;">브리티시 콜롬비아 주 (British Columbia)</p>
-                <hr />
-                <mat-label *ngFor="let js of jobSites">
-                  <a *ngIf="js.category === 'bc'" href="{{js.link}}" target="_blank">{{js.name}}<br /></a>
-                </mat-label>
-                <br />
-                <p style="font-size: 12px;">알버타 주 (Alberta)</p>
-                <hr />
-                <mat-label *ngFor="let js of jobSites">
-                  <a *ngIf="js.category === 'ab'" href="{{js.link}}" target="_blank">{{js.name}}<br /></a>
-                </mat-label>
-                <br />
-                <p style="font-size: 12px;">사스카츄완 주 (Saskatchewan)</p>
-                <hr />
-                <mat-label *ngFor="let js of jobSites">
-                  <a *ngIf="js.category === 'sk'" href="{{js.link}}" target="_blank">{{js.name}}<br /></a>
-                </mat-label>
-                <br />
-                <p style="font-size: 12px;">마니토바 주 (Manitoba)</p>
-                <hr />
-                <mat-label *ngFor="let js of jobSites">
-                  <a *ngIf="js.category === 'mb'" href="{{js.link}}" target="_blank">{{js.name}}<br /></a>
-                </mat-label>
-                <br />
-                <p style="font-size: 12px;">온타리오 주 (Ontario)</p>
-                <hr />
-                <mat-label *ngFor="let js of jobSites">
-                  <a *ngIf="js.category === 'on'" href="{{js.link}}" target="_blank">{{js.name}}<br /></a>
-                </mat-label>
-                <br />
-                <p style="font-size: 12px;">퀘백 주 (Quebec)</p>
-                <hr />
-                <mat-label *ngFor="let js of jobSites">
-                  <a *ngIf="js.category === 'qc'" href="{{js.link}}" target="_blank">{{js.name}}<br /></a>
-                </mat-label>
-                <br />
-                <p style="font-size: 12px;">뉴펀들랜드 주 (Newfoundland and Labrador)</p>
-                <hr />
-                <mat-label *ngFor="let js of jobSites">
-                  <a *ngIf="js.category === 'nl'" href="{{js.link}}" target="_blank">{{js.name}}<br /></a>
-                </mat-label>
-                <br />
-                <p style="font-size: 12px;">뉴브런즈윅 주 (New Brunswick)</p>
-                <hr />
-                <mat-label *ngFor="let js of jobSites">
-                  <a *ngIf="js.category === 'nb'" href="{{js.link}}" target="_blank">{{js.name}}<br /></a>
-                </mat-label>
-                <br />
-                <p style="font-size: 12px;">노바스코샤 주 (Nova Scotia)</p>
-                <hr />
-                <mat-label *ngFor="let js of jobSites">
-                  <a *ngIf="js.category === 'ns'" href="{{js.link}}" target="_blank">{{js.name}}<br /></a>
-                </mat-label>
-                <br />
-                <p style="font-size: 12px;">프린스 에드워드 아일랜드 주 (Prince Edward Island)</p>
-                <hr />
-                <mat-label *ngFor="let js of jobSites">
-                  <a *ngIf="js.category === 'pe'" href="{{js.link}}" target="_blank">{{js.name}}<br /></a>
-                </mat-label>
-                <br />
-                <p style="font-size: 12px;">유콘 준주 (Yukon)</p>
-                <hr />
-                <mat-label *ngFor="let js of jobSites">
-                  <a *ngIf="js.category === 'yt'" href="{{js.link}}" target="_blank">{{js.name}}<br /></a>
-                </mat-label>
-                <br />
-                <p style="font-size: 12px;">노스웨스트 준주 (Northwest Territories)</p>
-                <hr />
-                <mat-label *ngFor="let js of jobSites">
-                  <a *ngIf="js.category === 'nt'" href="{{js.link}}" target="_blank">{{js.name}}<br /></a>
-                </mat-label>
-                <br />
-                <p style="font-size: 12px;">누나붓 준주 (Nunavut)</p>
-                <hr />
-                <mat-label *ngFor="let js of jobSites">
-                  <a *ngIf="js.category === 'nu'" href="{{js.link}}" target="_blank">{{js.name}}<br /></a>
                 </mat-label>
               </mat-card-content>
             </mat-card>

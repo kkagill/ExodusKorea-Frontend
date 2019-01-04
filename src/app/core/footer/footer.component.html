@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row py-4 d-flex align-items-center">
         <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
-          <h6 class="mb-0">캐나다 취업의 모든 정보</h6>
+          <h6 class="mb-0">해외 취업/이민의 현실적 정보</h6>
         </div>
         <div class="col-md-6 col-lg-7 text-center text-md-right">
           <a class="fb-ic">
@@ -20,7 +20,7 @@
   <div class="container text-center text-md-left mt-5">
     <div class="row mt-3 dark-grey-text">
       <div class="col-md-3 col-lg-4 col-xl-3 mb-4">
-        <h6 class="text-uppercase font-weight-bold">엑소더스 코리아</h6>
+        <h6 class="text-uppercase font-weight-bold">탈조선</h6>
         <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
         <p>
           경쟁이 치열한 국내 시장에서 눈을 돌리면 해외의 놀라운 시장이 보입니다.
@@ -34,10 +34,7 @@
           <a class="dark-grey-text" [routerLink]="['search-videos']">영상 분류</a>
         </p>
         <p>
-          <a class="dark-grey-text" [routerLink]="['news']">캐나다 시장 뉴스</a>
-        </p>
-        <p>
-          <a class="dark-grey-text" [routerLink]="['country-info']">캐나다 정보</a>
+          <a class="dark-grey-text" [routerLink]="['news']">취업/이민 뉴스</a>
         </p>
         <p>
           <a class="dark-grey-text" [routerLink]="['upload-video']">영상 올리기</a>
@@ -45,11 +42,19 @@
       </div>
 
       <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-        <h6 class="text-uppercase font-weight-bold">KOTRA 자료</h6>
+        <h6 class="text-uppercase font-weight-bold">KOTRA 국가정보</h6>
         <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
         <p>
-          <a href="http://news.kotra.or.kr/user/nationInfo/kotranews/14/userNationBasicView.do?nationIdx=163" target="_blank"
-            class="dark-grey-text">국가·지역정보</a>
+          <a class="dark-grey-text" [routerLink]="['promising-field']">취업유망분야</a>
+        </p>
+        <p>
+          <a class="dark-grey-text" [routerLink]="['settlement-guide']">이주정착 가이드</a>
+        </p>
+        <p>
+          <a class="dark-grey-text" [routerLink]="['living-condition']">생활여건</a>
+        </p>
+        <p>
+          <a class="dark-grey-text" [routerLink]="['immigration-visa']">출입국 및 비자제도</a>
         </p>
       </div>
 
@@ -57,13 +62,13 @@
         <h6 class="text-uppercase font-weight-bold">연락</h6>
         <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
         <p>
-          <mdb-icon icon="envelope" class="mr-3"></mdb-icon> admin@exoduscorea.com
+          <mdb-icon icon="envelope" class="mr-3"></mdb-icon> admin@taljoseon.com
         </p>
       </div>
     </div>
   </div>
 
-  <div class="footer-copyright text-center py-3" style="background-color: #3f51b5; color: white;">
-    Copyright © {{ currentYear | date: "yyyy" }} 엑소더스 코리아
+  <div class="footer-copyright text-center py-3" style="background-color: #eceff1; color: black;">
+    Copyright © {{ currentYear | date: "yyyy" }} 탈조선.com
   </div>
 </footer>

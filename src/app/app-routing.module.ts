@@ -10,6 +10,10 @@ import { NewsComponent } from './news/news.component';
 import { NewsDetailComponent } from './news-detail/news-detail.component';
 import { SearchVideosComponent } from './search-videos/search-videos.component';
 import { CountryInfoComponent } from './country-info/country-info.component';
+import { PromisingFieldComponent } from './promising-field/promising-field.component';
+import { SettlementGuideComponent } from './settlement-guide/settlement-guide.component';
+import { LivingConditionComponent } from './living-condition/living-condition.component';
+import { ImmigrationVisaComponent } from './immigration-visa/immigration-visa.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -20,6 +24,10 @@ const routes: Routes = [
     { path: 'country-info', component: CountryInfoComponent },
     { path: 'upload-video', component: UploadVideoComponent },
     { path: 'account-info/:id', component: UserProfileComponent },
+    { path: 'promising-field', component: PromisingFieldComponent },
+    { path: 'settlement-guide', component: SettlementGuideComponent },
+    { path: 'living-condition', component: LivingConditionComponent },
+    { path: 'immigration-visa', component: ImmigrationVisaComponent },
     { path: 'error', component: ErrorComponent },
     { path: '**', component: NotFoundComponent }    
 ];

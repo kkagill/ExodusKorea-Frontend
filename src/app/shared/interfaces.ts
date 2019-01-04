@@ -20,7 +20,14 @@ export interface IJobSite {
 
 export interface ICategory {
     categoryId: number;
-    name;
+    name: string;
+}
+
+export interface ICountry {
+    countryId: number;
+    nameKR: string;
+    isChecked: boolean;
+    isNotDisabled: boolean;
 }
 
 export interface INews {
@@ -167,10 +174,17 @@ export interface IPI_Etc {
 }
 
 export interface ICurrencyInfo {
-    country: string;
-    baseCurrency: Date;
-    krwRate: string;
-    now: string;
+    usd: number;
+    cad: number;
+    aud: number;
+    nzd: number;
+    today: Date;
+}
+
+export interface IVideoPostInfo {
+    likes: number;
+    owner: string;
+    title: string;
 }
 
 export interface IVideoComment {
@@ -183,8 +197,11 @@ export interface IVideoComment {
     userId: string;
     countryEN: string;
     isYouTubeComment: boolean;
+    totalReplyCount: number;
+    //parentId: string;
     videoPostId: number;
     videoCommentReplies: IVideoCommentReply[];
+    youTubeCommentReplies: IYouTubeCommentReply[];
     isSharer: boolean;
 }
 
@@ -200,6 +217,13 @@ export interface IVideoCommentReply {
     countryEN: string;
     repliedTo: string;
     isSharer: boolean;
+}
+
+export interface IYouTubeCommentReply {
+    AuthorDisplayName: string;
+    TextDisplay: string;
+    UpdatedAt: Date;
+    Likes: string;
 }
 
 export interface ISalaryInfo {
@@ -233,6 +257,26 @@ export interface IProfile {
     dateVisitedRecent: Date;
     visitCount: number;
     hasCanceledSubscription: boolean;
+}
+
+export interface IPromisingField {
+    content: string;   
+    country: string;
+}
+
+export interface ISettlementGuide {
+    content: string;   
+    country: string;
+}
+
+export interface ILivingCondition {
+    content: string;   
+    country: string;
+}
+
+export interface IImmigrationVisa {
+    content: string;   
+    country: string;
 }
 
 export interface Pagination {

@@ -1,6 +1,6 @@
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { ICareer, IVideoPost, ICategory } from '../shared/interfaces';
+import { ICareer, IVideoPost, ICategory, ICountry } from '../shared/interfaces';
 import { DataService } from '../shared/services/data.service';
 import { ItemsService } from '../shared/utils/items.service';
 import { MatSnackBar, MatDialog } from '@angular/material';
@@ -20,9 +20,11 @@ export class SearchVideosComponent implements OnInit {
   //all: string = '';
   searchResult: IVideoPost[];
   categories: ICategory[];
+  countries: ICountry[];
   //careers: ICareer[];
   isSearchResultLoaded: boolean = false;
   isCategoriesLoaded: boolean = false;
+  isCountriesLoaded: boolean = false;
   //isCareersLoaded: boolean = false;
   backgroundUrl = '../../../assets/images/countries/';
   searchText: string;
@@ -56,6 +58,7 @@ export class SearchVideosComponent implements OnInit {
     } else if (categoryId == null) { // } else if (categoryId == null && careerId == null) {
       //this.all = "initial";
       this.loadAllCategories(1);
+      this.loadAllCountries();
       //this.loadAllCareers(0);
       //this.loadAllSearchResult();
     }
@@ -80,6 +83,33 @@ export class SearchVideosComponent implements OnInit {
               }
             }
           }
+        }
+      },
+        error => {
+          this.snackBar.open('정보를 불러오는 과정에서 오류가 났습니다.', '', {
+            duration: 5000,
+            panelClass: ['error-snackbar']
+          });
+        }
+      );
+  }
+
+  loadAllCountries() {
+    this.dataService.getAllCountries()
+      .subscribe(res => {
+        if (res.status === 200) {
+          this.isCountriesLoaded = true;
+          this.countries = this.itemsService.getSerialized<ICountry[]>(res.body);
+          let selectedCountries = this.countries.map(x => x.nameKR);   
+          // checkbox for country is pre-selected only when search result contains corresponding country
+          if (this.isSearchResultLoaded) {
+            for (let sr of this.searchResult) {
+              if (selectedCountries.includes(sr.countryKR)) {        
+                this.countries.find(x => x.nameKR === sr.countryKR).isChecked = true;    
+                this.countries.find(x => x.nameKR === sr.countryKR).isNotDisabled = true;            
+              }          
+            }
+          }          
         }
       },
         error => {
@@ -126,6 +156,8 @@ export class SearchVideosComponent implements OnInit {
           for (let sr of this.searchResult) {
             sr.categoryId = 1;
           }       
+          localStorage.setItem('searchResult', JSON.stringify(this.searchResult))
+          this.loadAllCountries();
         }
       },
         error => {
@@ -143,6 +175,8 @@ export class SearchVideosComponent implements OnInit {
         if (res.status === 200) {
           this.isSearchResultLoaded = true;
           this.searchResult = this.itemsService.getSerialized<IVideoPost[]>(res.body);
+          localStorage.setItem('searchResult', JSON.stringify(this.searchResult))
+          this.loadAllCountries();
         }
       },
         error => {
@@ -152,6 +186,18 @@ export class SearchVideosComponent implements OnInit {
           });
         }
       );
+  }
+
+  getVideosByCountry() {
+    let searchResult = JSON.parse(localStorage.getItem('searchResult'))   
+    let selectedCountries = this.countries.filter(x => x.isChecked === true).map(x => x.nameKR);   
+    this.searchResult = [];
+
+    for (let sr of searchResult) {     
+      if (selectedCountries.includes(sr.countryKR)) {        
+        this.searchResult.push(sr);
+      }
+    }
   }
 
   // loadSearchResultByCareer(careerId: number) {

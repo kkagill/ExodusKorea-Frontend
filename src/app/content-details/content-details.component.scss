@@ -27,6 +27,7 @@
 #low {
   position: absolute;
   top: 210px;
+  left: 35px;
 }
 
 #median-word {
@@ -38,7 +39,7 @@
 #median {
   position: absolute;
   top: 120px;
-  left: 130px; 
+  left: 110px; 
   font-size: 20px;
   font-weight: 900;
 }
@@ -52,7 +53,7 @@
 #high {
   position: absolute;
   top: 80px;
-  left: 255px;
+  left: 240px;
 }
 
 .sharer {
@@ -63,4 +64,11 @@
 
 .pre-wrap {
   white-space: pre-wrap;
+}
+
+@media screen and (min-width: 768px) {
+  .buttons {
+    display:block; 
+    margin-top: -45px;
+  }
 }

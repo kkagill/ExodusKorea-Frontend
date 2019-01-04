@@ -3,7 +3,7 @@
     [containerInside]="true">
     <mdb-navbar-brand>
       <a class="logo navbar-brand" [routerLink]="['']">
-        <strong>엑소더스 코리아</strong>
+        <strong>탈조선</strong>
       </a>
     </mdb-navbar-brand>
     <links>
@@ -15,13 +15,19 @@
         </li>
         <li class="nav-item waves-light" mdbWavesEffect>
           <a class="nav-link" [routerLink]="['news']">
-            캐나다 뉴스
+            취업/이민 뉴스
           </a>
         </li>
         <li class="nav-item dropdown" dropdown>
-          <a class="nav-link" [routerLink]="['country-info']">
-            캐나다 정보
+          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+            국가 정보<span class="caret"></span>
           </a>
+          <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['promising-field']">취업유망분야</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['settlement-guide']">이주정착 가이드</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['living-condition']">생활여건</a>
+            <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['immigration-visa']">출입국 및 비자제도</a>
+          </div>
         </li>
         <li class="nav-item waves-light" mdbWavesEffect>
           <a class="nav-link" [routerLink]="['upload-video']">
@@ -87,11 +93,11 @@
         <!-- rgba-purple-light  -->
         <div class="container text-center white-text wow fadeInUp">
           <br><br><br><br><br>
-          <h1>캐나다 취업의 모든 정보</h1>
+          <h1>해외 취업/이민의 현실적 정보</h1>
           <br>
           <h5>Goodbye 스펙경쟁 & 미세먼지.. 나는 해외로 간다!</h5>
           <h6>경쟁이 치열한 국내 시장에서 눈을 돌리면 해외의 놀라운 시장이 보입니다.</h6>
-          <h6>글로벌 무대로 진출하고자 하는 당신을 위한 캐나다 취업 정보 공유</h6>
+          <h6>글로벌 무대로 진출하고자 하는 당신을 위한 해외 취업/이민 정보 공유</h6>
         </div>
       </div>
     </div>
@@ -103,7 +109,7 @@
         <!-- rgba-purple-light  -->
         <div class="container text-center white-text wow fadeInUp">
           <br><br><br><br><br>
-          <h1>캐나다 취업 성공사례를 나눠주세요</h1>
+          <h1>해외 취업 성공사례를 나눠주세요</h1>
           <br>     
           <h6>여러분의 스토리를 앞으로 해외 취업을 꿈꾸는 모든 분들께 공유할 수 있습니다.</h6>
           <h6>멘토링 역할을 할 수 있는 기회를 꼭 만들어 보세요.</h6>

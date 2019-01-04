@@ -61,8 +61,8 @@ export class DataService {
       );
   }
 
-  getJobSites(): Observable<any> {
-    return this.http.get(this._baseUrl + `carddetail/job-sites`, { observe: "response" })
+  getJobSites(videoPostId: number): Observable<any> {
+    return this.http.get(this._baseUrl + `carddetail/${videoPostId}/job-sites`, { observe: "response" })
       .pipe(
         map(res => {
           return res;
@@ -99,6 +99,18 @@ export class DataService {
 
   getAllCareers(): Observable<any> {
     return this.http.get(this._baseUrl + `searchvideo/all-careers`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  } 
+
+  getAllCountries(): Observable<any> {
+    return this.http.get(this._baseUrl + `searchvideo/all-countries`, { observe: "response" })
       .pipe(
         map(res => {
           return res;
@@ -326,8 +338,8 @@ export class DataService {
       );
   }
 
-  getPostLikesCombined(videoPostId: number, videoId: string, vimeoId: number): Observable<any> {
-    return this.http.get(this._baseUrl + `carddetail/${videoPostId}/${videoId}/${vimeoId}/video-post-likes`, { observe: "response" })
+  getPostInfo(videoPostId: number, videoId: string, vimeoId: number): Observable<any> {
+    return this.http.get(this._baseUrl + `carddetail/${videoPostId}/${videoId}/${vimeoId}/video-post-info`, { observe: "response" })
       .pipe(
         map(res => {
           return res;
@@ -340,6 +352,18 @@ export class DataService {
 
   getVideoComments(videoPostId: number, videoId: string, vimeoId: number): Observable<any> {
     return this.http.get(this._baseUrl + `carddetail/${videoPostId}/${videoId}/${vimeoId}/video-comments-combined`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  getYouTubeReplies(parentId: string): Observable<any> {
+    return this.http.get(this._baseUrl + `carddetail/${parentId}/youtube-replies`, { observe: "response" })
       .pipe(
         map(res => {
           return res;
@@ -423,6 +447,54 @@ export class DataService {
       );
   }    
 
+  getAllPromisingFields(): Observable<any> {
+    return this.http.get(this._baseUrl + `countryinfo/promising-fields`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  getAllSettlementGuides(): Observable<any> {
+    return this.http.get(this._baseUrl + `countryinfo/settlement-guides`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  getAllLivingConditions(): Observable<any> {
+    return this.http.get(this._baseUrl + `countryinfo/living-conditions`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  getAllImmigrationVisa(): Observable<any> {
+    return this.http.get(this._baseUrl + `countryinfo/immigration-visas`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+  
   findUserLikedPost(id: number): Observable<any> {
     const header = {
       'Content-Type': 'application/json',

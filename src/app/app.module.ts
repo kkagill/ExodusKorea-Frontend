@@ -40,6 +40,10 @@ import { SafeHtmlPipe } from './shared/pipes/safe-html.pipe';
 import { SearchVideosComponent } from './search-videos/search-videos.component';
 import { CountryInfoComponent } from './country-info/country-info.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { PromisingFieldComponent } from './promising-field/promising-field.component';
+import { SettlementGuideComponent } from './settlement-guide/settlement-guide.component';
+import { LivingConditionComponent } from './living-condition/living-condition.component';
+import { ImmigrationVisaComponent } from './immigration-visa/immigration-visa.component';
 import { TermsOfServiceDialog } from './auth/register/dialog/terms-of-service/terms-of-service.component';
 import { EtcDialog } from './content-details/dialogs/minimum-col-detail-dialog/dialogs/etc-dialog/etc-dialog.component';
 
@@ -64,7 +68,11 @@ export function tokenGetter() {
     NewsDetailComponent,   
     SearchVideosComponent,
     CountryInfoComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    PromisingFieldComponent,
+    SettlementGuideComponent,
+    LivingConditionComponent,
+    ImmigrationVisaComponent
   ],
   entryComponents: [
     DeleteCommentDialog,

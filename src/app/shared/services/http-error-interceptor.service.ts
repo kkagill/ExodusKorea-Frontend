@@ -40,7 +40,7 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
             router.navigate(['error']);
           }
           // When logged in and access_token is expired (trying to access [Authorize] action)
-          else if (errorResponse.status === 401 && this.authService.isTokenExpired()) {
+          else if (errorResponse.status === 401) {
             // Get new access token
             return this.authService.refresh()
               .pipe(
@@ -57,19 +57,23 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
                     err.error.error_description === 'The specified refresh token is no longer valid.' ||
                     err.status === 400 &&
                     err.error.error === 'invalid_grant' &&
+                    err.error.error_description === 'The specified refresh token is invalid.' ||
+                    err.status === 400 &&
+                    err.error.error === 'invalid_grant' &&
                     err.error.error_description === 'The refresh token is no longer valid.') {
+                    this.authService.logout();
                     this.snackBar.open('세션이 만료됐습니다. 다시 로그인 해주세요.', '', {
                       duration: 10000,
                       panelClass: ['warning-snackbar']
-                    });
-                    this.authService.logout();
+                    });                    
                     const dialogRef = this.dialog.open(LoginComponent, {
                       width: '410px',
                       data: { email: this.email, password: this.password }
                     });
                     dialogRef.afterClosed().subscribe(result => {
-                      if (this.authService.isAuthenticated()) {
+                      if (this.authService.isAuthenticated()) {                       
                         this.dataSharingService.loggedIn.next(true); // pass data to header.component.ts
+                        router.navigate(['']);
                       }
                     });
                   } else {
@@ -81,11 +85,12 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
           }
           // Other error status (404 or 400) are logged in Log_HttpResponseException
           else {
-            if (this.authService.isAuthenticated()) {
-              this.LogLoggedInHttpResponseException(err);
-            } else {
-              this.LogHttpResponseException(err);
-            }
+            this.LogHttpResponseException(err);
+            // if (this.authService.isAuthenticated()) {
+            //   this.LogLoggedInHttpResponseException(err);
+            // } else {
+            //   this.LogHttpResponseException(err);
+            // }
           }
 
           return throwError(err);
