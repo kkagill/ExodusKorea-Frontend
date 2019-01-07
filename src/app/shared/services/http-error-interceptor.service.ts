@@ -34,13 +34,14 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
             //console.log('succeed');
           }
         }), catchError((err) => {
+          debugger;
           const errorResponse = err as HttpErrorResponse;        
           // Internal server errors are logged in Log_SiteException from the server before it is intercepted. 
           if (errorResponse.status === 500) {
             router.navigate(['error']);
           }
           // When logged in and access_token is expired (trying to access [Authorize] action)
-          else if (errorResponse.status === 401) {
+          else if (errorResponse.status === 401 && this.authService.isTokenExpired()) {
             // Get new access token
             return this.authService.refresh()
               .pipe(
@@ -61,7 +62,7 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
                     err.status === 400 &&
                     err.error.error === 'invalid_grant' &&
                     err.error.error_description === 'The refresh token is no longer valid.') {
-                    this.authService.logout();
+                    this.authService.removeStorage();
                     this.snackBar.open('세션이 만료됐습니다. 다시 로그인 해주세요.', '', {
                       duration: 10000,
                       panelClass: ['warning-snackbar']
@@ -76,14 +77,14 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
                         router.navigate(['']);
                       }
                     });
-                  } else {
+                  } else {                    
                     router.navigate(['error']);
                   }
 
                   return throwError(err);
                 }));
           }
-          // Other error status (404 or 400) are logged in Log_HttpResponseException
+          // Other error status (possibly 404 or 400) are logged in Log_HttpResponseException
           else {
             this.LogHttpResponseException(err);
             // if (this.authService.isAuthenticated()) {

@@ -65,7 +65,7 @@ export class AddMinimumColDialog implements OnInit {
     this.dialogRef.close();
   }
 
-  onSubmit(value: any) {
+  onSubmit(value: any) {   
     if (!this.authService.isAuthenticated()) {
       const dialogRef = this.dialog.open(LoginComponent, {
         width: '410px',
@@ -86,6 +86,9 @@ export class AddMinimumColDialog implements OnInit {
       });
       return;
     }
+
+    this.isSubmitted = true;
+    
     let body = {
       'country': this.data.countryEN,
       'cityId': value.cityId,
@@ -97,11 +100,11 @@ export class AddMinimumColDialog implements OnInit {
       'internet': value.internet,
       'etc': value.etc
     };
-    this.isSubmitted = false;
+    
     this.dataService.addMinimumCoL(body)
       .subscribe(res => {
         if (res.status === 201) {
-          this.isSubmitted = true;
+          this.isSubmitted = false;
           this.onCancelClick();
 
           setTimeout(() => {
@@ -113,7 +116,7 @@ export class AddMinimumColDialog implements OnInit {
         }
       },
         error => {
-          this.isSubmitted = true;
+          this.isSubmitted = false;
         }
       );
   }

@@ -1,3 +1,4 @@
+import { AdminComponent } from './admin/admin.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UploadVideoComponent } from './upload-video/upload-video.component';
 import { ContentDetailsComponent } from './content-details/content-details.component';
@@ -14,6 +15,8 @@ import { PromisingFieldComponent } from './promising-field/promising-field.compo
 import { SettlementGuideComponent } from './settlement-guide/settlement-guide.component';
 import { LivingConditionComponent } from './living-condition/living-condition.component';
 import { ImmigrationVisaComponent } from './immigration-visa/immigration-visa.component';
+import { AuthGuardService } from './shared/services/auth-guard.service';
+import { RoleGuardService } from './shared/services/role-guard.service';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -23,7 +26,9 @@ const routes: Routes = [
     { path: 'news-detail/:id1/:id2/:id3', component: NewsDetailComponent },
     { path: 'country-info', component: CountryInfoComponent },
     { path: 'upload-video', component: UploadVideoComponent },
-    { path: 'account-info/:id', component: UserProfileComponent },
+    { path: 'account-info/:id', component: UserProfileComponent, canActivate: [AuthGuardService] },
+    //{ path: 'admin', component: AdminComponent, canActivate: [RoleGuardService] },
+    { path: 'admin', component: AdminComponent },
     { path: 'promising-field', component: PromisingFieldComponent },
     { path: 'settlement-guide', component: SettlementGuideComponent },
     { path: 'living-condition', component: LivingConditionComponent },

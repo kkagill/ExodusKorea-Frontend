@@ -42,7 +42,7 @@
         <td style="text-align: center;">{{el.internet | currency:el.currency:'symbol-narrow'}}</td>
         <td style="text-align: center;">
           <!-- <button type="button" class="btn btn-outline-info waves-effect btn-sm" (click)="onClickDetail(el.etc)">보기</button> -->
-          <span class="pointer" style="color: #007ad9;" (click)="onClickDetail(el.etc)">보기</span>
+          <span *ngIf="el.etc" class="pointer" style="color: #007ad9;" (click)="onClickDetail(el.etc)">보기</span>
         </td>
         <td style="text-align: center;">{{el.total | currency:el.currency:'symbol-narrow'}}</td>
       </tr>

@@ -1,0 +1,120 @@
+<section class="magazine-section my-5">
+  <div class="row">
+    <div class="col-lg-12 col-md-12">
+      <div class="single-news mb-lg-0 mb-4">
+        <div mat-dialog-content>
+          <mdb-tabset [buttonClass]="'pills-secondary white mb-2'" [contentClass]="'card'">
+            <mdb-tab heading="영상 업로드" style="margin: 0 auto;">
+              <section class="magazine-section my-5">
+                <div class="row">
+                  <div class="col-lg-12	col-md-12">
+                    <h5>1. 영상 정보</h5>
+                    <form name="form" (ngSubmit)="f.form.valid && onSubmit(f.form.value)" #f="ngForm" novalidate>
+                      <div class="form-row" *ngIf="isDDLLoaded">
+                        <div class="col-lg-6 col-md-12">
+                          <div class="md-form form-group">
+                            <mdb-select [options]="categories" [(ngModel)]="categories.categoryId" name="categoryId"
+                              placeholder="카테고리 선택" required></mdb-select>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12">
+                          <div class="md-form form-group">
+                            <mdb-select [options]="countries" [(ngModel)]="countries.countryId" name="countryId"
+                              placeholder="국가 선택" required></mdb-select>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-row">
+                        <div class="col-md-6">
+                          <div class="md-form form-group">
+                            <input mdbInputDirective type="text" class="form-control" [(ngModel)]="model.title" #title="ngModel"
+                              id="title" name="title" required>
+                            <label for="title">* 제목</label>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="md-form form-group">
+                            <input mdbInputDirective type="text" class="form-control" [(ngModel)]="model.uploader"
+                              #uploader="ngModel" id="uploader" name="uploader" required>
+                            <label for="uploader">* 작성자</label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-row">
+                        <div class="col-md-6">
+                          <div class="md-form form-group">
+                            <input mdbInputDirective type="text" class="form-control" [(ngModel)]="model.youTubeVideoId"
+                              #youTubeVideoId="ngModel" id="youTubeVideoId" name="youTubeVideoId" required>
+                            <label for="youTubeVideoId">* 유튜브ID</label>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="md-form form-group">
+                            <input mdbInputDirective type="number" class="form-control" [(ngModel)]="model.vimeoId"
+                              #vimeoId="ngModel" id="vimeoId" name="vimeoId">
+                            <label for="vimeoId">비메오ID</label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-row">
+                        <div class="col-md-6">
+                          <div class="md-form form-group">
+                            <input mdbInputDirective type="text" class="form-control" [(ngModel)]="model.sharerId"
+                              #sharerId="ngModel" id="sharerId" name="sharerId">
+                            <label for="sharerId">공유자</label>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="md-form form-group">
+                            <mat-checkbox [(ngModel)]="isChecked" name="salaryInfoNeeded">연봉 정보</mat-checkbox>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div *ngIf="isChecked">
+                        <br /><br />
+                        <h5>2. 연봉 정보</h5>
+                        <br />
+                        <button type="button" class="btn btn-outline-info waves-effect btn-sm" (click)="onAddNewSalaryInfo()">연봉
+                          정보 추가</button>
+                        <br />
+                        <div class="form-row">
+                          <div class="col-lg-6 col-md-12">
+                            <div class="md-form form-group">
+                              <mdb-select *ngIf="isCountriesLoaded" [options]="countriesForSalary" [(ngModel)]="countriesForSalary.nameKR"
+                                name="nameKR" (ngModelChange)="onSelectCountry($event)" placeholder="국가 선택"></mdb-select>
+                            </div>
+                          </div>
+                          <div class="col-lg-6 col-md-12">
+                            <div class="md-form form-group">
+                              <mdb-select *ngIf="isOccupationsLoaded" [options]="occupations" [(ngModel)]="occupations.salaryInfoId"
+                                name="salaryInfoId" placeholder="직업 선택"></mdb-select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <mat-card-actions>
+                        <button *ngIf="!isSubmitted" mat-raised-button class="stick-to-right-side" color="accent">추가</button>
+                        <button *ngIf="isSubmitted" mat-raised-button class="stick-to-right-side" color="accent">
+                          <mdb-spinner spinnerType="small" spinnerColor="yellow"></mdb-spinner>
+                        </button>
+                      </mat-card-actions>
+                    </form>
+                  </div>
+                </div>
+              </section>
+            </mdb-tab>
+          </mdb-tabset>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

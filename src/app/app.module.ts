@@ -46,6 +46,9 @@ import { LivingConditionComponent } from './living-condition/living-condition.co
 import { ImmigrationVisaComponent } from './immigration-visa/immigration-visa.component';
 import { TermsOfServiceDialog } from './auth/register/dialog/terms-of-service/terms-of-service.component';
 import { EtcDialog } from './content-details/dialogs/minimum-col-detail-dialog/dialogs/etc-dialog/etc-dialog.component';
+import { RoleGuardService } from './shared/services/role-guard.service';
+import { AdminComponent } from './admin/admin.component';
+import { AddSalaryInfoDialog } from './admin/dialogs/add-salary-info-dialog.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -54,15 +57,7 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,
-    ContentDetailsComponent,
-    DeleteCommentDialog,
-    PriceInfoDetailDialog,
-    NotifCommentDialog,
-    AddMinimumColDialog,
-    MinimumColDetailDialog,
-    EtcDialog,
-    SearchFilterPipe,
-    SafeHtmlPipe,
+    ContentDetailsComponent,      
     UploadVideoComponent,
     NewsComponent,
     NewsDetailComponent,   
@@ -72,7 +67,17 @@ export function tokenGetter() {
     PromisingFieldComponent,
     SettlementGuideComponent,
     LivingConditionComponent,
-    ImmigrationVisaComponent
+    ImmigrationVisaComponent,
+    AdminComponent,
+    DeleteCommentDialog,
+    PriceInfoDetailDialog,
+    NotifCommentDialog,
+    AddMinimumColDialog,
+    MinimumColDetailDialog,
+    EtcDialog,
+    AddSalaryInfoDialog,
+    SearchFilterPipe,
+    SafeHtmlPipe
   ],
   entryComponents: [
     DeleteCommentDialog,
@@ -81,7 +86,8 @@ export function tokenGetter() {
     AddMinimumColDialog,
     MinimumColDetailDialog,
     TermsOfServiceDialog,
-    EtcDialog
+    EtcDialog,
+    AddSalaryInfoDialog
   ],
   imports: [
     CoreModule,
@@ -119,6 +125,7 @@ export function tokenGetter() {
     ItemsService,
     ConfigService,
     AuthGuardService,
+    RoleGuardService,
     MDBSpinningPreloader,
     DataSharingService,
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptorService, multi: true },

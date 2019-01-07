@@ -192,10 +192,13 @@ export class AuthService {
   }
 
   logout() {
+    this.removeStorage();
+    this.router.navigate(['logout']);
+  }
+
+  removeStorage() {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
-
-    this.router.navigate(['logout']);
   }
 
   setAccessToken(accessToken: string) {
@@ -231,7 +234,7 @@ export class AuthService {
     return jwtHelper.decodeToken(this.getAccessToken());
   }
 
-  isTokenExpired() {
+  isTokenExpired(): boolean {
     const jwtHelper = new JwtHelperService();
     return jwtHelper.isTokenExpired(this.getAccessToken());
   }
@@ -244,7 +247,7 @@ export class AuthService {
     return this.decodeToken().name;
   }
 
-  // isAdmin() {
-  //     return this.useJwtHelper().role == 'Admin' ? true : false;
-  // }
+  isAdmin() {
+      return this.decodeToken().role === 'Admin' ? true : false;
+  }
 }

@@ -34,6 +34,11 @@
             영상 만들기
           </a>
         </li>
+        <li *ngIf="authService.isAuthenticated() && authService.isAdmin()" class="nav-item waves-light" mdbWavesEffect>
+          <a class="nav-link" [routerLink]="['admin']">
+            운영자
+          </a>
+        </li>
       </ul>
       <ul *ngIf="!authService.isAuthenticated()" class="navbar-nav nav-flex-icons">
         <li class="nav-item waves-light" mdbWavesEffect>
@@ -51,8 +56,7 @@
           </a>
           <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
             <div *ngIf="hasNotifications" style="overflow-y: scroll; height: 400px;">
-              <div *ngFor="let n of notifications" class="dropdown-item waves-effect waves-light" 
-                    (click)="onClickNotification(n.notificationId, 
+              <div *ngFor="let n of notifications" class="dropdown-item waves-effect waves-light" (click)="onClickNotification(n.notificationId, 
                                                  n.videoPostId, 
                                                  n.youTubeVideoId, 
                                                  n.vimeoId, 
@@ -110,7 +114,7 @@
         <div class="container text-center white-text wow fadeInUp">
           <br><br><br><br><br>
           <h1>해외 취업 성공사례를 나눠주세요</h1>
-          <br>     
+          <br>
           <h6>여러분의 스토리를 앞으로 해외 취업을 꿈꾸는 모든 분들께 공유할 수 있습니다.</h6>
           <h6>멘토링 역할을 할 수 있는 기회를 꼭 만들어 보세요.</h6>
         </div>

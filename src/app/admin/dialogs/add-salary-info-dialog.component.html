@@ -1,0 +1,60 @@
+<form name="form" (ngSubmit)="f.form.valid && onSubmit(f.form.value)" #f="ngForm" novalidate>
+  <div class="form-row">
+    <div class="col-lg-6 col-md-12">
+      <div class="md-form form-group">
+        <mdb-select *ngIf="isCountriesLoaded" [options]="countriesForSalary" [(ngModel)]="countriesForSalary.nameKR"
+          name="nameKR" placeholder="국가 선택" required></mdb-select>
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-12">
+      <div class="md-form form-group">
+        <input mdbInputDirective type="text" class="form-control" [(ngModel)]="model.currency" #currency="ngModel" id="currency"
+          name="currency" placeholder="예: CAD $" required>
+        <label for="currency">* 통화</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="col-md-6">
+      <div class="md-form form-group">
+        <input mdbInputDirective type="number" class="form-control" [(ngModel)]="model.high" #high="ngModel" id="high"
+          name="high" placeholder="예: 44720.00" required>
+        <label for="high">* 최대</label>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="md-form form-group">
+        <input mdbInputDirective type="number" class="form-control" [(ngModel)]="model.median" #median="ngModel" id="median"
+          name="median" placeholder="예: 33150.00" required>
+        <label for="median">* 평균</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="col-md-6">
+      <div class="md-form form-group">
+        <input mdbInputDirective type="number" class="form-control" [(ngModel)]="model.low" #low="ngModel" id="low"
+          name="low" placeholder="예: 28080.00" required>
+        <label for="low">* 최하</label>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="md-form form-group">
+        <input mdbInputDirective type="text" class="form-control" [(ngModel)]="model.occupation" #occupation="ngModel"
+          id="occupation" name="occupation" required>
+        <label for="occupation">직업</label>
+      </div>
+    </div>
+  </div>
+
+  <mat-card-actions>
+    <button *ngIf="!isSubmitted" mat-raised-button class="stick-to-right-side" color="accent">추가</button>
+    <button *ngIf="isSubmitted" mat-raised-button class="stick-to-right-side" color="accent">
+      <mdb-spinner spinnerType="small" spinnerColor="yellow"></mdb-spinner>
+    </button>
+  </mat-card-actions>
+</form>

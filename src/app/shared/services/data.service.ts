@@ -326,6 +326,38 @@ export class DataService {
       );
   }
 
+  getCategoryCountry(): Observable<any> {
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+    };
+    return this.http.get(this._baseUrl + `admin/categories-countries`, { headers: header, observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  getSalaryInfoOccupations(nameKR: string): Observable<any> {
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+    };
+    return this.http.get(this._baseUrl + `admin/${nameKR}/salary-info-occupations`, { headers: header, observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
   getCurrencyInfo(videoPostId: number): Observable<any> {
     return this.http.get(this._baseUrl + `carddetail/${videoPostId}/currency-info`, { observe: "response" })
       .pipe(
@@ -561,6 +593,38 @@ export class DataService {
       'Authorization': 'Bearer ' + localStorage.getItem('access_token')
     };
     return this.http.post<any>(this._baseUrl + 'httpresponse/log-loggedin-http-response', body, { headers: header, observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  addNewVideoPost(body: any): Observable<any> {
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+    };
+    return this.http.post<any>(this._baseUrl + 'admin/add-new-video', body, { headers: header, observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  addNewSalaryInfo(body: any): Observable<any> {
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+    };
+    return this.http.post<any>(this._baseUrl + 'admin/add-new-salary-info', body, { headers: header, observe: "response" })
       .pipe(
         map(res => {
           return res;

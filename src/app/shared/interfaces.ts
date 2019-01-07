@@ -227,6 +227,7 @@ export interface IYouTubeCommentReply {
 }
 
 export interface ISalaryInfo {
+    salaryInfoId: number;
     country: string;
     occupation: string;
     currency: string;
@@ -277,6 +278,11 @@ export interface ILivingCondition {
 export interface IImmigrationVisa {
     content: string;   
     country: string;
+}
+
+export interface ICategoryCountry {
+    categories: ICategory[];
+    countries: ICountry[];
 }
 
 export interface Pagination {

@@ -124,9 +124,9 @@ export class ContentDetailsComponent implements OnInit {
   loadSalaryInfo() {
     this.dataService.getSalaryInfo(this.videoPostId)
       .subscribe(res => {
-        if (res.status === 200) {
+        if (res.status === 200) {        
           this.isSalaryInfoLoaded = true;
-          this.salaryInfo = this.itemsService.getSerialized<ISalaryInfo>(res.body);
+          this.salaryInfo = this.itemsService.getSerialized<ISalaryInfo>(res.body);          
         }
       });
   }
