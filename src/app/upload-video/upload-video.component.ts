@@ -2,7 +2,6 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { DataService } from '../shared/services/data.service';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { environment } from '../../environments/environment';
 
 @Component({
@@ -15,12 +14,12 @@ export class UploadVideoComponent implements OnInit {
   youtubeAddress = '';
   isCaptchaPassed = false;
   error = '';
-  siteKey = environment.RecaptchaSiteKey; 
+  siteKey = environment.RecaptchaSiteKey;
+  isSubmitted: boolean = false;
 
   constructor(private dataService: DataService,
-              private authService: AuthService,
-              private spinner: NgxSpinnerService,
-              public snackBar: MatSnackBar) { }
+    private authService: AuthService,
+    public snackBar: MatSnackBar) { }
 
   ngOnInit() {
   }
@@ -40,25 +39,27 @@ export class UploadVideoComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.email === '' || 
-        this.email.trim().length === 0 || 
-        this.youtubeAddress === '' || 
-        this.youtubeAddress.trim().length === 0) {
+    if (this.email === '' ||
+      this.email.trim().length === 0 ||
+      this.youtubeAddress === '' ||
+      this.youtubeAddress.trim().length === 0) {
       return;
     } else if (!this.isCaptchaPassed) {
       return;
     } else {
-      this.spinner.show();
+      this.isSubmitted = true;
+
       let body = {
         'email': this.email,
         'youtubeAddress': this.youtubeAddress
       };
+
       this.dataService.uploadVideo(body)
         .subscribe(res => {
-          if (res.status === 201) {   
+          if (res.status === 201) {
             this.email = '';
             this.youtubeAddress = '';
-            this.spinner.hide();
+            this.isSubmitted = false;
             this.snackBar.open('감사합니다. 확인절차 후 본 사이트에 업로드 됩니다.', '', {
               duration: 5000,
               panelClass: ['green-snackbar']
@@ -66,7 +67,7 @@ export class UploadVideoComponent implements OnInit {
           }
         },
           error => {
-            this.spinner.hide();
+            this.isSubmitted = false;
             if (error.error === "The Email field is not a valid e-mail address.") {
               this.snackBar.open('이메일 필드에 이메일 형식으로 입력해 주세요.', '', {
                 duration: 5000,
@@ -76,7 +77,7 @@ export class UploadVideoComponent implements OnInit {
               this.snackBar.open('제대로 된 유튜브 주소를 입력해 주세요.', '', {
                 duration: 5000,
                 panelClass: ['warning-snackbar']
-              });              
+              });
             } else {
               this.snackBar.open('오류가 났습니다.', '', {
                 duration: 5000,

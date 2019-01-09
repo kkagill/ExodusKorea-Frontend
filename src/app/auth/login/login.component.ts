@@ -84,10 +84,7 @@ export class LoginComponent {
     this.router.navigate(['register']);
   }
 
-  onNoClick(event) {
-    // Close only when it is clicked, not enter pressed
-    if (event.x !== 0 && event.y !== 0) {
-      this.dialogRef.close();
-    }
+  onNoClick() {
+      this.dialogRef.close();    
   }
 }

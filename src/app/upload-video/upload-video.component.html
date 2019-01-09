@@ -1,4 +1,3 @@
-<ngx-spinner bdColor="rgba(255,255,255,0.8)" size="large" color="#f7a233" type="timer"></ngx-spinner>
 <section>
 	<h2 class="h1 py-5 font-weight-bold text-center">SHARING YOUR STORY</h2>
 	<p class="px-5 mb-5 pb-3 lead grey-text text-center">
@@ -127,14 +126,13 @@
 		<p class="grey-text w-responsive mx-auto mb-5">기존에 있는 영상 or 새로운 영상 제작 완료 후</p>
 		<p>1. 엑소더스 코리아 회원가입에 쓰인 이메일 주소와</p>
 		<p>2. 유튜브에 업로드 된 영상 <span class="youtube-address" mdbTooltip="예: https://www.youtube.com/watch?v=JLigmxoSb30"
-			placement="top">주소</span>를 보내주시면 됩니다</p>
+			 placement="top">주소</span>를 보내주시면 됩니다</p>
 		<br />
 		<p class="grey-text w-responsive mx-auto mb-5">
 			간단한 <span class="youtube-address" mdbTooltip="저희 측에서 해당 유튜브 영상에 코멘트를 남기면 답글을 달아주시면 됩니다." placement="top">확인절차</span>를
 			거친 후 엑소더스 코리아에 콘텐츠를 업로드 하게 됩니다.
 		</p>
-		<input type="email" [(ngModel)]="email" name="email" mdbInputDirective class="form-control mb-4"
-		 placeholder="이메일">
+		<input type="email" [(ngModel)]="email" name="email" mdbInputDirective class="form-control mb-4" placeholder="이메일">
 		<input type="text" [(ngModel)]="youtubeAddress" name="youtubeAddress" mdbInputDirective class="form-control mb-4"
 		 placeholder="유튜브 주소">
 		<div class="custom-control custom-checkbox mb-4">
@@ -142,7 +140,10 @@
 				<re-captcha (resolved)="$event && submit($event)" siteKey={{siteKey}}></re-captcha>
 			</div>
 		</div>
-		<button mdbBtn color="info" block="true" class="z-depth-0 my-4 waves-effect" mdbWavesEffect type="submit">제출</button>
+		<button *ngIf="!isSubmitted" mdbBtn color="info" block="true" class="z-depth-0 my-4 waves-effect" mdbWavesEffect type="submit">제출</button>
+		<button *ngIf="isSubmitted" mdbBtn color="info" block="true" class="z-depth-0 my-4 waves-effect" mdbWavesEffect type="submit">
+			<mdb-spinner spinnerType="small" spinnerColor="yellow"></mdb-spinner>
+		</button>
 	</form>
 </div>
 

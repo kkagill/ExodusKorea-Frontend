@@ -5,7 +5,7 @@
           <div *ngIf="!isImmigrationVisaLoaded">
             <mdb-spinner spinnerType="big" spinnerColor="yellow"></mdb-spinner>
           </div>
-          <div *ngIf="isImmigrationVisaLoaded" mat-dialog-content>
+          <div *ngIf="isImmigrationVisaLoaded">
             <mdb-tabset [buttonClass]="'pills-secondary white mb-2'" [contentClass]="'card'">
               <mdb-tab *ngFor="let iv of immigrationVisas" heading="{{iv.country}}">
                 <section class="magazine-section my-5">

@@ -34,14 +34,13 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
             //console.log('succeed');
           }
         }), catchError((err) => {
-          debugger;
           const errorResponse = err as HttpErrorResponse;        
           // Internal server errors are logged in Log_SiteException from the server before it is intercepted. 
           if (errorResponse.status === 500) {
             router.navigate(['error']);
           }
           // When logged in and access_token is expired (trying to access [Authorize] action)
-          else if (errorResponse.status === 401 && this.authService.isTokenExpired()) {
+          else if (errorResponse.status === 401) {
             // Get new access token
             return this.authService.refresh()
               .pipe(
@@ -52,34 +51,35 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
                   return next.handle(cloneRequest);
                 }),
                 catchError(err => {
+                  // 로그아웃하고 그지같이 로그인하라는 창 어딜가나 계속떠서 없애버림
                   // When refresh token is expired (14 days), force user to login again
-                  if (err.status === 400 &&
-                    err.error.error === 'invalid_grant' &&
-                    err.error.error_description === 'The specified refresh token is no longer valid.' ||
-                    err.status === 400 &&
-                    err.error.error === 'invalid_grant' &&
-                    err.error.error_description === 'The specified refresh token is invalid.' ||
-                    err.status === 400 &&
-                    err.error.error === 'invalid_grant' &&
-                    err.error.error_description === 'The refresh token is no longer valid.') {
-                    this.authService.removeStorage();
-                    this.snackBar.open('세션이 만료됐습니다. 다시 로그인 해주세요.', '', {
-                      duration: 10000,
-                      panelClass: ['warning-snackbar']
-                    });                    
-                    const dialogRef = this.dialog.open(LoginComponent, {
-                      width: '410px',
-                      data: { email: this.email, password: this.password }
-                    });
-                    dialogRef.afterClosed().subscribe(result => {
-                      if (this.authService.isAuthenticated()) {                       
-                        this.dataSharingService.loggedIn.next(true); // pass data to header.component.ts
-                        router.navigate(['']);
-                      }
-                    });
-                  } else {                    
-                    router.navigate(['error']);
-                  }
+                  // if (err.status === 400 &&
+                  //   err.error.error === 'invalid_grant' &&
+                  //   err.error.error_description === 'The specified refresh token is no longer valid.' ||
+                  //   err.status === 400 &&
+                  //   err.error.error === 'invalid_grant' &&
+                  //   err.error.error_description === 'The specified refresh token is invalid.' ||
+                  //   err.status === 400 &&
+                  //   err.error.error === 'invalid_grant' &&
+                  //   err.error.error_description === 'The refresh token is no longer valid.') {
+                  //   this.authService.removeStorage();
+                  //   this.snackBar.open('세션이 만료됐습니다. 다시 로그인 해주세요.', '', {
+                  //     duration: 10000,
+                  //     panelClass: ['warning-snackbar']
+                  //   });                    
+                  //   const dialogRef = this.dialog.open(LoginComponent, {
+                  //     width: '410px',
+                  //     data: { email: this.email, password: this.password }
+                  //   });
+                  //   dialogRef.afterClosed().subscribe(result => {
+                  //     if (this.authService.isAuthenticated()) {                       
+                  //       this.dataSharingService.loggedIn.next(true); // pass data to header.component.ts
+                  //       router.navigate(['']);
+                  //     }
+                  //   });
+                  // } else {                    
+                  //   router.navigate(['error']);
+                  // }
 
                   return throwError(err);
                 }));

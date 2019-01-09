@@ -21,13 +21,16 @@
       <a href="javascript:void(0);" (click)="goToRegister()" class="remove-underline stick-to-right-side">회원가입</a>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button class="stick-to-right-side" [disabled]="!(loginForm.controls.email.valid && loginForm.controls.password.valid)"
+      <button type="submit" mat-raised-button class="stick-to-right-side" [disabled]="!(loginForm.controls.email.valid && loginForm.controls.password.valid)"
         color="accent">
         로그인
       </button>
-      <button mat-raised-button class="stick-to-right-side" (click)="onNoClick($event)" color="primary">
+      <button type="button" mat-raised-button class="stick-to-right-side" (click)="onNoClick()" color="primary">
         닫기
       </button>
     </mat-card-actions>
   </form>
+  <!-- <button mat-raised-button class="stick-to-right-side" style="margin-top: -23.7px; margin-right: 5px;" (click)="onNoClick()" color="primary">
+    닫기
+  </button> -->
 </mat-card>
