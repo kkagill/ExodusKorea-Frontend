@@ -182,9 +182,9 @@ export class UserProfileComponent implements OnInit {
       );
   }
 
-  onMatCardClick(videoPostId: number, videoId: string, vimeoId: number) {
+  onMatCardClick(videoPostId: number, videoId: string, isGoogleDriveVideo: number) {
     localStorage.setItem('myVideos', 'true');
-    this.router.navigate(['content-details', videoPostId, videoId, vimeoId]);
+    this.router.navigate(['content-details', videoPostId, videoId, isGoogleDriveVideo]);
   }
 
   onSelectMyVideos() {

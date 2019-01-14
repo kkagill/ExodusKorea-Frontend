@@ -48,7 +48,7 @@
           </div>      
         </div>
         <div class="col-md-3" *ngFor="let card of searchResult | searchFilter: {uploader: searchText, uploadedDate: searchText, countryKR: searchText, title: searchText} | paginate: { itemsPerPage: 8, currentPage: page }">
-          <mat-card class="card card-body mb-3" (click)="onMatCardClick(card.videoPostId, card.youTubeVideoId, card.categoryId, card.vimeoId)" style="cursor:pointer;">
+          <mat-card class="card card-body mb-3" (click)="onMatCardClick(card.videoPostId, card.youTubeVideoId, card.categoryId, card.isGoogleDriveVideo)" style="cursor:pointer;">
             <mat-card-header>
               <div mat-card-avatar class="example-header-image" [ngStyle]="{'background-image':'url(' + backgroundUrl + card.countryEN +'.png' + ')'}"></div>
               <mat-card-title>{{card.uploader}}</mat-card-title>

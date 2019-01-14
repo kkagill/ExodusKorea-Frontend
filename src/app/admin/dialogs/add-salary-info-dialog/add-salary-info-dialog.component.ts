@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar, MatDialog, MatDialogRef } from '@angular/material';
-import { DataSharingService } from '../../shared/services/data-sharing.service';
-import { AuthService } from '../../shared/services/auth.service';
-import { ItemsService } from '../../shared/utils/items.service';
-import { DataService } from '../../shared/services/data.service';
-import { ICategoryCountry, ISalaryInfo } from '../../shared/interfaces';
-import { LoginComponent } from '../../auth/login/login.component';
+import { DataSharingService } from '../../../shared/services/data-sharing.service';
+import { AuthService } from '../../../shared/services/auth.service';
+import { ItemsService } from '../../../shared/utils/items.service';
+import { DataService } from '../../../shared/services/data.service';
+import { ICategoryCountryUploader } from '../../../shared/interfaces';
+import { LoginComponent } from '../../../auth/login/login.component';
 
 @Component({
   selector: 'app-add-salary-info-dialog',
@@ -82,11 +82,11 @@ export class AddSalaryInfoDialog implements OnInit {
   }
 
   onLoadCountries() {
-    this.dataService.getCategoryCountry()
+    this.dataService.getCategoryCountryUploader()
       .subscribe(res => {
         if (res.status === 200) {
           this.isCountriesLoaded = true;
-          let result = this.itemsService.getSerialized<ICategoryCountry>(res.body);
+          let result = this.itemsService.getSerialized<ICategoryCountryUploader>(res.body);
           for (let c of result.countries) {
             this.countriesForSalary.push({ value: c.nameKR, label: c.nameKR });
           }

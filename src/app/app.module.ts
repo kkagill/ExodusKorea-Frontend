@@ -1,3 +1,4 @@
+import { AddUploaderDialog } from './admin/dialogs/add-uploader-dialog/add-uploader-dialog.component';
 import { MaterialModule } from './shared/material.module';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -48,7 +49,9 @@ import { TermsOfServiceDialog } from './auth/register/dialog/terms-of-service/te
 import { EtcDialog } from './content-details/dialogs/minimum-col-detail-dialog/dialogs/etc-dialog/etc-dialog.component';
 import { RoleGuardService } from './shared/services/role-guard.service';
 import { AdminComponent } from './admin/admin.component';
-import { AddSalaryInfoDialog } from './admin/dialogs/add-salary-info-dialog.component';
+import { AddSalaryInfoDialog } from './admin/dialogs/add-salary-info-dialog/add-salary-info-dialog.component';
+import { UploaderRankingComponent } from './uploader-ranking/uploader-ranking.component';
+import { DetailDialog } from './uploader-ranking/dialogs/detail-dialog/detail-dialog.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -76,8 +79,11 @@ export function tokenGetter() {
     MinimumColDetailDialog,
     EtcDialog,
     AddSalaryInfoDialog,
+    AddUploaderDialog,
+    DetailDialog,
     SearchFilterPipe,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    UploaderRankingComponent        
   ],
   entryComponents: [
     DeleteCommentDialog,
@@ -87,7 +93,9 @@ export function tokenGetter() {
     MinimumColDetailDialog,
     TermsOfServiceDialog,
     EtcDialog,
-    AddSalaryInfoDialog
+    AddSalaryInfoDialog,
+    AddUploaderDialog,
+    DetailDialog
   ],
   imports: [
     CoreModule,

@@ -46,7 +46,7 @@
               <mdb-spinner spinnerType="big" spinnerColor="yellow"></mdb-spinner>
             </div>
             <div *ngIf="isVideoCommentsLoaded">
-              <div class="left-align" *ngFor="let vc of videoComments | paginate: { itemsPerPage: 20, currentPage: page }">
+              <div class="left-align" *ngFor="let vc of videoComments | paginate: { itemsPerPage: 10, currentPage: page }">
                 <mat-label class="thick">
                   <span *ngIf="vc.isSharer" class="sharer">&nbsp;{{vc.authorDisplayName}}&nbsp;</span>
                   <span *ngIf="!vc.isSharer">{{vc.authorDisplayName}}</span>

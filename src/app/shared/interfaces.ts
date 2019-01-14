@@ -1,7 +1,7 @@
 export interface IApplicationUser {
     userName: string;
     firstName: string;
-    lastName: string;   
+    lastName: string;
     lockoutEnd: Date;
     nickName: string;
 }
@@ -28,6 +28,11 @@ export interface ICountry {
     nameKR: string;
     isChecked: boolean;
     isNotDisabled: boolean;
+}
+
+export interface IUploader {
+    uploaderId: number;
+    name: string;
 }
 
 export interface INews {
@@ -59,11 +64,11 @@ export interface IVideoPost {
     title: string;
     likes: number;
     youTubeVideoId: string;
-    vimeoId: number;
+    isGoogleDriveVideo: number;
     categoryId: number;
     countryEN: string;
-    countryKR: string;  
-    category: string;  
+    countryKR: string;
+    category: string;
 }
 
 export interface ICountryInfo {
@@ -73,7 +78,7 @@ export interface ICountryInfo {
     majorCities: string;
     population: string;
     perCapitaGDP: number;
-    currency: number;   
+    currency: number;
     countryLink: string;
 }
 
@@ -98,19 +103,19 @@ export interface IPriceInfo {
     restaurantPriceIcon: string;
 }
 
-export interface IMinimumCoLInfo {  
+export interface IMinimumCoLInfo {
     countryKR: string;
     countryEN: string;
     baseCurrency: string;
     cityMinimums: ICityMinimum[];
 }
 
-export interface ICityMinimum {   
+export interface ICityMinimum {
     city: string;
     avgCostOfLiving: number;
 }
 
-export interface IPriceInfoDetail {  
+export interface IPriceInfoDetail {
     city: string;
     currency: string;
     rent: IPI_Rent;
@@ -119,13 +124,13 @@ export interface IPriceInfoDetail {
     etc: IPI_Etc;
 }
 
-export interface ICity {  
+export interface ICity {
     cityId: number;
     country: string;
     name: string;
 }
 
-export interface IMinimumCOL {  
+export interface IMinimumCOL {
     country: string;
     cityId: number;
     city: string;
@@ -139,24 +144,24 @@ export interface IMinimumCOL {
     total: number;
     dateCreated: Date;
     authorCountryEN: string;
-    
-    currency: string;   
+
+    currency: string;
 }
 
-export interface IPI_Rent { 
+export interface IPI_Rent {
     oneBedRoomCenter: any;
     oneBedRoomOutside: any;
     twoBedRoomCenter: any;
     twoBedRoomOutside: any;
 }
 
-export interface IPI_Restaurant {  
+export interface IPI_Restaurant {
     bigMacMeal: any;
     cappuccino: any;
     mealPerOne: any;
 }
 
-export interface IPI_Groceries {  
+export interface IPI_Groceries {
     apple: any;
     chickenBreasts: any;
     cigarettes: any;
@@ -166,7 +171,7 @@ export interface IPI_Groceries {
     water: any;
 }
 
-export interface IPI_Etc {   
+export interface IPI_Etc {
     bus: any;
     gas: any;
     internet: any;
@@ -185,6 +190,18 @@ export interface IVideoPostInfo {
     likes: number;
     owner: string;
     title: string;
+}
+
+export interface IUploaderRanking {
+    name: string;
+    uploaderId: number;
+    specificInfo: ISpecificInfo;
+}
+
+export interface ISpecificInfo {
+    totalScore: number;
+    videoCount: number;
+    likesSum: number;
 }
 
 export interface IVideoComment {
@@ -234,7 +251,7 @@ export interface ISalaryInfo {
     low: number;
     median: number;
     high: number;
-    isDisplayable: boolean;  
+    isDisplayable: boolean;
 }
 
 export interface INotification {
@@ -243,64 +260,65 @@ export interface INotification {
     videoCommentReplyId: number;
     videoPostId: number;
     youTubeVideoId: string;
-    vimeoId: number;
+    isGoogleDriveVideo: number;
     userId: string;
     nickName: string;
-    comment: string;  
-    dateCreated: Date;  
+    comment: string;
+    dateCreated: Date;
     hasRead: boolean;
 }
 
 export interface IProfile {
-    email : string;
-    nickName : string;
-    dateCreated : Date;
+    email: string;
+    nickName: string;
+    dateCreated: Date;
     dateVisitedRecent: Date;
     visitCount: number;
     hasCanceledSubscription: boolean;
 }
 
 export interface IPromisingField {
-    content: string;   
+    content: string;
     country: string;
 }
 
 export interface ISettlementGuide {
-    content: string;   
+    content: string;
     country: string;
 }
 
 export interface ILivingCondition {
-    content: string;   
+    content: string;
     country: string;
 }
 
 export interface IImmigrationVisa {
-    content: string;   
+    content: string;
     country: string;
 }
 
-export interface ICategoryCountry {
+export interface ICategoryCountryUploader {
     categories: ICategory[];
     countries: ICountry[];
+    uploaders: IUploader[];
 }
 
 export interface Pagination {
-    CurrentPage : number;
-    ItemsPerPage : number;
-    TotalItems : number;
+    CurrentPage: number;
+    ItemsPerPage: number;
+    TotalItems: number;
     TotalPages: number;
 }
 
 export interface LoginResponse {
-    access_token : string;
-    refresh_token : string;
-    expires_in : number;
+    access_token: string;
+    refresh_token: string;
+    expires_in: number;
 }
 
 export class PaginatedResult<T> {
-    result :  T;
-    pagination : Pagination;
+    result: T;
+    pagination: Pagination;
 }
 
 export interface Predicate<T> {

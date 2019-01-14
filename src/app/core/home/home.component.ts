@@ -160,8 +160,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
     return R;
   }
 
-  onMatCardClick(videoPostId: number, videoId: string, vimeoId: number) {
-    if (vimeoId > 0 && !this.authService.isAuthenticated()) {
+  onMatCardClick(videoPostId: number, videoId: string, isGoogleDriveVideo: number) {
+    if (isGoogleDriveVideo === 1 && !this.authService.isAuthenticated()) {
       const dialogRef = this.dialog.open(LoginComponent, {
         width: '410px',
         data: { email: this.email, password: this.password }
@@ -173,7 +173,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
         }
       });
     } else {
-      this.router.navigate(['content-details', videoPostId, videoId, vimeoId]);
+      this.router.navigate(['content-details', videoPostId, videoId, isGoogleDriveVideo]);
     }    
   }
 

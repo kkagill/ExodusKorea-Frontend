@@ -15,7 +15,7 @@ export interface DialogData {
   notificationId: number,
   videoPostId: number,
   youTubeVideoId: string,
-  vimeoId: number,
+  isGoogleDriveVideo: number,
   videoCommentId: number;
   videoCommentReplyId: number;
 }
@@ -395,6 +395,6 @@ export class NotifCommentDialog implements OnInit {
 
   onClickRedirect() {
     this.dialogRef.close();
-    this.router.navigate(['content-details', this.data.videoPostId, this.data.youTubeVideoId, this.data.vimeoId]);
+    this.router.navigate(['content-details', this.data.videoPostId, this.data.youTubeVideoId, this.data.isGoogleDriveVideo]);
   }
 }

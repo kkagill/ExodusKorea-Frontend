@@ -1,0 +1,24 @@
+<div *ngIf="isUploaderRankingLoaded">
+  <mat-card class="example-card" style="width: 230px;">
+    <p class="thick">
+      영상 업로더 랭킹
+      <i class="fa fa-info-circle" [mdbTooltip]="popTemplate" placement="top" aria-hidden="true"></i>
+    </p>
+    <hr />
+    <mat-card-content class="left-align-panel">
+      <mat-label *ngFor="let up of uploaderRanking; index as i" style="text-align: justify;">
+        <p>{{i+1}}. <span class="score" (click)="onScoreClick(up)">{{up.name}}</span><span class="thick stick-to-right-side">{{up.specificInfo.totalScore}}</span></p>
+      </mat-label>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<ng-template #popTemplate>
+  <div style="width: 200px;">
+    <p>스코어 계산 법</p>
+    <br />
+    <p>- 영상 업로드 1개: 100점</p>
+    <p></p>
+    <p>- 영상에 달린 추천 1개: 1점</p>
+  </div>
+</ng-template>

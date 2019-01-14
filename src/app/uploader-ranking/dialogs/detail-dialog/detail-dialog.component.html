@@ -1,0 +1,39 @@
+<section class="magazine-section my-5" id="detail">
+  <div class="row">
+    <div class="col-lg-12 col-md-12">
+      <div style="text-align: center;">
+        <p class="thick">{{data.uploaderRanking.name}}</p>
+        <p style="font-size: 13px;">총 올려진 영상: {{data.uploaderRanking.specificInfo.videoCount}}</p>
+        <p style="font-size: 13px;">총 추천 개수: {{data.uploaderRanking.specificInfo.likesSum}}</p>
+      </div>
+
+      <div *ngIf="!isSearchResultLoaded">
+        <mdb-spinner spinnerType="big" spinnerColor="yellow"></mdb-spinner>
+      </div>
+      <div class="row" *ngIf="isSearchResultLoaded">
+        <div class="col-lg-6 col-md-4" *ngFor="let card of searchResult | searchFilter: {uploader: searchText, uploadedDate: searchText, countryKR: searchText, title: searchText} | paginate: { itemsPerPage: 2, currentPage: page }">
+          <mat-card class="card card-body mb-6" (click)="onMatCardClick(card.videoPostId, card.youTubeVideoId, card.isGoogleDriveVideo)"
+            style="cursor:pointer;">
+            <mat-card-header>
+              <mat-card-subtitle>{{card.uploadedDate | date:'yyyy-MM-dd'}}</mat-card-subtitle>
+            </mat-card-header>
+            <img mat-card-image src="https://img.youtube.com/vi/{{card.youTubeVideoId}}/hqdefault.jpg">
+            <mat-card-content>
+              <h6 style="text-align: center;"><strong>{{card.countryKR}} {{card.title}}</strong></h6>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+      <br />
+      <div style="text-align: center;">
+        <pagination-controls (pageChange)="page = $event"></pagination-controls>
+      </div>
+    </div>
+  </div>
+
+  <mat-card-actions>
+    <button mat-raised-button class="stick-to-right-side" (click)="onCancelClick()" color="primary">
+      닫기
+    </button>
+  </mat-card-actions>
+</section>

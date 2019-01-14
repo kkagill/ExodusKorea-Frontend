@@ -1,0 +1,18 @@
+<form name="form" (ngSubmit)="f.form.valid && onSubmit(f.form.value)" #f="ngForm" novalidate>
+  <div class="form-row">
+    <div class="col-lg-6 col-md-12">
+      <div class="md-form form-group">
+        <input mdbInputDirective type="text" class="form-control" [(ngModel)]="model.uploader" #uploader="ngModel" id="uploader"
+          name="uploader" required>
+        <label for="uploader">* 작성자</label>
+      </div>
+    </div>
+  </div>
+
+  <mat-card-actions>
+    <button *ngIf="!isSubmitted" mat-raised-button class="stick-to-right-side" color="accent">추가</button>
+    <button *ngIf="isSubmitted" mat-raised-button class="stick-to-right-side" color="accent">
+      <mdb-spinner spinnerType="small" spinnerColor="yellow"></mdb-spinner>
+    </button>
+  </mat-card-actions>
+</form>

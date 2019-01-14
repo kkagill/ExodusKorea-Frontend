@@ -47,14 +47,14 @@ export class SearchVideosComponent implements OnInit {
 
     if (categoryId != null) {
       localStorage.removeItem('categoryId');
-     // this.expandCategory = true;
+      // this.expandCategory = true;
       this.loadAllCategories(+categoryId);
       //this.loadAllCareers(0);
-    // } else if (careerId != null) {
-    //   localStorage.removeItem('careerId');
-    //   this.expandCareer = true;
-    //   this.loadAllCategories(0);
-    //   this.loadAllCareers(+careerId);
+      // } else if (careerId != null) {
+      //   localStorage.removeItem('careerId');
+      //   this.expandCareer = true;
+      //   this.loadAllCategories(0);
+      //   this.loadAllCareers(+careerId);
     } else if (categoryId == null) { // } else if (categoryId == null && careerId == null) {
       //this.all = "initial";
       this.loadAllCategories(1);
@@ -79,7 +79,7 @@ export class SearchVideosComponent implements OnInit {
                   this.loadAllSearchResult();
                 } else {
                   this.loadSearchResultByCategory(c.categoryId);
-                }                
+                }
               }
             }
           }
@@ -100,16 +100,16 @@ export class SearchVideosComponent implements OnInit {
         if (res.status === 200) {
           this.isCountriesLoaded = true;
           this.countries = this.itemsService.getSerialized<ICountry[]>(res.body);
-          let selectedCountries = this.countries.map(x => x.nameKR);   
+          let selectedCountries = this.countries.map(x => x.nameKR);
           // checkbox for country is pre-selected only when search result contains corresponding country
           if (this.isSearchResultLoaded) {
             for (let sr of this.searchResult) {
-              if (selectedCountries.includes(sr.countryKR)) {        
-                this.countries.find(x => x.nameKR === sr.countryKR).isChecked = true;    
-                this.countries.find(x => x.nameKR === sr.countryKR).isNotDisabled = true;            
-              }          
+              if (selectedCountries.includes(sr.countryKR)) {
+                this.countries.find(x => x.nameKR === sr.countryKR).isChecked = true;
+                this.countries.find(x => x.nameKR === sr.countryKR).isNotDisabled = true;
+              }
             }
-          }          
+          }
         }
       },
         error => {
@@ -150,12 +150,12 @@ export class SearchVideosComponent implements OnInit {
   loadAllSearchResult() {
     this.dataService.getAllSearchResult()
       .subscribe(res => {
-        if (res.status === 200) {  
+        if (res.status === 200) {
           this.isSearchResultLoaded = true;
           this.searchResult = this.itemsService.getSerialized<IVideoPost[]>(res.body);
           for (let sr of this.searchResult) {
             sr.categoryId = 1;
-          }       
+          }
           localStorage.setItem('searchResult', JSON.stringify(this.searchResult))
           this.loadAllCountries();
         }
@@ -189,12 +189,12 @@ export class SearchVideosComponent implements OnInit {
   }
 
   getVideosByCountry() {
-    let searchResult = JSON.parse(localStorage.getItem('searchResult'))   
-    let selectedCountries = this.countries.filter(x => x.isChecked === true).map(x => x.nameKR);   
+    let searchResult = JSON.parse(localStorage.getItem('searchResult'))
+    let selectedCountries = this.countries.filter(x => x.isChecked === true).map(x => x.nameKR);
     this.searchResult = [];
 
-    for (let sr of searchResult) {     
-      if (selectedCountries.includes(sr.countryKR)) {        
+    for (let sr of searchResult) {
+      if (selectedCountries.includes(sr.countryKR)) {
         this.searchResult.push(sr);
       }
     }
@@ -245,11 +245,11 @@ export class SearchVideosComponent implements OnInit {
   //   this.loadSearchResultByCareer(career.careerId);
   // }
 
-  onMatCardClick(videoPostId: number, videoId: string, categoryId: number, vimeoId: number) {
+  onMatCardClick(videoPostId: number, videoId: string, categoryId: number, isGoogleDriveVideo: number) {
     if (this.selectedCategory != null) {
       localStorage.setItem('categoryId', categoryId.toString());
     }
-    if (vimeoId > 0 && !this.authService.isAuthenticated()) {
+    if (isGoogleDriveVideo === 1 && !this.authService.isAuthenticated()) {
       const dialogRef = this.dialog.open(LoginComponent, {
         width: '410px',
         data: { email: this.email, password: this.password }
@@ -261,8 +261,8 @@ export class SearchVideosComponent implements OnInit {
         }
       });
     } else {
-      this.router.navigate(['content-details', videoPostId, videoId, vimeoId]);
-    }    
+      this.router.navigate(['content-details', videoPostId, videoId, isGoogleDriveVideo]);
+    }
     // if (this.selectedCareer != null) {
     //   let serializedCareer = this.itemsService.getSerialized<ICareer>(this.selectedCareer);
     //   localStorage.setItem('careerId', serializedCareer.careerId.toString());

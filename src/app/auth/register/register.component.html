@@ -23,7 +23,7 @@
         <form (ngSubmit)="onSubmit()" [formGroup]="registerForm">
           <mat-card-content>
             <mat-form-field appearance="outline" class="input-size">
-              <mat-label>이메일</mat-label>
+              <mat-label>이메일 *</mat-label>
               <input matInput placeholder="이메일" formControlName="email" [formControl]="emailFormControl"
                 [errorStateMatcher]="matcher" />
               <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
@@ -31,12 +31,12 @@
               </mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" class="input-size">
-              <mat-label>닉네임</mat-label>
+              <mat-label>닉네임 *</mat-label>
               <input matInput placeholder="닉네임" formControlName="nickName" [formControl]="nickNameFormControl"
                 [errorStateMatcher]="matcher" />
             </mat-form-field>
             <mat-form-field appearance="outline" class="input-size">
-              <mat-label>비밀번호</mat-label>
+              <mat-label>비밀번호 *</mat-label>
               <input matInput type="password" placeholder="비밀번호" formControlName="password" [formControl]="passwordFormControl"
                 [errorStateMatcher]="matcher" />
               <mat-error *ngIf="passwordFormControl.hasError('pattern') && !passwordFormControl.hasError('required')">
@@ -44,7 +44,7 @@
               </mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" class="input-size">
-              <mat-label>비밀번호 재확인</mat-label>
+              <mat-label>비밀번호 재확인 *</mat-label>
               <input matInput type="password" placeholder="비밀번호 재확인" formControlName="confirmPassword" [formControl]="confirmPasswordFormControl"
                 [errorStateMatcher]="matcher" />
               <mat-error *ngIf="confirmPasswordFormControl.hasError('pattern') && !confirmPasswordFormControl.hasError('required')">

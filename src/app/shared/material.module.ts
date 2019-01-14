@@ -17,7 +17,8 @@ import { MatSnackBarModule,
          MatMenuModule,
          MatTabsModule,
          MatBadgeModule,
-         MatTooltipModule
+         MatTooltipModule,
+         MatAutocompleteModule
         } from  '@angular/material';
 import { FormsModule } from '@angular/forms';
  
@@ -42,7 +43,8 @@ import { FormsModule } from '@angular/forms';
         MatMenuModule,
         MatTabsModule,
         MatBadgeModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MatAutocompleteModule
     ], 
     exports: [
         MatSnackBarModule,
@@ -64,7 +66,8 @@ import { FormsModule } from '@angular/forms';
         MatMenuModule,
         MatTabsModule,
         MatBadgeModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MatAutocompleteModule
     ] 
 }) 
 export class MaterialModule { }

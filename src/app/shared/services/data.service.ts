@@ -326,12 +326,12 @@ export class DataService {
       );
   }
 
-  getCategoryCountry(): Observable<any> {
+  getCategoryCountryUploader(): Observable<any> {
     const header = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('access_token')
     };
-    return this.http.get(this._baseUrl + `admin/categories-countries`, { headers: header, observe: "response" })
+    return this.http.get(this._baseUrl + `admin/categories-countries-uploaders`, { headers: header, observe: "response" })
       .pipe(
         map(res => {
           return res;
@@ -342,12 +342,28 @@ export class DataService {
       );
   }
 
-  getSalaryInfoOccupations(nameKR: string): Observable<any> {
+  getYouTubeInfoById(youTubeId: string): Observable<any> {
     const header = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('access_token')
     };
-    return this.http.get(this._baseUrl + `admin/${nameKR}/salary-info-occupations`, { headers: header, observe: "response" })
+    return this.http.get(this._baseUrl + `admin/${youTubeId}/youtube-info-by-id`, { headers: header, observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  getSalaryInfoOccupations(country: string): Observable<any> {
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+    };
+    return this.http.get(this._baseUrl + `admin/${country}/salary-info-occupations`, { headers: header, observe: "response" })
       .pipe(
         map(res => {
           return res;
@@ -527,6 +543,30 @@ export class DataService {
       );
   }
   
+  getUploaderRanking(): Observable<any> {
+    return this.http.get(this._baseUrl + `ranking/uploader-ranking`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  getUploaderVideos(uploaderId: number): Observable<any> {
+    return this.http.get(this._baseUrl + `ranking/${uploaderId}/uploader-videos`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
   findUserLikedPost(id: number): Observable<any> {
     const header = {
       'Content-Type': 'application/json',
@@ -625,6 +665,22 @@ export class DataService {
       'Authorization': 'Bearer ' + localStorage.getItem('access_token')
     };
     return this.http.post<any>(this._baseUrl + 'admin/add-new-salary-info', body, { headers: header, observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  addNewUploader(body: any): Observable<any> {
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+    };
+    return this.http.post<any>(this._baseUrl + 'admin/add-new-uploader', body, { headers: header, observe: "response" })
       .pipe(
         map(res => {
           return res;

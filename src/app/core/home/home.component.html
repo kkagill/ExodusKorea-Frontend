@@ -3,14 +3,14 @@
 <div *ngIf="!isNewVideosLoaded">
 	<mdb-spinner spinnerType="big" spinnerColor="yellow"></mdb-spinner>
 </div>
-<div *ngIf="isNewVideosLoaded">
+<div>
 	<p class="country-title">새로운 영상</p>
 	<hr />
 	<mdb-carousel [isControls]="true" class="carousel-multi-item multi-animation" [type]="'carousel-multi-item'"
 	 [animation]="'slide'">
 		<mdb-carousel-item *ngFor="let item of slides; let i = index">
 			<div class="col-md-3" *ngFor="let card of item">
-				<mat-card class="card card-body mb-3" (click)="onMatCardClick(card.videoPostId, card.youTubeVideoId, card.vimeoId)" style="cursor:pointer;">
+				<mat-card class="card card-body mb-3" (click)="onMatCardClick(card.videoPostId, card.youTubeVideoId, card.isGoogleDriveVideo)" style="cursor:pointer;">
 					<mat-card-header>
 						<div mat-card-avatar class="example-header-image" [ngStyle]="{'background-image':'url(' + backgroundUrl + card.countryEN +'.png' + ')'}"></div>
 						<mat-card-title>{{card.uploader}}</mat-card-title>
@@ -36,7 +36,7 @@
 	<hr />
 	<div class="row">
 		<div class="col-md-3" *ngFor="let card of allVideos">
-			<mat-card class="card card-body mb-3" (click)="onMatCardClick(card.videoPostId, card.youTubeVideoId, card.vimeoId)" style="cursor:pointer;">
+			<mat-card class="card card-body mb-3" (click)="onMatCardClick(card.videoPostId, card.youTubeVideoId, card.isGoogleDriveVideo)" style="cursor:pointer;">
 				<mat-card-header>
 					<div mat-card-avatar class="example-header-image" [ngStyle]="{'background-image':'url(' + backgroundUrl + card.countryEN +'.png' + ')'}"></div>
 					<mat-card-title>{{card.uploader}}</mat-card-title>
@@ -99,7 +99,7 @@
 		<div class="col-lg-3 col-md-12">
 			<div class="single-news mb-lg-0 mb-4">
 				<div *ngIf="isRecommendedVideoLoaded">
-					<mat-card class="card card-body mb-3" (click)="onMatCardClick(recommendedVideo.videoPostId, recommendedVideo.youTubeVideoId, recommendedVideo.vimeoId)"
+					<mat-card class="card card-body mb-3" (click)="onMatCardClick(recommendedVideo.videoPostId, recommendedVideo.youTubeVideoId, recommendedVideo.isGoogleDriveVideo)"
 					 style="cursor:pointer;">
 						<p class="thick">추천 영상</p>
 						<hr />

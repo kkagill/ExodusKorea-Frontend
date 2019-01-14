@@ -1,6 +1,10 @@
+.example-header-image {
+  background-size: cover;
+}
+
 @media screen and (min-width : 0px) and (max-width : 767px){
-  #add {    
+  #detail {    
     overflow-y: scroll; 
-    height: 400px;
+    height: 320px;
   }
 }

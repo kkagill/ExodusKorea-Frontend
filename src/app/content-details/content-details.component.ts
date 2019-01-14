@@ -26,7 +26,7 @@ export class ContentDetailsComponent implements OnInit {
   safeURL: any;
   videoPostId: any;
   youtubeId: any;
-  vimeoId: number;
+  isGoogleDriveVideo: number;
   countryInfo: ICountryInfo;
   salaryInfo: ISalaryInfo;
   priceInfo: IPriceInfo;
@@ -88,14 +88,14 @@ export class ContentDetailsComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
       this.videoPostId = params.get('id1');
       this.youtubeId = params.get('id2');
-      this.vimeoId = +params.get('id3');
-      // Use Vimeo
-      if (this.vimeoId > 0 && this.authService.isAuthenticated()) {
-        this.safeURL = this.sanitizer.bypassSecurityTrustResourceUrl(`https://player.vimeo.com/video/${this.vimeoId}${'?autoplay=1'}${'&rel=0'}`); // rel=0, related videos will come from the same channel as the video that was just played. 
-        // Enter vimeoId in URL without being logged in
-      } else if (this.vimeoId > 0 && !this.authService.isAuthenticated()) {
+      this.isGoogleDriveVideo = +params.get('id3');
+      // Use Google Drive Video
+      if (this.isGoogleDriveVideo === 1 && this.authService.isAuthenticated()) {
+        this.safeURL = this.sanitizer.bypassSecurityTrustResourceUrl(`https://drive.google.com/file/d/${this.youtubeId}/preview`); // rel=0, related videos will come from the same channel as the video that was just played. 
+        // Enter 1 at the end of URL without being logged in
+      } else if (this.isGoogleDriveVideo === 1 && !this.authService.isAuthenticated()) {
         this.router.navigate(['**']);
-        // Use YouTube
+        // Use YouTube Video
       } else {
         this.safeURL = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${this.youtubeId}${'?autoplay=1'}${'&rel=0'}`); // rel=0, related videos will come from the same channel as the video that was just played. 
       }
@@ -124,9 +124,9 @@ export class ContentDetailsComponent implements OnInit {
   loadSalaryInfo() {
     this.dataService.getSalaryInfo(this.videoPostId)
       .subscribe(res => {
-        if (res.status === 200) {        
+        if (res.status === 200) {
           this.isSalaryInfoLoaded = true;
-          this.salaryInfo = this.itemsService.getSerialized<ISalaryInfo>(res.body);          
+          this.salaryInfo = this.itemsService.getSerialized<ISalaryInfo>(res.body);
         }
       });
   }
@@ -182,7 +182,7 @@ export class ContentDetailsComponent implements OnInit {
   // }
 
   loadPostInfo() {
-    this.dataService.getPostInfo(this.videoPostId, this.youtubeId, this.vimeoId)
+    this.dataService.getPostInfo(this.videoPostId, this.youtubeId, this.isGoogleDriveVideo)
       .subscribe(res => {
         if (res.status === 200) {
           this.isVideoPostInfoLoaded = true;
@@ -192,7 +192,7 @@ export class ContentDetailsComponent implements OnInit {
   }
 
   loadVideoComments() {
-    this.dataService.getVideoComments(this.videoPostId, this.youtubeId, this.vimeoId)
+    this.dataService.getVideoComments(this.videoPostId, this.youtubeId, this.isGoogleDriveVideo)
       .subscribe(res => {
         if (res.status === 200) {
           this.isVideoCommentsLoaded = true;
@@ -274,7 +274,7 @@ export class ContentDetailsComponent implements OnInit {
             'videoCommentReplyId': res.body.videoCommentReplyId,
             'videoPostId': this.videoPostId,
             'youTubeVideoId': this.youtubeId,
-            'vimeoId': this.vimeoId,
+            'isGoogleDriveVideo': this.isGoogleDriveVideo,
             'userId': userId,
             'comment': this.commentReplyForm.value.comment
           };
@@ -318,7 +318,7 @@ export class ContentDetailsComponent implements OnInit {
             'videoCommentReplyId': res.body.videoCommentReplyId,
             'videoPostId': this.videoPostId,
             'youTubeVideoId': this.youtubeId,
-            'vimeoId': this.vimeoId,
+            'isGoogleDriveVideo': this.isGoogleDriveVideo,
             'userId': userId,
             'comment': this.commentReplyForm.value.comment
           };
@@ -388,7 +388,7 @@ export class ContentDetailsComponent implements OnInit {
                 this.dataService.addPostLike(body)
                   .subscribe(res => {
                     if (res.status === 201) {
-                      this.dataService.getPostInfo(this.videoPostId, this.youtubeId, this.vimeoId)
+                      this.dataService.getPostInfo(this.videoPostId, this.youtubeId, this.isGoogleDriveVideo)
                         .subscribe(res => {
                           if (res.status === 200) {
                             this.videoInfo = this.itemsService.getSerialized<IVideoPostInfo>(res.body);

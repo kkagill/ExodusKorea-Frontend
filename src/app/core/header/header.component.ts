@@ -77,7 +77,7 @@ export class HeaderComponent implements OnInit {
               this.newNotifications += 1;
             }
           }
-          
+
           this.isNotificationLoaded = true;
         }
       });
@@ -87,19 +87,19 @@ export class HeaderComponent implements OnInit {
     return notification.notificationId === this;
   }
 
-  onClickNotification(notificationId: number, 
-                      videoPostId: number, 
-                      youTubeVideoId: string, 
-                      vimeoId: number, 
-                      videoCommentId: number, 
-                      videoCommentReplyId: number) {
+  onClickNotification(notificationId: number,
+    videoPostId: number,
+    youTubeVideoId: string,
+    isGoogleDriveVideo: number,
+    videoCommentId: number,
+    videoCommentReplyId: number) {
     this.dialogNotif.open(NotifCommentDialog, {
       width: '510px',
       data: {
         notificationId: notificationId,
         videoPostId: videoPostId,
         youTubeVideoId: youTubeVideoId,
-        vimeoId: vimeoId,
+        isGoogleDriveVideo: isGoogleDriveVideo,
         videoCommentId: videoCommentId,
         videoCommentReplyId: videoCommentReplyId
       }
