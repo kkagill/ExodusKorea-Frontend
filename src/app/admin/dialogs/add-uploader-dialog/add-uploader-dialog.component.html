@@ -2,9 +2,35 @@
   <div class="form-row">
     <div class="col-lg-6 col-md-12">
       <div class="md-form form-group">
+        <input mdbInputDirective type="text" class="form-control" [(ngModel)]="model.channelId" #channelId="ngModel"
+          id="channelId" name="channelId" required>
+        <label for="channelId">* 채널 ID</label>
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-12">
+      <div class="md-form form-group">
+        <button *ngIf="!isChannelIdSubmitted" type="button" class="btn btn-outline-info waves-effect btn-sm" (click)="onFindChannelInfo(model.channelId)">정보
+          조회</button>
+        <button *ngIf="isChannelIdSubmitted" type="button" class="btn btn-outline-info waves-effect btn-sm">
+          <mdb-spinner spinnerType="small" spinnerColor="yellow"></mdb-spinner>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="col-lg-6 col-md-12">
+      <div class="md-form form-group">
         <input mdbInputDirective type="text" class="form-control" [(ngModel)]="model.uploader" #uploader="ngModel" id="uploader"
           name="uploader" required>
         <label for="uploader">* 작성자</label>
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-12">
+      <div class="md-form form-group">
+        <input mdbInputDirective type="text" class="form-control" [(ngModel)]="model.thumbnailUrl" #thumbnailUrl="ngModel" id="thumbnailUrl"
+          name="thumbnailUrl" required>
+        <label for="thumbnailUrl">* 썸네일 URL</label>
       </div>
     </div>
   </div>

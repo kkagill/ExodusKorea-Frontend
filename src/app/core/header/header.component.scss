@@ -23,3 +23,17 @@ h1, h5, strong{
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+@media screen and (min-width : 0px) and (max-width : 767px){
+  #main {    
+    visibility: hidden;
+    clear: both;   
+    display: none;
+  }
+  
+  #share {    
+    visibility: hidden;
+    clear: both;   
+    display: none;
+  }
+}

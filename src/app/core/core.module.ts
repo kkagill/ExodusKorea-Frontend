@@ -8,17 +8,21 @@ import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MaterialModule } from '../shared/material.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
 import { FooterComponent } from './footer/footer.component';
+import { CoreRoutingModule } from './core-routing.module';
+import { NotifCommentDialog } from './header/dialogs/notif-comment-dialog.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { VideoNotFoundComponent } from './video-not-found/video-not-found.component';
 
 @NgModule({
   imports: [
     CommonModule,
+    CoreRoutingModule,
     RouterModule,
     LayoutModule,
-    MaterialModule,
-    FlexLayoutModule,
+    MaterialModule,   
+    ReactiveFormsModule,
     MDBBootstrapModulesPro.forRoot()
   ],
   declarations: [
@@ -27,7 +31,9 @@ import { FooterComponent } from './footer/footer.component';
     HeaderComponent,
     ErrorComponent,
     NotFoundComponent,
-    FooterComponent
+    FooterComponent,
+    NotifCommentDialog,
+    VideoNotFoundComponent
   ],
   exports: [  
     HeaderComponent,

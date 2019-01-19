@@ -22,6 +22,7 @@ export class DetailDialog implements OnInit {
   isSearchResultLoaded: boolean = false;
   email: string;
   password: string;
+  page: number = 1;
 
   constructor(private dataService: DataService,
     private authService: AuthService,

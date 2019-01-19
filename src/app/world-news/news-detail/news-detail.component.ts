@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../shared/services/data.service';
+import { DataService } from '../../shared/services/data.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { ItemsService } from '../shared/utils/items.service';
-import { INewsDetail, ICategory } from '../shared/interfaces';
+import { ItemsService } from '../../shared/utils/items.service';
+import { INewsDetail, ICategory } from '../../shared/interfaces';
 import { MatSnackBar } from '@angular/material';
 
 @Component({

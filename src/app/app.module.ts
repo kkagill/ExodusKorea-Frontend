@@ -1,3 +1,4 @@
+import { SearchVideosModule } from './search-videos/search-videos.module';
 import { AddUploaderDialog } from './admin/dialogs/add-uploader-dialog/add-uploader-dialog.component';
 import { MaterialModule } from './shared/material.module';
 import { BrowserModule, Title } from '@angular/platform-browser';
@@ -15,7 +16,6 @@ import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 import { FlexLayoutModule } from '@angular/flex-layout'
 import { MDBBootstrapModulesPro, ToastModule } from 'ng-uikit-pro-standard';
 import { MDBSpinningPreloader } from 'ng-uikit-pro-standard';
-import { NgxPaginationModule } from 'ngx-pagination';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { AuthService } from './shared/services/auth.service';
@@ -27,31 +27,24 @@ import { HttpErrorInterceptorService } from './shared/services/http-error-interc
 import { DataSharingService } from './shared/services/data-sharing.service';
 
 import { AppComponent } from './app.component';
-import { ContentDetailsComponent } from './content-details/content-details.component';
 import { DeleteCommentDialog } from './content-details/dialogs/delete-comment-dialog/delete-comment-dialog.component';
 import { PriceInfoDetailDialog } from './content-details/dialogs/price-info-detail-dialog/price-info-detail-dialog.component';
 import { NotifCommentDialog } from './core/header/dialogs/notif-comment-dialog.component';
 import { AddMinimumColDialog } from './content-details/dialogs/add-minimum-col-dialog/add-minimum-col-dialog.component';
 import { MinimumColDetailDialog } from './content-details/dialogs/minimum-col-detail-dialog/minimum-col-detail-dialog.component';
-import { SearchFilterPipe } from './shared/pipes/search-filter.pipe';
 import { UploadVideoComponent } from './upload-video/upload-video.component';
-import { NewsComponent } from './news/news.component';
-import { NewsDetailComponent } from './news-detail/news-detail.component';
-import { SafeHtmlPipe } from './shared/pipes/safe-html.pipe';
-import { SearchVideosComponent } from './search-videos/search-videos.component';
-import { CountryInfoComponent } from './country-info/country-info.component';
-import { UserProfileComponent } from './user-profile/user-profile.component';
-import { PromisingFieldComponent } from './promising-field/promising-field.component';
-import { SettlementGuideComponent } from './settlement-guide/settlement-guide.component';
-import { LivingConditionComponent } from './living-condition/living-condition.component';
-import { ImmigrationVisaComponent } from './immigration-visa/immigration-visa.component';
 import { TermsOfServiceDialog } from './auth/register/dialog/terms-of-service/terms-of-service.component';
 import { EtcDialog } from './content-details/dialogs/minimum-col-detail-dialog/dialogs/etc-dialog/etc-dialog.component';
 import { RoleGuardService } from './shared/services/role-guard.service';
-import { AdminComponent } from './admin/admin.component';
 import { AddSalaryInfoDialog } from './admin/dialogs/add-salary-info-dialog/add-salary-info-dialog.component';
-import { UploaderRankingComponent } from './uploader-ranking/uploader-ranking.component';
-import { DetailDialog } from './uploader-ranking/dialogs/detail-dialog/detail-dialog.component';
+import { CountryInfoModule } from './country-info/country-info.module';
+import { AdminModule } from './admin/admin.module';
+import { NewsModule } from './world-news/news.module';
+import { SharedModule } from './shared/shared.module';
+import { ContentDetailsModule } from './content-details/content-details.module';
+import { UserProfileModule } from './user-profile/user-profile.module';
+import { DetailDialog } from './uploader-rankings/uploader-ranking-panel/dialogs/detail-dialog/detail-dialog.component';
+import { UploaderRankingsModule } from './uploader-rankings/uploader-rankings.module';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -60,30 +53,7 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,
-    ContentDetailsComponent,      
-    UploadVideoComponent,
-    NewsComponent,
-    NewsDetailComponent,   
-    SearchVideosComponent,
-    CountryInfoComponent,
-    UserProfileComponent,
-    PromisingFieldComponent,
-    SettlementGuideComponent,
-    LivingConditionComponent,
-    ImmigrationVisaComponent,
-    AdminComponent,
-    DeleteCommentDialog,
-    PriceInfoDetailDialog,
-    NotifCommentDialog,
-    AddMinimumColDialog,
-    MinimumColDetailDialog,
-    EtcDialog,
-    AddSalaryInfoDialog,
-    AddUploaderDialog,
-    DetailDialog,
-    SearchFilterPipe,
-    SafeHtmlPipe,
-    UploaderRankingComponent        
+    UploadVideoComponent               
   ],
   entryComponents: [
     DeleteCommentDialog,
@@ -100,7 +70,15 @@ export function tokenGetter() {
   imports: [
     CoreModule,
     AuthModule,   
+    CountryInfoModule,
+    AdminModule,
+    NewsModule,
+    ContentDetailsModule,
+    SearchVideosModule,
+    UserProfileModule,
+    UploaderRankingsModule,
     MaterialModule,
+    SharedModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
@@ -120,7 +98,6 @@ export function tokenGetter() {
     RecaptchaFormsModule,
     FlexLayoutModule,
     MDBBootstrapModulesPro.forRoot(),
-    NgxPaginationModule,
     FormsModule,
     ReactiveFormsModule,
     ToastModule.forRoot()

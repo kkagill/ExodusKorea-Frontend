@@ -1,9 +1,21 @@
 <section>
 	<h2 class="h1 py-5 font-weight-bold text-center">SHARING YOUR STORY</h2>
-	<p class="px-5 mb-5 pb-3 lead grey-text text-center">
-		아무것도 모른채 해외 취업에 뛰어든다면 이리저리 치일 수 밖에 없는 해외 취업 지망생들을 위해
-		해외 취업에 성공한 <span class="thick">나의 노하우</span>를 영상을 통해 전달해 보세요!
+	<p class="px-5 mb-5 pb-3 lead grey-text text-center thick">
+		사실 1. 취준생 10명 중 9명이 해외 취업에 관심
 	</p>
+	<p class="px-5 mb-5 pb-3 lead grey-text text-center thick">
+		사실 2. 해외 이민이 3.2배로 급증
+	</p>
+	<p class="px-5 mb-5 pb-3 lead grey-text text-center">
+		해외 취업/이민/유학을 계획하거나 관심있어 하시는 많은 분들을 위해 이미 발판을 마련한
+	</p>
+	<p class="px-5 mb-5 pb-3 lead grey-text text-center">
+		<span class="thick">나만의 노하우 또는 지식</span>을
+		<span class="thick" style="color: red;">유튜브 (YouTube)</span> 영상을 통해 전달해 보세요!
+	</p>
+
+	<hr />
+
 	<section class="team-section text-center my-5">
 		<h2 class="h1-responsive font-weight-bold my-5">How to do?</h2>
 		<p class="grey-text w-responsive mx-auto mb-5">
@@ -39,8 +51,12 @@
 			</div>
 		</div>
 		<br />
+		<p class="grey-text w-responsive mx-auto mb-5 thick">
+			<a href="https://www.youtube.com/watch?v=13FpjgD1kFI" target="_blank" style="color: red; text-decoration: underline;">유튜브에
+				영상 올리는 방법</a>
+		</p>
 		<p class="grey-text w-responsive mx-auto mb-5">
-			* 유튜브와 연동이 되어있어 조회수를 올리며 또 채널 홍보에 더 많은 도움이 될 것 입니다.
+			* 본 사이트는 유튜브와 연동이 되어있어 해당 영상의 조회수를 올리며 또 채널 홍보에 더 많은 도움이 될 것 입니다.
 			많은 이들이 여러분의 영상을 보고 꿈을 키울 수 있도록 홍보와 마케팅에 노력을 기하겠습니다.
 		</p>
 	</section>
@@ -48,7 +64,7 @@
 	<hr />
 
 	<p class="px-5 mb-5 pb-3 lead grey-text text-center">
-		영상에 들어가면 좋은 내용
+		영상에 들어가면 좋은 내용 (예: 취업관련)
 	</p>
 	<div class="row">
 		<div class="col-md-4">
@@ -132,9 +148,9 @@
 			간단한 <span class="youtube-address" mdbTooltip="저희 측에서 해당 유튜브 영상에 코멘트를 남기면 답글을 달아주시면 됩니다." placement="top">확인절차</span>를
 			거친 후 엑소더스 코리아에 콘텐츠를 업로드 하게 됩니다.
 		</p>
-		<input type="email" [(ngModel)]="email" name="email" mdbInputDirective class="form-control mb-4" placeholder="이메일">
+		<input type="email" [(ngModel)]="email" name="email" mdbInputDirective class="form-control mb-4" placeholder="엑소더스 코리아 가입 이메일">
 		<input type="text" [(ngModel)]="youtubeAddress" name="youtubeAddress" mdbInputDirective class="form-control mb-4"
-		 placeholder="유튜브 주소">
+		 placeholder="내 유튜브 영상 주소">
 		<div class="custom-control custom-checkbox mb-4">
 			<div id="recaptcha">
 				<re-captcha (resolved)="$event && submit($event)" siteKey={{siteKey}}></re-captcha>

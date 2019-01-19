@@ -7,8 +7,16 @@
 .text-center {
   padding-top: 1rem !important;
 }
-.uploader-ranking {
-  position: fixed; 
+.uploader-ranking-panel {
+  position: absolute; 
   right: 100px; 
-  top: 550px;
+  top: 580px;
+}
+
+@media screen and (min-width : 0px) and (max-width : 767px){
+  .uploader-ranking-panel {    
+    visibility: hidden;
+    clear: both;   
+    display: none;
+  }
 }

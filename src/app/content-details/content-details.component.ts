@@ -99,16 +99,32 @@ export class ContentDetailsComponent implements OnInit {
       } else {
         this.safeURL = this.sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${this.youtubeId}${'?autoplay=1'}${'&rel=0'}`); // rel=0, related videos will come from the same channel as the video that was just played. 
       }
-      this.loadCountryInfo();
-      this.loadSalaryInfo();
-      this.loadPriceInfo();
-      this.loadMinimumCoLInfo();
-      this.loadCareerInfo();
-      this.loadJobSites();
-      // this.loadCurrencyInfo();
-      this.loadPostInfo();
-      this.loadVideoComments();
+      this.loadPostInfo(); // Check if the youtube video exists or not first           
     });
+  }
+
+  loadPostInfo() {
+    this.dataService.getPostInfo(this.videoPostId, this.youtubeId, this.isGoogleDriveVideo)
+      .subscribe(res => {
+        if (res.status === 200) {
+          this.isVideoPostInfoLoaded = true;
+          this.videoInfo = this.itemsService.getSerialized<IVideoPostInfo>(res.body);
+
+          this.loadVideoComments();
+          this.loadCountryInfo();
+          this.loadSalaryInfo();
+          this.loadPriceInfo();
+          this.loadMinimumCoLInfo();
+          this.loadCareerInfo();
+          this.loadJobSites();
+        }
+      },
+        error => {
+          if (error.status === 404 && error.error === "youtube") {
+            this.router.navigate(['youtube-not-found']);
+          }
+        }
+      );
   }
 
   loadCountryInfo() {
@@ -171,26 +187,6 @@ export class ContentDetailsComponent implements OnInit {
       });
   }
 
-  // loadCurrencyInfo() {
-  //   this.dataService.getCurrencyInfo(this.videoPostId)
-  //     .subscribe(res => {
-  //       if (res.status === 200) {
-  //         this.isCurrencyInfoLoaded = true;
-  //         this.currencyInfo = this.itemsService.getSerialized<ICurrencyInfo>(res.body);
-  //       }
-  //     });
-  // }
-
-  loadPostInfo() {
-    this.dataService.getPostInfo(this.videoPostId, this.youtubeId, this.isGoogleDriveVideo)
-      .subscribe(res => {
-        if (res.status === 200) {
-          this.isVideoPostInfoLoaded = true;
-          this.videoInfo = this.itemsService.getSerialized<IVideoPostInfo>(res.body);
-        }
-      });
-  }
-
   loadVideoComments() {
     this.dataService.getVideoComments(this.videoPostId, this.youtubeId, this.isGoogleDriveVideo)
       .subscribe(res => {
@@ -200,16 +196,6 @@ export class ContentDetailsComponent implements OnInit {
         }
       });
   }
-
-  // loadYouTubeReplies(parentId: string) {
-  //   this.dataService.getYouTubeReplies(parentId)
-  //   .subscribe(res => {
-  //     if (res.status === 200) {
-  //       this.isYouTubeRepliesLoaded = true;
-  //       this.youTubeReplies = this.itemsService.getSerialized<IVideoComment[]>(res.body);
-  //     }
-  //   });
-  // }
 
   onClickCommentBox() {
     if (!this.authService.isAuthenticated()) {
@@ -647,4 +633,24 @@ export class ContentDetailsComponent implements OnInit {
         }
       );
   }
+
+  // loadCurrencyInfo() {
+  //   this.dataService.getCurrencyInfo(this.videoPostId)
+  //     .subscribe(res => {
+  //       if (res.status === 200) {
+  //         this.isCurrencyInfoLoaded = true;
+  //         this.currencyInfo = this.itemsService.getSerialized<ICurrencyInfo>(res.body);
+  //       }
+  //     });
+  // } 
+
+  // loadYouTubeReplies(parentId: string) {
+  //   this.dataService.getYouTubeReplies(parentId)
+  //   .subscribe(res => {
+  //     if (res.status === 200) {
+  //       this.isYouTubeRepliesLoaded = true;
+  //       this.youTubeReplies = this.itemsService.getSerialized<IVideoComment[]>(res.body);
+  //     }
+  //   });
+  // }
 }

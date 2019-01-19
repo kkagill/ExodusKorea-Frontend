@@ -12,7 +12,7 @@ export class DataService {
     private configService: ConfigService) {
     this._baseUrl = this.configService.getApiURI();
   }
-  
+
   getAllNews(): Observable<any> {
     return this.http.get(this._baseUrl + `news/all-news`, { observe: "response" })
       .pipe(
@@ -83,7 +83,7 @@ export class DataService {
           return throwError(err);
         })
       );
-  } 
+  }
 
   getAllSearchVideoCategories(): Observable<any> {
     return this.http.get(this._baseUrl + `searchvideo/all-categories`, { observe: "response" })
@@ -95,7 +95,7 @@ export class DataService {
           return throwError(err);
         })
       );
-  } 
+  }
 
   getAllCareers(): Observable<any> {
     return this.http.get(this._baseUrl + `searchvideo/all-careers`, { observe: "response" })
@@ -107,7 +107,7 @@ export class DataService {
           return throwError(err);
         })
       );
-  } 
+  }
 
   getAllCountries(): Observable<any> {
     return this.http.get(this._baseUrl + `searchvideo/all-countries`, { observe: "response" })
@@ -119,7 +119,7 @@ export class DataService {
           return throwError(err);
         })
       );
-  } 
+  }
 
   getAllSearchResult(): Observable<any> {
     return this.http.get(this._baseUrl + `searchvideo/all-search-result`, { observe: "response" })
@@ -131,7 +131,7 @@ export class DataService {
           return throwError(err);
         })
       );
-  } 
+  }
 
   getSearchResultByCategory(categoryId: number): Observable<any> {
     return this.http.get(this._baseUrl + `searchvideo/${categoryId}/search-result-category`, { observe: "response" })
@@ -145,7 +145,7 @@ export class DataService {
       );
   }
 
-  
+
   getSearchResultByCareer(careerId: number): Observable<any> {
     return this.http.get(this._baseUrl + `searchvideo/${careerId}/search-result-career`, { observe: "response" })
       .pipe(
@@ -358,6 +358,22 @@ export class DataService {
       );
   }
 
+  getChannelInfoById(channelId: string): Observable<any> {
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+    };
+    return this.http.get(this._baseUrl + `admin/${channelId}/channel-info-by-id`, { headers: header, observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
   getSalaryInfoOccupations(country: string): Observable<any> {
     const header = {
       'Content-Type': 'application/json',
@@ -460,14 +476,14 @@ export class DataService {
           return throwError(err);
         })
       );
-  }    
-  
+  }
+
   getNotificationsForUser(): Observable<any> {
     const header = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('access_token')
     };
-    
+
     return this.http.get<any>(this._baseUrl + 'carddetail/notifications-for-user', { headers: header, observe: "response" })
       .pipe(
         map(res => {
@@ -493,7 +509,7 @@ export class DataService {
           return throwError(err);
         })
       );
-  }    
+  }
 
   getAllPromisingFields(): Observable<any> {
     return this.http.get(this._baseUrl + `countryinfo/promising-fields`, { observe: "response" })
@@ -542,7 +558,7 @@ export class DataService {
         })
       );
   }
-  
+
   getUploaderRanking(): Observable<any> {
     return this.http.get(this._baseUrl + `ranking/uploader-ranking`, { observe: "response" })
       .pipe(
@@ -581,7 +597,7 @@ export class DataService {
           return throwError(err);
         })
       );
-  }  
+  }
 
   findUserLikedComment(id: number): Observable<any> {
     const header = {
@@ -597,7 +613,7 @@ export class DataService {
           return throwError(err);
         })
       );
-  }  
+  }
 
   findUserLikedCommentReply(id: number): Observable<any> {
     const header = {
@@ -613,9 +629,9 @@ export class DataService {
           return throwError(err);
         })
       );
-  }  
+  }
 
-  logHttpResponseException(body: any): Observable<any> {   
+  logHttpResponseException(body: any): Observable<any> {
     return this.http.post<any>(this._baseUrl + 'httpresponse/log-http-response', body, { observe: "response" })
       .pipe(
         map(res => {
@@ -833,9 +849,9 @@ export class DataService {
           return throwError(err);
         })
       );
-  }  
+  }
 
-  uploadVideo(body: any): Observable<any> {   
+  uploadVideo(body: any): Observable<any> {
     return this.http.post<any>(this._baseUrl + 'uploadvideo/upload-video', body, { observe: "response" })
       .pipe(
         map(res => {
@@ -847,7 +863,7 @@ export class DataService {
       );
   }
 
-  updateNewsViewsCount(newsDetailId: number): Observable<any> {      
+  updateNewsViewsCount(newsDetailId: number): Observable<any> {
     return this.http.put<any>(this._baseUrl + `news/${newsDetailId}/update-views-count`, newsDetailId, { observe: "response" })
       .pipe(
         map(res => {
@@ -859,11 +875,11 @@ export class DataService {
       );
   }
 
-  updatePostLikes(id: number): Observable<any> {  
+  updatePostLikes(id: number): Observable<any> {
     const header = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-    }; 
+    };
     return this.http.put<any>(this._baseUrl + `carddetail/${id}/update-video-post-likes`, id, { headers: header, observe: "response" })
       .pipe(
         map(res => {
@@ -875,11 +891,11 @@ export class DataService {
       );
   }
 
-  updateCommentLikes(id: number): Observable<any> {  
+  updateCommentLikes(id: number): Observable<any> {
     const header = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-    }; 
+    };
     return this.http.put<any>(this._baseUrl + `carddetail/${id}/update-comment-likes`, id, { headers: header, observe: "response" })
       .pipe(
         map(res => {
@@ -891,11 +907,11 @@ export class DataService {
       );
   }
 
-  updateCommentReplyLikes(id: number): Observable<any> {  
+  updateCommentReplyLikes(id: number): Observable<any> {
     const header = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-    }; 
+    };
     return this.http.put<any>(this._baseUrl + `carddetail/${id}/update-comment-reply-likes`, id, { headers: header, observe: "response" })
       .pipe(
         map(res => {
@@ -907,11 +923,11 @@ export class DataService {
       );
   }
 
-  updateHasReadById(id: number): Observable<any> {  
+  updateHasReadById(id: number): Observable<any> {
     const header = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-    }; 
+    };
     return this.http.put<any>(this._baseUrl + `carddetail/${id}/update-has-read`, id, { headers: header, observe: "response" })
       .pipe(
         map(res => {
@@ -921,13 +937,13 @@ export class DataService {
           return throwError(err);
         })
       );
-  }   
+  }
 
-  deleteComment(id: number): Observable<any> {  
+  deleteComment(id: number): Observable<any> {
     const header = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-    }; 
+    };
     return this.http.delete<any>(this._baseUrl + `carddetail/${id}/delete-video-comment`, { headers: header, observe: "response" })
       .pipe(
         map(res => {
@@ -939,12 +955,28 @@ export class DataService {
       );
   }
 
-  deleteCommentReply(id: number): Observable<any> {  
+  deleteCommentReply(id: number): Observable<any> {
     const header = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('access_token')
-    }; 
+    };
     return this.http.delete<any>(this._baseUrl + `carddetail/${id}/delete-video-comment-reply`, { headers: header, observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  disableVideoPost(videoPostId: number): Observable<any> {
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+    };
+    return this.http.delete<any>(this._baseUrl + `admin/${videoPostId}/disable-video`, { headers: header, observe: "response" })
       .pipe(
         map(res => {
           return res;

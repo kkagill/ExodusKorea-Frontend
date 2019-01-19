@@ -4,7 +4,7 @@ import { DataSharingService } from '../shared/services/data-sharing.service';
 import { AuthService } from '../shared/services/auth.service';
 import { ItemsService } from '../shared/utils/items.service';
 import { DataService } from '../shared/services/data.service';
-import { ISalaryInfo, ICategoryCountryUploader, IUploader, IVideoPostInfo } from '../shared/interfaces';
+import { ISalaryInfo, ICategoryCountryUploader, IUploader, IVideoPostInfo, IVideoPost } from '../shared/interfaces';
 import { LoginComponent } from '../auth/login/login.component';
 import { NgForm, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -21,6 +21,7 @@ export class AdminComponent implements OnInit {
   @ViewChild('f') form: NgForm;
   categories: Array<any> = [];
   countries: Array<any> = [];
+  videoPosts: Array<any> = [];
   countriesForSalary: Array<any> = [];
   occupations: Array<any> = [];
   isChecked: boolean = false;
@@ -29,6 +30,7 @@ export class AdminComponent implements OnInit {
   isCountriesLoaded: boolean = false;
   isOccupationsLoaded: boolean = false;
   isYouTubeInfoLoaded: boolean = false;
+  isVideoPostsLoaded: boolean = false;
   isSubmitted: boolean = false;
   isYouTubeSubmitted: boolean = false;
   isLinkSubmitted: boolean = false;
@@ -44,11 +46,18 @@ export class AdminComponent implements OnInit {
     private authService: AuthService,
     private dataSharingService: DataSharingService,
     public snackBar: MatSnackBar,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog) {
+    this.dataSharingService.uploaderAdded.subscribe(flag => {
+      if (flag) {
+        this.refreshUploaders();
+      }
+    });
+  }
 
   ngOnInit() {
     this.loadAllDDLInfo();
     this.onLoadCountries();
+    this.loadAllVideoPosts();
   }
 
   loadAllDDLInfo() {
@@ -57,6 +66,7 @@ export class AdminComponent implements OnInit {
         if (res.status === 200) {
           this.isDDLLoaded = true;
           let result = this.itemsService.getSerialized<ICategoryCountryUploader>(res.body);
+
           for (let c of result.categories) {
             if (c.categoryId !== 1) {
               this.categories.push({ value: c.categoryId, label: c.name });
@@ -85,9 +95,51 @@ export class AdminComponent implements OnInit {
       );
   }
 
-  private _filterUploaders(value: string): IUploader[] {
-    const filterValue = value.toLowerCase();
-    return this.uploaders.filter(u => u.name.toLowerCase().indexOf(filterValue) === 0);
+  refreshUploaders() {
+    this.dataService.getCategoryCountryUploader()
+      .subscribe(res => {
+        if (res.status === 200) {
+          this.isDDLLoaded = true;
+          let result = this.itemsService.getSerialized<ICategoryCountryUploader>(res.body);
+
+          for (let u of result.uploaders) {
+            this.uploaders.push({ uploaderId: u.uploaderId, name: u.name });
+          }
+
+          this.filteredUploaders = this.uploaderControl.valueChanges
+            .pipe(
+              startWith(''),
+              map(u => u ? this._filterUploaders(u) : result.uploaders.slice())
+            );
+        }
+      },
+        error => {
+          this.snackBar.open('정보를 불러오는 과정에서 오류가 났습니다.', '', {
+            duration: 5000,
+            panelClass: ['error-snackbar']
+          });
+        }
+      );
+  }
+
+  loadAllVideoPosts() {
+    this.dataService.getAllSearchResult()
+      .subscribe(res => {
+        if (res.status === 200) {
+          this.isVideoPostsLoaded = true;
+          let result = this.itemsService.getSerialized<IVideoPost[]>(res.body);
+          for (let vp of result) {
+            this.videoPosts.push({ value: vp.videoPostId, label: vp.videoPostId + " " + vp.youTubeVideoId });
+          }
+        }
+      },
+        error => {
+          this.snackBar.open('정보를 불러오는 과정에서 오류가 났습니다.', '', {
+            duration: 5000,
+            panelClass: ['error-snackbar']
+          });
+        }
+      );
   }
 
   onFindYouTubeInfo(youtubeId: any) {
@@ -101,6 +153,7 @@ export class AdminComponent implements OnInit {
           this.model.likes = result.likes;
           this.model.subject = result.title;
           this.model.uploader = result.owner;
+          this.model.channelId = result.channelId;
         }
       },
         error => {
@@ -162,6 +215,7 @@ export class AdminComponent implements OnInit {
           this.isSubmitted = false;
           this.form.reset()
           this.uploaderControl.reset();
+          this.isYouTubeInfoLoaded = false;
 
           setTimeout(() => {
             this.snackBar.open('추가되었습니다.', '', {
@@ -175,6 +229,50 @@ export class AdminComponent implements OnInit {
           this.isSubmitted = false;
           this.snackBar.open(error.message, '', {
             duration: 5000,
+            panelClass: ['error-snackbar']
+          });
+        }
+      );
+  }
+
+  onSubmitDisableVideo(value: any) {
+    if (!this.authService.isAuthenticated() || !this.authService.isAdmin()) {
+      const dialogRef = this.dialog.open(LoginComponent, {
+        width: '410px',
+        data: { email: this.email, password: this.password }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (this.authService.isAuthenticated() && this.authService.isAdmin()) {
+          this.dataSharingService.loggedIn.next(true); // pass data to header.component.ts
+        }
+      });
+      return;
+    }
+
+    this.isSubmitted = true;
+
+    if (value.videoPostId <= 0 || value.videoPostId === undefined) {
+      alert("YouTubeVideoId error");
+      this.isSubmitted = false;
+
+      return;
+    }
+
+    this.dataService.disableVideoPost(value.videoPostId)
+      .subscribe(res => {
+        if (res.status === 204) {
+          this.isSubmitted = false;
+          this.form.reset()
+          this.snackBar.open('해당 영상을 삭제했습니다.', '', {
+            duration: 2000,
+            panelClass: ['green-snackbar']
+          });
+        }
+      },
+        error => {
+          this.isSubmitted = false;
+          this.snackBar.open('오류가 발생했습니다.', '', {
+            duration: 3000,
             panelClass: ['error-snackbar']
           });
         }
@@ -232,5 +330,10 @@ export class AdminComponent implements OnInit {
           });
         }
       );
+  }
+
+  private _filterUploaders(value: string): IUploader[] {
+    const filterValue = value.toLowerCase();
+    return this.uploaders.filter(u => u.name.toLowerCase().indexOf(filterValue) === 0);
   }
 }

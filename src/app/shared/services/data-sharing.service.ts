@@ -5,4 +5,5 @@ import { BehaviorSubject } from 'rxjs';
 export class DataSharingService {
     public updatedNotif: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     public loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+    public uploaderAdded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 }

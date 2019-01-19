@@ -190,10 +190,16 @@ export interface IVideoPostInfo {
     likes: number;
     owner: string;
     title: string;
+    channelId: string;
+}
+
+export interface IChannelInfo {
+    thumbnailUrl: number;  
 }
 
 export interface IUploaderRanking {
     name: string;
+    thumbnailDefaultUrl: string;
     uploaderId: number;
     specificInfo: ISpecificInfo;
 }

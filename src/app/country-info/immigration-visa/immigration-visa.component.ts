@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataService } from '../shared/services/data.service';
-import { ItemsService } from '../shared/utils/items.service';
+import { DataService } from '../../shared/services/data.service';
+import { ItemsService } from '../../shared/utils/items.service';
 import { MatSnackBar } from '@angular/material';
-import { IImmigrationVisa } from '../shared/interfaces';
+import { IImmigrationVisa } from '../../shared/interfaces';
 
 @Component({
   selector: 'app-immigration-visa',

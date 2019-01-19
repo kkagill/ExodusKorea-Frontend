@@ -1,34 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataService } from '../shared/services/data.service';
-import { ItemsService } from '../shared/utils/items.service';
+import { DataService } from '../../shared/services/data.service';
+import { ItemsService } from '../../shared/utils/items.service';
 import { MatSnackBar } from '@angular/material';
-import { IPromisingField } from '../shared/interfaces';
+import { ISettlementGuide } from '../../shared/interfaces';
 
 @Component({
-  selector: 'app-promising-field',
-  templateUrl: './promising-field.component.html',
-  styleUrls: ['./promising-field.component.scss']  
+  selector: 'app-settlement-guide',
+  templateUrl: './settlement-guide.component.html',
+  styleUrls: ['./settlement-guide.component.scss']
 })
-export class PromisingFieldComponent implements OnInit {  
-  isPromisingFieldLoaded: boolean = false;
-  promisingFields: IPromisingField[];
+export class SettlementGuideComponent implements OnInit {
+  isSettlementGuideLoaded: boolean = false;
+  settlementGuides: ISettlementGuide[];
 
   public constructor(private router: Router,
     public snackBar: MatSnackBar,
     private dataService: DataService,
     private itemsService: ItemsService) { }
 
-  ngOnInit() {   
-    this.loadPromisingField();
+  ngOnInit() {
+    this.loadSettlementGuide();
   }
 
-  loadPromisingField() {
-    this.dataService.getAllPromisingFields()
+  loadSettlementGuide() {
+    this.dataService.getAllSettlementGuides()
       .subscribe(res => {
         if (res.status === 200) {
-          this.isPromisingFieldLoaded = true;
-          this.promisingFields = this.itemsService.getSerialized<IPromisingField[]>(res.body);         
+          this.isSettlementGuideLoaded = true;
+          this.settlementGuides = this.itemsService.getSerialized<ISettlementGuide[]>(res.body);
         }
       },
         error => {

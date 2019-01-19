@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataService } from '../shared/services/data.service';
-import { ItemsService } from '../shared/utils/items.service';
+import { DataService } from '../../shared/services/data.service';
+import { ItemsService } from '../../shared/utils/items.service';
 import { MatSnackBar } from '@angular/material';
-import { ISettlementGuide } from '../shared/interfaces';
+import { ILivingCondition } from '../../shared/interfaces';
 
 @Component({
-  selector: 'app-settlement-guide',
-  templateUrl: './settlement-guide.component.html',
-  styleUrls: ['./settlement-guide.component.scss']
+  selector: 'app-living-condition',
+  templateUrl: './living-condition.component.html',
+  styleUrls: ['./living-condition.component.scss']
 })
-export class SettlementGuideComponent implements OnInit {
-  isSettlementGuideLoaded: boolean = false;
-  settlementGuides: ISettlementGuide[];
+export class LivingConditionComponent implements OnInit {
+  isLivingConditionLoaded: boolean = false;
+  livingConditions: ILivingCondition[];
 
   public constructor(private router: Router,
     public snackBar: MatSnackBar,
@@ -20,15 +20,15 @@ export class SettlementGuideComponent implements OnInit {
     private itemsService: ItemsService) { }
 
   ngOnInit() {
-    this.loadSettlementGuide();
+    this.loadLivingCondition();
   }
 
-  loadSettlementGuide() {
-    this.dataService.getAllSettlementGuides()
+  loadLivingCondition() {
+    this.dataService.getAllLivingConditions()
       .subscribe(res => {
         if (res.status === 200) {
-          this.isSettlementGuideLoaded = true;
-          this.settlementGuides = this.itemsService.getSerialized<ISettlementGuide[]>(res.body);
+          this.isLivingConditionLoaded = true;
+          this.livingConditions = this.itemsService.getSerialized<ILivingCondition[]>(res.body);
         }
       },
         error => {

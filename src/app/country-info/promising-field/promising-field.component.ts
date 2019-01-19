@@ -1,34 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataService } from '../shared/services/data.service';
-import { ItemsService } from '../shared/utils/items.service';
+import { DataService } from '../../shared/services/data.service';
+import { ItemsService } from '../../shared/utils/items.service';
 import { MatSnackBar } from '@angular/material';
-import { ILivingCondition } from '../shared/interfaces';
+import { IPromisingField } from '../../shared/interfaces';
 
 @Component({
-  selector: 'app-living-condition',
-  templateUrl: './living-condition.component.html',
-  styleUrls: ['./living-condition.component.scss']
+  selector: 'app-promising-field',
+  templateUrl: './promising-field.component.html',
+  styleUrls: ['./promising-field.component.scss']  
 })
-export class LivingConditionComponent implements OnInit {
-  isLivingConditionLoaded: boolean = false;
-  livingConditions: ILivingCondition[];
+export class PromisingFieldComponent implements OnInit {  
+  isPromisingFieldLoaded: boolean = false;
+  promisingFields: IPromisingField[];
 
   public constructor(private router: Router,
     public snackBar: MatSnackBar,
     private dataService: DataService,
     private itemsService: ItemsService) { }
 
-  ngOnInit() {
-    this.loadLivingCondition();
+  ngOnInit() {   
+    this.loadPromisingField();
   }
 
-  loadLivingCondition() {
-    this.dataService.getAllLivingConditions()
+  loadPromisingField() {
+    this.dataService.getAllPromisingFields()
       .subscribe(res => {
         if (res.status === 200) {
-          this.isLivingConditionLoaded = true;
-          this.livingConditions = this.itemsService.getSerialized<ILivingCondition[]>(res.body);
+          this.isPromisingFieldLoaded = true;
+          this.promisingFields = this.itemsService.getSerialized<IPromisingField[]>(res.body);         
         }
       },
         error => {

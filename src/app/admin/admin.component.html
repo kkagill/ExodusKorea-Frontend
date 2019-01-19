@@ -29,11 +29,12 @@
                         </div>
                       </div>
 
-                      <div *ngIf="isYouTubeInfoLoaded">
+                      <div *ngIf="isYouTubeInfoLoaded" style="text-align: justify; border:1px solid black;">
                         <br />
                         <p><span class="thick">작성자:</span> {{model.uploader}}</p>
                         <p><span class="thick">제목:</span> {{model.subject}}</p>
                         <p><span class="thick">추천:</span> {{model.likes}}</p>
+                        <p><span class="thick">채널ID:</span> {{model.channelId}}</p>
                         <br />
                       </div>
 
@@ -124,6 +125,33 @@
                       <br /><br />
                       <mat-card-actions>
                         <button *ngIf="!isSubmitted" mat-raised-button class="stick-to-right-side" color="accent">추가</button>
+                        <button *ngIf="isSubmitted" mat-raised-button class="stick-to-right-side" color="accent">
+                          <mdb-spinner spinnerType="small" spinnerColor="yellow"></mdb-spinner>
+                        </button>
+                      </mat-card-actions>
+                    </form>
+                  </div>
+                </div>
+              </section>
+            </mdb-tab>
+            <mdb-tab heading="영상 삭제" style="margin: 0 auto;">
+              <section class="magazine-section my-5">
+                <div class="row">
+                  <div class="col-md-12">
+                    <form name="form2" (ngSubmit)="fv.form.valid && onSubmitDisableVideo(fv.form.value)" #fv="ngForm"
+                      novalidate>
+                      <div class="form-row" *ngIf="isVideoPostsLoaded">
+                        <div class="col-md-12">
+                          <div class="md-form form-group">
+                            <mdb-select style="width: 200px !important;" [options]="videoPosts" [(ngModel)]="videoPosts.videoPostId"
+                              name="videoPostId" placeholder="영상 선택" required></mdb-select>
+                          </div>
+                        </div>
+                      </div>
+                      <br />
+                      <mat-card-actions>
+                        <button *ngIf="!isSubmitted" mat-raised-button class="stick-to-right-side" color="accent">삭제
+                          (Disable)</button>
                         <button *ngIf="isSubmitted" mat-raised-button class="stick-to-right-side" color="accent">
                           <mdb-spinner spinnerType="small" spinnerColor="yellow"></mdb-spinner>
                         </button>

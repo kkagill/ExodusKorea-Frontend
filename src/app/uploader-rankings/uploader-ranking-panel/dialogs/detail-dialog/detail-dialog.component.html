@@ -3,7 +3,7 @@
     <div class="col-lg-12 col-md-12">
       <div style="text-align: center;">
         <p class="thick">{{data.uploaderRanking.name}}</p>
-        <p style="font-size: 13px;">총 올려진 영상: {{data.uploaderRanking.specificInfo.videoCount}}</p>
+        <p style="font-size: 13px;">총 공유된 영상: {{data.uploaderRanking.specificInfo.videoCount}}</p>
         <p style="font-size: 13px;">총 추천 개수: {{data.uploaderRanking.specificInfo.likesSum}}</p>
       </div>
 
@@ -11,7 +11,7 @@
         <mdb-spinner spinnerType="big" spinnerColor="yellow"></mdb-spinner>
       </div>
       <div class="row" *ngIf="isSearchResultLoaded">
-        <div class="col-lg-6 col-md-4" *ngFor="let card of searchResult | searchFilter: {uploader: searchText, uploadedDate: searchText, countryKR: searchText, title: searchText} | paginate: { itemsPerPage: 2, currentPage: page }">
+        <div class="col-lg-10 col-md-4" style="margin: 0 auto;" *ngFor="let card of searchResult | searchFilter: {uploader: searchText, uploadedDate: searchText, countryKR: searchText, title: searchText} | paginate: { itemsPerPage: 1, currentPage: page }">
           <mat-card class="card card-body mb-6" (click)="onMatCardClick(card.videoPostId, card.youTubeVideoId, card.isGoogleDriveVideo)"
             style="cursor:pointer;">
             <mat-card-header>
@@ -25,7 +25,7 @@
         </div>
       </div>
       <br />
-      <div style="text-align: center;">
+      <div>
         <pagination-controls (pageChange)="page = $event"></pagination-controls>
       </div>
     </div>

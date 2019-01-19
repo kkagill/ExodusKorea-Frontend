@@ -1,0 +1,48 @@
+<br /><br />
+<h4 class="thick">
+  영상 공유자 랭킹
+  <i class="fa fa-info-circle" [mdbTooltip]="popTemplate" placement="right" aria-hidden="true"></i>
+</h4>
+<section class="magazine-section my-5" *ngIf="isUploaderRankingLoaded">
+  <div class="row">
+    <div class="col-lg-6 col-md-12" style="margin:0 auto;">
+      <mat-card class="example-card">
+        <div class="single-news mb-4" *ngFor="let up of uploaderRanking; index as i">
+          <div class="row pointer" (click)="onRowClick(up)">
+            <div class="col-md-3">
+              <div class="view overlay rounded z-depth-1 mb-4">
+                <img class="img-fluid" src="{{up.thumbnailDefaultUrl}}">
+                <a>
+                  <div class="mask rgba-white-slight waves-light" mdbWavesEffect></div>
+                </a>
+              </div>
+            </div>
+            <div class="col-md-9">
+              <p class="font-weight-bold dark-grey-text" style="text-align: justify; margin-top: 15px;">
+                {{i+1}}.
+                <span class="score" (click)="onScoreClick(up)">{{up.name}}</span>
+              </p>
+              <div class="d-flex justify-content-between">
+                <div class="col-11 text-truncate pl-0 mb-3">
+                  <span class="thick stick-to-left-side" style="border:2px solid black;">{{up.specificInfo.totalScore}}</span>
+                </div>
+                <a>
+                  <i class="fa fa-angle-double-right"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</section>
+
+<ng-template #popTemplate>
+  <div style="width: 200px;">
+    <p>스코어 계산 법</p>
+    <p>- 영상 업로드 1개: 100점</p>
+    <p></p>
+    <p>- 영상에 달린 추천 1개: 1점</p>
+  </div>
+</ng-template>

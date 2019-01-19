@@ -15,7 +15,7 @@ import { DataSharingService } from 'src/app/shared/services/data-sharing.service
   styleUrls: ['./home.component.scss'],
   providers: [DatePipe]
 })
-export class HomeComponent implements OnInit, AfterViewInit {
+export class HomeComponent implements OnInit {
   mainNews: INewsDetail[];
   recommendedVideo: IVideoPost;
   currencyInfo: ICurrencyInfo;
@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   public constructor(private router: Router,
     private authService: AuthService,
     private datePipe: DatePipe,
-    private renderer: Renderer2,
+    //private renderer: Renderer2,
     public snackBar: MatSnackBar,
     private dataSharingService: DataSharingService,
     public dialog: MatDialog,
@@ -50,18 +50,18 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.loadCurrency();
     this.loadNewVideos();
     this.loadAllVideos();
-    this.slides = this.chunk(this.initial, 1); // 진짜 미스테리.. loadNewVideoPosts에서도 this.slides 대입하고 여기서도 이런식으로해야 비로소 ngAfterViewInit이 작동한다..
+    //this.slides = this.chunk(this.initial, 1); // 진짜 미스테리.. loadNewVideoPosts에서도 this.slides 대입하고 여기서도 이런식으로해야 비로소 ngAfterViewInit이 작동한다..
   }
 
-  ngAfterViewInit() {
-    let controls = document.querySelector('.controls-top');
-    this.renderer.setStyle(controls.children[0], 'position', 'absolute');
-    this.renderer.setStyle(controls.children[0], 'top', '-30%');
-    this.renderer.setStyle(controls.children[0], 'right', '5%');
-    this.renderer.setStyle(controls.children[1], 'position', 'absolute');
-    this.renderer.setStyle(controls.children[1], 'top', '-30%');
-    this.renderer.setStyle(controls.children[1], 'left', '94%');
-  }
+  // ngAfterViewInit() {
+  //   let controls = document.querySelector('.controls-top');
+  //   this.renderer.setStyle(controls.children[0], 'position', 'absolute');
+  //   this.renderer.setStyle(controls.children[0], 'top', '-30%');
+  //   this.renderer.setStyle(controls.children[0], 'right', '5%');
+  //   this.renderer.setStyle(controls.children[1], 'position', 'absolute');
+  //   this.renderer.setStyle(controls.children[1], 'top', '-30%');
+  //   this.renderer.setStyle(controls.children[1], 'left', '94%');
+  // }
 
   loadMainNews() {
     this.dataService.getMainNews()
@@ -174,7 +174,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       });
     } else {
       this.router.navigate(['content-details', videoPostId, videoId, isGoogleDriveVideo]);
-    }    
+    }
   }
 
   onNewsDetailClick(newsDetailId: number, newsId: number) {

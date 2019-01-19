@@ -5,6 +5,34 @@
     <router-outlet></router-outlet>
     <a href="#0" class="cd-top">Top</a>
   </div>
-<app-uploader-ranking class="uploader-ranking"></app-uploader-ranking>  
+  <app-uploader-ranking-panel class="uploader-ranking-panel" *ngIf="router.url === '/'"></app-uploader-ranking-panel>
+
+  <div style="width: 270px; position: absolute; right: 70px; top: 1000px;">
+      <p class="thick">수요 높은 직종</p>
+      <hr />
+      <mdb-tabset [buttonClass]="'pills-secondary white mb-2'" [contentClass]="'card'">
+          <mdb-tab heading="캐나다">
+            <section class="magazine-section my-5">
+              <div class="row">
+                <div class="col-lg-12	col-md-12">                    
+               
+                </div>
+              </div>
+            </section>
+          </mdb-tab>
+          <mdb-tab heading="뉴질랜드">
+              <section class="magazine-section my-5">
+                <div class="row">
+                  <div class="col-lg-12	col-md-12">                    
+                  
+                  </div>
+                </div>
+              </section>
+            </mdb-tab>             
+        </mdb-tabset>
+    
+      <button type="button" class="btn btn-outline-info waves-effect btn-sm" (click)="onClickMore()" style="margin-top: -80px;">더보기</button>
+    </div>
+ 
 </main>
 <app-footer></app-footer>
