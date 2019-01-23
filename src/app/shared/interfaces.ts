@@ -139,6 +139,7 @@ export interface IMinimumCOL {
     food: number;
     cell: number;
     internet: number;
+    other: number;
     etc: number;
     nickName: string;
     total: number;
@@ -301,6 +302,18 @@ export interface ILivingCondition {
 export interface IImmigrationVisa {
     content: string;
     country: string;
+}
+
+export interface IJobsInDemand {
+    countryKR: string;  
+    details: IDetails[];
+}
+
+export interface IDetails {
+    jobsInDemandId: number;
+    titleKR: string;
+    description: string;
+    hasVideoPost: boolean;
 }
 
 export interface ICategoryCountryUploader {

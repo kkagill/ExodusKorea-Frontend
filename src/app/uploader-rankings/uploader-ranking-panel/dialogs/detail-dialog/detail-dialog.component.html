@@ -7,11 +7,11 @@
         <p style="font-size: 13px;">총 추천 개수: {{data.uploaderRanking.specificInfo.likesSum}}</p>
       </div>
 
-      <div *ngIf="!isSearchResultLoaded">
+      <div style="text-align: center;" *ngIf="!isSearchResultLoaded">
         <mdb-spinner spinnerType="big" spinnerColor="yellow"></mdb-spinner>
       </div>
       <div class="row" *ngIf="isSearchResultLoaded">
-        <div class="col-lg-10 col-md-4" style="margin: 0 auto;" *ngFor="let card of searchResult | searchFilter: {uploader: searchText, uploadedDate: searchText, countryKR: searchText, title: searchText} | paginate: { itemsPerPage: 1, currentPage: page }">
+        <div class="col-lg-10 col-md-4" style="margin: 0 auto;" *ngFor="let card of searchResult | paginate: { itemsPerPage: 1, currentPage: page }">
           <mat-card class="card card-body mb-6" (click)="onMatCardClick(card.videoPostId, card.youTubeVideoId, card.isGoogleDriveVideo)"
             style="cursor:pointer;">
             <mat-card-header>
@@ -25,15 +25,14 @@
         </div>
       </div>
       <br />
-      <div>
-        <pagination-controls (pageChange)="page = $event"></pagination-controls>
+      <div style="text-align: center;">
+        <pagination-controls (pageChange)="page = $event" previousLabel="이전" nextLabel="다음"></pagination-controls>
       </div>
     </div>
   </div>
-
-  <mat-card-actions>
-    <button mat-raised-button class="stick-to-right-side" (click)="onCancelClick()" color="primary">
-      닫기
-    </button>
-  </mat-card-actions>
 </section>
+<mat-card-actions>
+  <button mat-raised-button class="stick-to-right-side" (click)="onCancelClick()" color="primary">
+    닫기
+  </button>
+</mat-card-actions>

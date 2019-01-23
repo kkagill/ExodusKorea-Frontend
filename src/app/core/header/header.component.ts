@@ -24,7 +24,8 @@ export class HeaderComponent implements OnInit {
   newNotifications: number = 0;
   isNotificationLoaded: boolean = false;
   hasNotifications: boolean = false;
-
+  currentYear: number = Date.now();
+  
   constructor(private dataService: DataService,
     private itemsService: ItemsService,
     public dialog: MatDialog,

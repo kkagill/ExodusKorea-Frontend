@@ -41,6 +41,7 @@
           <td style="text-align: center;">{{el.food | currency:el.currency:'symbol-narrow'}}</td>
           <td style="text-align: center;">{{el.cell | currency:el.currency:'symbol-narrow'}}</td>
           <td style="text-align: center;">{{el.internet | currency:el.currency:'symbol-narrow'}}</td>
+          <td style="text-align: center;">{{el.other | currency:el.currency:'symbol-narrow'}}</td>
           <td style="text-align: center;">
             <!-- <button type="button" class="btn btn-outline-info waves-effect btn-sm" (click)="onClickDetail(el.etc)">보기</button> -->
             <span *ngIf="el.etc" class="pointer" style="color: #007ad9;" (click)="onClickDetail(el.etc)">보기</span>
@@ -51,12 +52,12 @@
     </table>
 
     <div style="text-align: center;">
-      <pagination-controls (pageChange)="page = $event"></pagination-controls>
+      <pagination-controls (pageChange)="page = $event" previousLabel="이전" nextLabel="다음"></pagination-controls>
     </div>
   </div>
-  <mat-card-actions>
-    <button mat-raised-button class="stick-to-right-side" (click)="onCancelClick()" color="primary" style="margin-right: 16px;">
-      닫기
-    </button>
-  </mat-card-actions>
 </div>
+<mat-card-actions>
+  <button mat-raised-button class="stick-to-right-side" (click)="onCancelClick()" color="primary" style="margin-right: 16px;">
+    닫기
+  </button>
+</mat-card-actions>

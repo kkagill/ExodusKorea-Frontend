@@ -1,5 +1,5 @@
 <div *ngIf="isUploaderRankingLoaded">
-  <mat-card class="example-card" style="width: 230px; height: 310px;">
+  <mat-card class="example-card" style="width: 230px; height: 500px;">
     <p class="thick">
       영상 공유자 랭킹
       <i class="fa fa-info-circle" [mdbTooltip]="popTemplate" placement="top" aria-hidden="true"></i>
@@ -7,7 +7,10 @@
     <hr />
     <mat-card-content class="left-align-panel">
       <mat-label *ngFor="let up of uploaderRanking; index as i" style="text-align: justify;">
-        <p>{{i+1}}. <span class="score" (click)="onScoreClick(up)">{{up.name}}</span><span class="thick stick-to-right-side">{{up.specificInfo.totalScore}}</span></p>
+        <p>{{i+1}}.
+          <span class="score" (click)="onScoreClick(up)">{{up.name}}</span>
+          <span class="thick stick-to-right-side">{{up.specificInfo.totalScore}}</span>
+        </p>
       </mat-label>
     </mat-card-content>
   </mat-card>

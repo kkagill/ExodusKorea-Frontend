@@ -7,7 +7,7 @@
           전체
         </div>    -->
 
-        <mat-expansion-panel expanded="true" *ngIf="isCategoriesLoaded">  
+        <mat-expansion-panel expanded="true" *ngIf="isCategoriesLoaded">
           <mat-expansion-panel-header>
             <mat-panel-title>
               카테고리
@@ -39,16 +39,18 @@
         <div class="col-md-10 mx-auto">
           <div class="md-form">
             <input type="text" [(ngModel)]="searchText" class="form-control" id="search" mdbInputDirective>
-            <label for="search">검색</label>            
+            <label for="search">검색</label>
           </div>
           <div *ngIf="isCountriesLoaded" style="float: left;">
-            <p>국가별:&nbsp;&nbsp;  
-              <mat-checkbox *ngFor="let c of countries" [(ngModel)]="c.isChecked" [disabled]="!c.isNotDisabled" (change)="getVideosByCountry()" style="margin-right: 20px;">{{c.nameKR}}</mat-checkbox>
-            </p>            
-          </div>      
+            <p>국가별:&nbsp;&nbsp;
+              <mat-checkbox *ngFor="let c of countries" [(ngModel)]="c.isChecked" [disabled]="!c.isNotDisabled"
+                (change)="getVideosByCountry()" style="margin-right: 20px;">{{c.nameKR}}</mat-checkbox>
+            </p>
+          </div>
         </div>
         <div class="col-md-3" *ngFor="let card of searchResult | searchFilter: {uploader: searchText, uploadedDate: searchText, countryKR: searchText, title: searchText} | paginate: { itemsPerPage: 8, currentPage: page }">
-          <mat-card class="card card-body mb-3" (click)="onMatCardClick(card.videoPostId, card.youTubeVideoId, card.categoryId, card.isGoogleDriveVideo)" style="cursor:pointer;">
+          <mat-card class="card card-body mb-3" (click)="onMatCardClick(card.videoPostId, card.youTubeVideoId, card.categoryId, card.isGoogleDriveVideo)"
+            style="cursor:pointer;">
             <mat-card-header>
               <div mat-card-avatar class="example-header-image" [ngStyle]="{'background-image':'url(' + backgroundUrl + card.countryEN +'.png' + ')'}"></div>
               <mat-card-title>{{card.uploader}}</mat-card-title>
@@ -63,7 +65,7 @@
       </div>
       <br />
       <div class="has-text-centered">
-        <pagination-controls (pageChange)="page = $event"></pagination-controls>
+        <pagination-controls (pageChange)="page = $event" previousLabel="이전" nextLabel="다음"></pagination-controls>
       </div>
     </div>
   </div>

@@ -1,3 +1,5 @@
+import { JidDetailDialog } from './jobs-in-demands/jobs-in-demand-panel/dialogs/jid-detail-dialog/jid-detail-dialog.component';
+import { JobsInDemandModule } from './jobs-in-demands/jobs-in-demand.module';
 import { SearchVideosModule } from './search-videos/search-videos.module';
 import { AddUploaderDialog } from './admin/dialogs/add-uploader-dialog/add-uploader-dialog.component';
 import { MaterialModule } from './shared/material.module';
@@ -45,6 +47,7 @@ import { ContentDetailsModule } from './content-details/content-details.module';
 import { UserProfileModule } from './user-profile/user-profile.module';
 import { DetailDialog } from './uploader-rankings/uploader-ranking-panel/dialogs/detail-dialog/detail-dialog.component';
 import { UploaderRankingsModule } from './uploader-rankings/uploader-rankings.module';
+import { JidDescriptionDialog } from './jobs-in-demands/jobs-in-demand-panel/dialogs/jid-description-dialog/jid-description-dialog.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -53,7 +56,7 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,
-    UploadVideoComponent               
+    UploadVideoComponent           
   ],
   entryComponents: [
     DeleteCommentDialog,
@@ -65,7 +68,9 @@ export function tokenGetter() {
     EtcDialog,
     AddSalaryInfoDialog,
     AddUploaderDialog,
-    DetailDialog
+    DetailDialog,
+    JidDetailDialog,
+    JidDescriptionDialog
   ],
   imports: [
     CoreModule,
@@ -77,6 +82,7 @@ export function tokenGetter() {
     SearchVideosModule,
     UserProfileModule,
     UploaderRankingsModule,
+    JobsInDemandModule,
     MaterialModule,
     SharedModule,
     BrowserModule,

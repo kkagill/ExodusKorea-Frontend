@@ -1,0 +1,19 @@
+<br /><br />
+<h4 class="thick">{{ currentYear | date: "yyyy" }} 수요 높은 직종</h4>
+<br /><br />
+<div *ngIf="isJobsInDemandLoaded" class="col-lg-8" style="margin: 0 auto;">
+  <mdb-tabset [buttonClass]="'pills-secondary white mb-2'" [contentClass]="'card'">
+    <mdb-tab *ngFor="let j of jobsInDemand" heading="{{j.countryKR}}">
+      <section class="magazine-section my-5" style="margin-top: 0rem !important;">
+        <div class="row">
+          <div class="col-lg-12	col-md-12">
+            <p *ngFor="let d of j.details" class="title" (click)="onClickTitle(d.description, d.jobsInDemandId, d.hasVideoPost, d.titleKR, j.countryKR)">
+              {{d.titleKR}}
+              <img *ngIf="d.hasVideoPost" src="./../../assets/images/youtube.png" alt="유튜브" style="margin-left: 5px; margin-bottom: 3px;">
+            </p>
+          </div>
+        </div>
+      </section>
+    </mdb-tab>
+  </mdb-tabset>
+</div>

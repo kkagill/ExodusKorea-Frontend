@@ -10,9 +10,14 @@
 .uploader-ranking-panel {
   position: absolute; 
   right: 100px; 
-  top: 580px;
+  top: 570px;
 }
-
+.jobs-in-demand-panel {
+  width: 270px; 
+  position: absolute; 
+  right: 70px; 
+  top: 1179px;
+}
 @media screen and (min-width : 0px) and (max-width : 767px){
   .uploader-ranking-panel {    
     visibility: hidden;

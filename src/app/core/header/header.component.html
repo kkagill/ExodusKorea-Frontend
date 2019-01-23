@@ -39,6 +39,11 @@
             공유자 랭킹
           </a>
         </li>
+        <li class="nav-item waves-light" mdbWavesEffect>
+          <a class="nav-link" [routerLink]="['jobs-in-demand']">
+            {{ currentYear | date: "yyyy" }} Hot Jobs
+          </a>
+        </li>
         <li *ngIf="authService.isAuthenticated() && authService.isAdmin()" class="nav-item waves-light" mdbWavesEffect>
           <a class="nav-link" [routerLink]="['admin']">
             운영자

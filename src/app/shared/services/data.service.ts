@@ -583,6 +583,42 @@ export class DataService {
       );
   }
 
+  getJobsInDemandVideos(jobsInDemandId: number): Observable<any> {
+    return this.http.get(this._baseUrl + `ranking/${jobsInDemandId}/jobsindemand-videos`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  getJobsInDemandByRandomCountries(): Observable<any> {
+    return this.http.get(this._baseUrl + `ranking/jobsindemand-random-countries`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
+  getJobsInDemandByAllCountries(): Observable<any> {
+    return this.http.get(this._baseUrl + `ranking/jobsindemand-all-countries`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
   findUserLikedPost(id: number): Observable<any> {
     const header = {
       'Content-Type': 'application/json',
