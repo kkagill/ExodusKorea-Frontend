@@ -14,11 +14,15 @@ import { CoreRoutingModule } from './core-routing.module';
 import { NotifCommentDialog } from './header/dialogs/notif-comment-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { VideoNotFoundComponent } from './video-not-found/video-not-found.component';
+import { UploaderRankingsModule } from '../uploader-rankings/uploader-rankings.module';
+import { JobsInDemandModule } from '../jobs-in-demands/jobs-in-demand.module';
 
 @NgModule({
   imports: [
     CommonModule,
     CoreRoutingModule,
+    JobsInDemandModule,
+    UploaderRankingsModule,
     RouterModule,
     LayoutModule,
     MaterialModule,   

@@ -230,6 +230,18 @@ export class DataService {
       );
   }
 
+  getPopularVideos(): Observable<any> {
+    return this.http.get(this._baseUrl + `home/popular-videos`, { observe: "response" })
+      .pipe(
+        map(res => {
+          return res;
+        }),
+        catchError(err => {
+          return throwError(err);
+        })
+      );
+  }
+
   getAllVideos(): Observable<any> {
     return this.http.get(this._baseUrl + `home/all-videos`, { observe: "response" })
       .pipe(
@@ -326,12 +338,12 @@ export class DataService {
       );
   }
 
-  getCategoryCountryUploader(): Observable<any> {
+  getCategoryCountryCareerUploader(): Observable<any> {
     const header = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('access_token')
     };
-    return this.http.get(this._baseUrl + `admin/categories-countries-uploaders`, { headers: header, observe: "response" })
+    return this.http.get(this._baseUrl + `admin/categories-countries-careers-uploaders`, { headers: header, observe: "response" })
       .pipe(
         map(res => {
           return res;

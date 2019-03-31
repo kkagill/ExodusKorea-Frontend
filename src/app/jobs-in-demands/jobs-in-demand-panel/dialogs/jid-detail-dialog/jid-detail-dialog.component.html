@@ -1,25 +1,24 @@
 <section class="magazine-section my-5" id="detail">
   <div class="row">
     <div class="col-lg-12 col-md-12">
-      <div style="text-align: center;">
-        <button type="button" class="btn btn-outline-info waves-effect btn-sm" (click)="onClickDescription()" style="margin-top: -50px;">설명
-          보기</button>
-      </div>
-
       <div style="text-align: center;" *ngIf="!isSearchResultLoaded">
         <mdb-spinner spinnerType="big" spinnerColor="yellow"></mdb-spinner>
       </div>
       <div class="row" *ngIf="data.hasVideoPost">
         <div *ngIf="isSearchResultLoaded">
-          <div class="col-lg-10 col-md-4" style="margin: 0 auto;" *ngFor="let card of searchResult | paginate: { itemsPerPage: 1, currentPage: page }">
-            <mat-card class="card card-body mb-6" (click)="onMatCardClick(card.videoPostId, card.youTubeVideoId, card.isGoogleDriveVideo)"
+          <div class="col-lg-10 col-md-4" style="margin: 0 auto;"
+            *ngFor="let card of searchResult | paginate: { itemsPerPage: 1, currentPage: page }">
+            <mat-card class="card card-body mb-6"
+              (click)="onMatCardClick(card.videoPostId, card.youTubeVideoId, card.isGoogleDriveVideo)"
               style="cursor:pointer;">
               <mat-card-header>
-                <mat-card-subtitle>{{card.uploadedDate | date:'yyyy-MM-dd'}}</mat-card-subtitle>
+                <mat-card-title [ngClass]="{'eko-video': card.isGoogleDriveVideo}">{{card.uploader}}</mat-card-title>
+                <mat-card-subtitle>좋아요: {{card.likes}}</mat-card-subtitle>
               </mat-card-header>
               <img mat-card-image src="https://img.youtube.com/vi/{{card.youTubeVideoId}}/hqdefault.jpg">
               <mat-card-content>
-                <h6 style="text-align: center;"><strong>{{card.countryKR}} {{card.title}}</strong></h6>
+                <p style="text-align: center;"><strong><span style="color: #007bff;">[{{card.category}}]</span>
+                    {{card.countryKR}} {{card.title}}</strong></p>
               </mat-card-content>
             </mat-card>
           </div>
@@ -40,10 +39,8 @@
       </div>
     </div>
   </div>
-
-  <mat-card-actions>
-    <button mat-raised-button class="stick-to-right-side" (click)="onCancelClick()" color="primary">
-      닫기
-    </button>
-  </mat-card-actions>
 </section>
+<mat-card-actions>
+  <button mat-raised-button class="stick-to-right-side" (click)="onClickDescription()" color="accent">더 자세히..</button>
+  <button mat-raised-button class="stick-to-right-side" (click)="onCancelClick()" color="primary">닫기</button>
+</mat-card-actions>

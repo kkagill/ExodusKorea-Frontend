@@ -1,15 +1,23 @@
-h1, h5, strong{
-  font-family: 'BusanBada';
+@import url('https://cdn.rawgit.com/YJSoft/Webfonts/0.1/BM_JUA.css');
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'BM JUA', '배달의민족 주아', 'NanumBarunGothic', sans-serif;
 }
 
 .view {
-  background: url('../../../assets/images/main.jpeg') no-repeat center center;
+  background: url('../../../assets/images/main.jpg') no-repeat center center;
   background-size: cover;
   height: 50vh;
 }
 
 .navbar {
   z-index: 1;
+}
+
+#navbar-text-blue {
+  font-size: 17px;
+  font-weight: bold; 
+  color: rgb(40, 61, 118);
 }
 
 .left-align {

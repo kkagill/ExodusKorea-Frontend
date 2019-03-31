@@ -1,25 +1,25 @@
 <header class="h-100">
-  <mdb-navbar SideClass="navbar fixed-top navbar-expand-lg navbar-dark indigo scrolling-navbar intro-fixed-nav"
+  <mdb-navbar SideClass="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar intro-fixed-nav"
     [containerInside]="true">
     <mdb-navbar-brand>
-      <a class="logo navbar-brand" [routerLink]="['']">
-        <strong>탈조선</strong>
+      <a class="logo navbar-brand" id="navbar-text-blue" [routerLink]="['']">    
+        <img src="./../../../assets/images/logo2.png">
       </a>
     </mdb-navbar-brand>
     <links>
       <ul class="navbar-nav mr-auto">
         <li class="nav-item waves-light" mdbWavesEffect>
-          <a class="nav-link" [routerLink]="['search-videos']">
+          <a class="nav-link" id="navbar-text-blue" [routerLink]="['search-videos']">
             영상 분류
           </a>
         </li>
-        <li class="nav-item waves-light" mdbWavesEffect>
+        <!-- <li class="nav-item waves-light" mdbWavesEffect>
           <a class="nav-link" [routerLink]="['news']">
-            취업/이민 뉴스
+            해외 뉴스
           </a>
-        </li>
+        </li> -->
         <li class="nav-item dropdown" dropdown>
-          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" id="navbar-text-blue" mdbWavesEffect>
             국가 정보<span class="caret"></span>
           </a>
           <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
@@ -30,37 +30,37 @@
           </div>
         </li>
         <li class="nav-item waves-light" mdbWavesEffect>
-          <a class="nav-link" [routerLink]="['upload-video']">
-            영상 공유
+          <a class="nav-link" id="navbar-text-blue" [routerLink]="['upload-video']">
+            영상공유 신청
           </a>
         </li>
         <li class="nav-item waves-light" mdbWavesEffect>
-          <a class="nav-link" [routerLink]="['uploader-ranking']">
+          <a class="nav-link" id="navbar-text-blue" [routerLink]="['uploader-ranking']">
             공유자 랭킹
           </a>
         </li>
         <li class="nav-item waves-light" mdbWavesEffect>
-          <a class="nav-link" [routerLink]="['jobs-in-demand']">
+          <a class="nav-link" id="navbar-text-blue" [routerLink]="['jobs-in-demand']">
             {{ currentYear | date: "yyyy" }} Hot Jobs
           </a>
         </li>
         <li *ngIf="authService.isAuthenticated() && authService.isAdmin()" class="nav-item waves-light" mdbWavesEffect>
-          <a class="nav-link" [routerLink]="['admin']">
+          <a class="nav-link" id="navbar-text-blue" [routerLink]="['admin']">
             운영자
           </a>
         </li>
       </ul>
       <ul *ngIf="!authService.isAuthenticated()" class="navbar-nav nav-flex-icons">
         <li class="nav-item waves-light" mdbWavesEffect>
-          <a class="nav-link" [routerLink]="['register']">회원가입</a>
+          <a class="nav-link" id="navbar-text-blue" [routerLink]="['register']">회원가입</a>
         </li>
         <li class="nav-item waves-light" mdbWavesEffect>
-          <a href="javascript:void(0);" class="nav-link" (click)="openLoginDialog()">로그인</a>
+          <a href="javascript:void(0);" class="nav-link" id="navbar-text-blue" (click)="openLoginDialog()">로그인</a>
         </li>
       </ul>
       <ul *ngIf="authService.isAuthenticated()" class="navbar-nav nav-flex-icons">
         <li class="nav-item dropdown" dropdown>
-          <a dropdownToggle mdbWavesEffect type="button" class="nav-link waves-light" mdbWavesEffect>
+          <a dropdownToggle mdbWavesEffect type="button" class="nav-link waves-light" id="navbar-text-blue" dbWavesEffect>
             <i *ngIf="isNotificationLoaded" matBadge="{{newNotifications}}" matBadgeColor="warn" class="fa fa-bell"></i>
             <i *ngIf="!isNotificationLoaded" class="fa fa-bell"></i>
           </a>
@@ -86,7 +86,7 @@
           </div>
         </li>
         <li class="nav-item dropdown" dropdown>
-          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" id="navbar-text-blue" mdbWavesEffect>
             <i class="fa fa-user"></i>
           </a>
           <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
@@ -108,12 +108,12 @@
         <!-- rgba-purple-light  -->
         <div class="container text-center white-text wow fadeInUp">
           <br><br><br><br><br>
-          <h1>해외 취업/이민/유학의 현실적 정보</h1>
+          <h1>해외 취업/이민/워홀 정보 공유</h1>
           <br>
           <div id="main">
             <h5>Goodbye 스펙경쟁 & 미세먼지.. 나는 해외로 간다!</h5>
             <h6>경쟁이 치열한 국내 시장에서 눈을 돌리면 해외의 놀라운 시장이 보입니다.</h6>
-            <h6>글로벌 무대로 진출하고자 하는 당신을 위한 정보 공유</h6>
+            <h6>깨끗한 환경과 글로벌 무대로 진출하고자 하는 당신을 위한 영상 정보 공유 플랫폼</h6>
           </div>
         </div>
       </div>
@@ -126,8 +126,10 @@
         <!-- rgba-purple-light  -->
         <div class="container text-center white-text wow fadeInUp">
           <br><br><br><br><br>
-          <h1>해외 취업/이민/유학 성공사례를 나눠주세요</h1>
-          <br>
+          <h1 id="share">해외 취업/이민/워홀</h1>
+          <br />
+          <h1>성공/실폐 사례 SHARE</h1>
+          <br />
           <div id="share">
             <h6>여러분의 스토리를 앞으로 해외 진출을 꿈꾸는 모든 분들께 공유할 수 있습니다.</h6>
             <h6>멘토링 역할을 할 수 있는 기회를 꼭 만들어 보세요.</h6>

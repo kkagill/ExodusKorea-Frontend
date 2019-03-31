@@ -19,8 +19,8 @@
             </div>
             <div class="col-md-9">
               <p class="font-weight-bold dark-grey-text" style="text-align: justify; margin-top: 15px;">
-                {{i+1}}.
-                <span class="score" (click)="onScoreClick(up)">{{up.name}}</span>
+                {{i+1}}.               
+                  <span *ngIf="router.url === '/uploader-ranking'" class="score">{{up.nameOriginal}}</span>
               </p>
               <div class="d-flex justify-content-between">
                 <div class="col-11 text-truncate pl-0 mb-3">

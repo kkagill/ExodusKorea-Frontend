@@ -4,7 +4,7 @@ import { DataSharingService } from '../shared/services/data-sharing.service';
 import { AuthService } from '../shared/services/auth.service';
 import { ItemsService } from '../shared/utils/items.service';
 import { DataService } from '../shared/services/data.service';
-import { ISalaryInfo, ICategoryCountryUploader, IUploader, IVideoPostInfo, IVideoPost } from '../shared/interfaces';
+import { ISalaryInfo, IUploader, IVideoPostInfo, IVideoPost, ICategoryCountryCareerUploader } from '../shared/interfaces';
 import { LoginComponent } from '../auth/login/login.component';
 import { NgForm, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -21,6 +21,7 @@ export class AdminComponent implements OnInit {
   @ViewChild('f') form: NgForm;
   categories: Array<any> = [];
   countries: Array<any> = [];
+  careers: Array<any> = [];
   videoPosts: Array<any> = [];
   countriesForSalary: Array<any> = [];
   occupations: Array<any> = [];
@@ -61,11 +62,11 @@ export class AdminComponent implements OnInit {
   }
 
   loadAllDDLInfo() {
-    this.dataService.getCategoryCountryUploader()
+    this.dataService.getCategoryCountryCareerUploader()
       .subscribe(res => {
         if (res.status === 200) {
           this.isDDLLoaded = true;
-          let result = this.itemsService.getSerialized<ICategoryCountryUploader>(res.body);
+          let result = this.itemsService.getSerialized<ICategoryCountryCareerUploader>(res.body);
 
           for (let c of result.categories) {
             if (c.categoryId !== 1) {
@@ -74,6 +75,9 @@ export class AdminComponent implements OnInit {
           }
           for (let c of result.countries) {
             this.countries.push({ value: c.countryId, label: c.nameKR });
+          }
+          for (let c of result.careers) {
+            this.careers.push({ value: c.careerId, label: c.name });
           }
           for (let u of result.uploaders) {
             this.uploaders.push({ uploaderId: u.uploaderId, name: u.name });
@@ -96,11 +100,11 @@ export class AdminComponent implements OnInit {
   }
 
   refreshUploaders() {
-    this.dataService.getCategoryCountryUploader()
+    this.dataService.getCategoryCountryCareerUploader()
       .subscribe(res => {
         if (res.status === 200) {
           this.isDDLLoaded = true;
-          let result = this.itemsService.getSerialized<ICategoryCountryUploader>(res.body);
+          let result = this.itemsService.getSerialized<ICategoryCountryCareerUploader>(res.body);
 
           for (let u of result.uploaders) {
             this.uploaders.push({ uploaderId: u.uploaderId, name: u.name });
@@ -200,6 +204,7 @@ export class AdminComponent implements OnInit {
     let body = {
       'categoryId': value.categoryId,
       'countryId': value.countryId,
+      'careerId': value.careerId,
       'uploaderId': uploaderId,
       'salaryInfoId': value.salaryInfoId,
       'likes': this.isGDVChecked ? 10 : this.model.likes, // If it's google drive video, give 10 likes in advance
@@ -292,11 +297,11 @@ export class AdminComponent implements OnInit {
   }
 
   onLoadCountries() {
-    this.dataService.getCategoryCountryUploader()
+    this.dataService.getCategoryCountryCareerUploader()
       .subscribe(res => {
         if (res.status === 200) {
           this.isCountriesLoaded = true;
-          let result = this.itemsService.getSerialized<ICategoryCountryUploader>(res.body);
+          let result = this.itemsService.getSerialized<ICategoryCountryCareerUploader>(res.body);
           for (let c of result.countries) {
             this.countriesForSalary.push({ value: c.nameKR, label: c.nameKR });
           }

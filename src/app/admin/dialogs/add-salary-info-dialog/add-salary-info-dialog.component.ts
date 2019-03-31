@@ -4,7 +4,7 @@ import { DataSharingService } from '../../../shared/services/data-sharing.servic
 import { AuthService } from '../../../shared/services/auth.service';
 import { ItemsService } from '../../../shared/utils/items.service';
 import { DataService } from '../../../shared/services/data.service';
-import { ICategoryCountryUploader } from '../../../shared/interfaces';
+import { ICategoryCountryCareerUploader } from '../../../shared/interfaces';
 import { LoginComponent } from '../../../auth/login/login.component';
 
 @Component({
@@ -82,11 +82,11 @@ export class AddSalaryInfoDialog implements OnInit {
   }
 
   onLoadCountries() {
-    this.dataService.getCategoryCountryUploader()
+    this.dataService.getCategoryCountryCareerUploader()
       .subscribe(res => {
         if (res.status === 200) {
           this.isCountriesLoaded = true;
-          let result = this.itemsService.getSerialized<ICategoryCountryUploader>(res.body);
+          let result = this.itemsService.getSerialized<ICategoryCountryCareerUploader>(res.body);
           for (let c of result.countries) {
             this.countriesForSalary.push({ value: c.nameKR, label: c.nameKR });
           }

@@ -2,7 +2,14 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 export interface DialogData {
+  difficultyLevel: string;
   description: string;
+  link: string,
+  jobSite: string,
+  salary: number,
+  currency: string
+  titleKR: string,
+  titleEN: string
 }
 
 @Component({

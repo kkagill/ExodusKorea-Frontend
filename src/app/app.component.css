@@ -7,7 +7,7 @@
 .text-center {
   padding-top: 1rem !important;
 }
-.uploader-ranking-panel {
+/* .uploader-ranking-panel {
   position: absolute; 
   right: 100px; 
   top: 570px;
@@ -24,4 +24,4 @@
     clear: both;   
     display: none;
   }
-}
+} */

@@ -43,10 +43,30 @@ export class JobsInDemandComponent implements OnInit {
       );
   }
 
-  onClickTitle(description: string, jobsInDemandId: number, hasVideoPost: boolean, titleKR: string, countryKR: string) {
+  onClickTitle(description: string, 
+    jobsInDemandId: number, 
+    hasVideoPost: boolean, 
+    titleKR: string, 
+    titleEN: string, 
+    countryKR: string, 
+    difficultyLevel: string,
+    link: string,
+    jobSite: string,
+    salary: number,
+    currency: string) {
     const dialogRef = this.dialog.open(JidDetailDialog, {
       width: '350px',
-      data: { description: description, jobsInDemandId: jobsInDemandId, hasVideoPost: hasVideoPost, titleKR: titleKR, countryKR: countryKR }
+      data: { description: description, 
+        jobsInDemandId: jobsInDemandId, 
+        hasVideoPost: hasVideoPost, 
+        titleKR: titleKR, 
+        titleEN: titleEN, 
+        countryKR: countryKR, 
+        difficultyLevel: difficultyLevel,
+        link: link,
+        jobSite: jobSite,
+        salary: salary,
+        currency: currency }
     });
   }
 

@@ -105,7 +105,7 @@ export class SearchVideosComponent implements OnInit {
           if (this.isSearchResultLoaded) {
             for (let sr of this.searchResult) {
               if (selectedCountries.includes(sr.countryKR)) {
-                this.countries.find(x => x.nameKR === sr.countryKR).isChecked = true;
+                //this.countries.find(x => x.nameKR === sr.countryKR).isChecked = true;
                 this.countries.find(x => x.nameKR === sr.countryKR).isNotDisabled = true;
               }
             }
@@ -193,9 +193,15 @@ export class SearchVideosComponent implements OnInit {
     let selectedCountries = this.countries.filter(x => x.isChecked === true).map(x => x.nameKR);
     this.searchResult = [];
 
-    for (let sr of searchResult) {
-      if (selectedCountries.includes(sr.countryKR)) {
-        this.searchResult.push(sr);
+    if (selectedCountries.length <= 0) {
+      for (let sr of searchResult) {       
+          this.searchResult.push(sr);
+      }
+    } else {
+      for (let sr of searchResult) {
+        if (selectedCountries.includes(sr.countryKR)) {
+          this.searchResult.push(sr);
+        }
       }
     }
   }

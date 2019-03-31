@@ -2,6 +2,19 @@
   <div class="row">
     <div class="col-lg-12 col-md-12">
       <div style="text-align: justify;">
+        <span class="thick">{{data.titleKR}} {{data.titleEN}}</span>
+        <br /><br />
+        취직 난이도 <i class="fa fa-info-circle" [mdbTooltip]="popTemplate" placement="bottom" aria-hidden="true"></i>:
+        <img *ngIf="data.difficultyLevel && data.difficultyLevel === '상'" src="./../../assets/images/low.png" />
+        <img *ngIf="data.difficultyLevel && data.difficultyLevel === '중'" src="./../../assets/images/medium.png" />
+        <img *ngIf="data.difficultyLevel && data.difficultyLevel === '하'" src="./../../assets/images/high.png" />
+        <br />
+        평균 연봉: {{data.currency}} {{data.salary | currency:data.currency:'symbol-narrow':'1.0'}}
+        <br /><br />
+        <a href="{{data.link}}" target="_blank">기본 정보</a>
+        <br />
+        <a href="{{data.jobSite}}" target="_blank">현지 일자리 수요</a>
+        <hr />
         {{data.description}}
       </div>
     </div>
@@ -12,3 +25,12 @@
     닫기
   </button>
 </mat-card-actions>
+
+<ng-template #popTemplate>
+  <div style="width: 100px;">
+    <p>취업에 필요한 과정들을 평가했을 때</p>
+    <p>초록: 쉬움</p>
+    <p>노랑: 중간</p>
+    <p>빨강: 어려움</p>
+  </div>
+</ng-template>

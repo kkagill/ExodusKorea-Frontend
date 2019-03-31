@@ -37,28 +37,30 @@
             </mat-form-field>
             <mat-form-field appearance="outline" class="input-size">
               <mat-label>비밀번호 *</mat-label>
-              <input matInput type="password" placeholder="비밀번호" formControlName="password" [formControl]="passwordFormControl"
-                [errorStateMatcher]="matcher" />
+              <input matInput type="password" placeholder="비밀번호" formControlName="password"
+                [formControl]="passwordFormControl" [errorStateMatcher]="matcher" />
               <mat-error *ngIf="passwordFormControl.hasError('pattern') && !passwordFormControl.hasError('required')">
                 최소 8글자에 숫자, 대소문자를 섞어주세요.
               </mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" class="input-size">
               <mat-label>비밀번호 재확인 *</mat-label>
-              <input matInput type="password" placeholder="비밀번호 재확인" formControlName="confirmPassword" [formControl]="confirmPasswordFormControl"
-                [errorStateMatcher]="matcher" />
-              <mat-error *ngIf="confirmPasswordFormControl.hasError('pattern') && !confirmPasswordFormControl.hasError('required')">
+              <input matInput type="password" placeholder="비밀번호 재확인" formControlName="confirmPassword"
+                [formControl]="confirmPasswordFormControl" [errorStateMatcher]="matcher" />
+              <mat-error
+                *ngIf="confirmPasswordFormControl.hasError('pattern') && !confirmPasswordFormControl.hasError('required')">
                 최소 8글자에 숫자, 대소문자를 섞어주세요.
               </mat-error>
             </mat-form-field>
             <div id="recaptcha" style="margin-left: 15px;">
-              <re-captcha (resolved)="$event && submit($event)" formControlName="recaptcha" siteKey={{siteKey}}></re-captcha>
+              <re-captcha (resolved)="$event && submit($event)" formControlName="recaptcha" siteKey={{siteKey}}>
+              </re-captcha>
             </div>
           </mat-card-content>
-          <div style="margin-top: 30px;">
+          <!-- <div style="margin-top: 30px;">
             <mat-checkbox formControlName="tands" [formControl]="tandsFormControl"></mat-checkbox>
             <span class="terms-of-service pointer" style="margin-left: 10px;" (click)="onClickTermsOfService()">이용약관</span>에 동의합니다.
-          </div>
+          </div> -->
           <div>
             <br />
             <mat-toolbar>
@@ -66,11 +68,18 @@
                   registerForm.controls.nickName.valid &&
                   registerForm.controls.password.valid &&
                   registerForm.controls.confirmPassword.valid &&
+                  registerForm.controls.recaptcha.valid)" color="accent">
+                등록
+              </button>
+              <!-- <button style="margin: auto;" mat-raised-button class="stick-to-right-side" [disabled]="!(registerForm.controls.email.valid && 
+                  registerForm.controls.nickName.valid &&
+                  registerForm.controls.password.valid &&
+                  registerForm.controls.confirmPassword.valid &&
                   registerForm.controls.recaptcha.valid &&
                   registerForm.controls.tands.valid)"
                 color="accent">
                 등록
-              </button>
+              </button> -->
             </mat-toolbar>
           </div>
         </form>

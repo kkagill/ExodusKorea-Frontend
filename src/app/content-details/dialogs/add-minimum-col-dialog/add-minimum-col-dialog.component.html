@@ -1,7 +1,7 @@
 <div id="add">
-  <h1 mat-dialog-title>매월 최저 생존비용</h1>
+  <h1 mat-dialog-title>매월 1人 최저 생존 비용</h1>
   <p>
-    여러분이 경험하신 매달 최대로 아낄 수 있는 비용을 <span class="thick">{{data.baseCurrency}}</span>로 입력해주세요.
+    여러분이 경험하신 매월 최대로 아낄 수 있는 비용을 <span class="thick">{{data.baseCurrency}}</span>로 입력해주세요.
     <span style="color: red;">(상식에서 벗어나는 정보면 삭제됩니다)</span>
   </p>
   <form name="form" (ngSubmit)="f.form.valid && onSubmit(f.form.value)" #f="ngForm" novalidate>
@@ -26,8 +26,7 @@
         <div class="md-form form-group">
           <input mdbInputDirective type="number" min="0" step='0.01' placeholder='0.00' class="form-control"
             [(ngModel)]="model.rent" #rent="ngModel" id="rent" name="rent" required>
-          <label for="rent">룸쉐어 <i class="fa fa-info-circle" mdbTooltip="one bedroom 아파트/콘도 룸메이트와 공유" placement="top"
-              aria-hidden="true"></i></label>
+          <label for="rent">주거비</label>
         </div>
       </div>
 

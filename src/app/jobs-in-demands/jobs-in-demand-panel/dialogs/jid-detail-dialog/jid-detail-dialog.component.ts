@@ -14,7 +14,13 @@ export interface DialogData {
   jobsInDemandId: number;
   hasVideoPost: boolean;
   titleKR: string;
+  titleEN: string;
   countryKR: string;
+  difficultyLevel: string;
+  link: string,
+  jobSite: string,
+  salary: number,
+  currency: string
 }
 
 @Component({
@@ -81,7 +87,14 @@ export class JidDetailDialog implements OnInit {
   onClickDescription() {
     const dialogRef = this.dialog.open(JidDescriptionDialog, {
       width: '500px',
-      data: { description: this.data.description }
+      data: { difficultyLevel: this.data.difficultyLevel, 
+              description: this.data.description, 
+              titleKR: this.data.titleKR, 
+              titleEN: this.data.titleEN,
+              link: this.data.link,
+              jobSite: this.data.jobSite,
+              salary: this.data.salary,
+              currency: this.data.currency }
     });
   }
 

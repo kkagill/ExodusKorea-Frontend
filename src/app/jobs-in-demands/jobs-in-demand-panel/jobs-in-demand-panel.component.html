@@ -1,12 +1,21 @@
 <div *ngIf="isJobsInDemandLoaded" class="jobs-in-demand-panel">
-  <p class="thick">2019 수요 높은 직종</p>
-  <hr />
+  <p class="thick">{{ currentYear | date: "yyyy" }} 수요 높은 직종</p>
   <mdb-tabset [buttonClass]="'pills-secondary white mb-2'" [contentClass]="'card'">
     <mdb-tab *ngFor="let j of jobsInDemand" heading="{{j.countryKR}}">
       <section class="magazine-section my-5" style="margin-top: 0rem !important;">
         <div class="row">
           <div class="col-lg-12	col-md-12">
-            <p *ngFor="let d of j.details" class="title" (click)="onClickTitle(d.description, d.jobsInDemandId, d.hasVideoPost, d.titleKR, j.countryKR)">
+            <p *ngFor="let d of j.details" class="title" (click)="onClickTitle(d.description, 
+            d.jobsInDemandId, 
+            d.hasVideoPost, 
+            d.titleKR, 
+            d.titleEN, 
+            j.countryKR, 
+            d.difficultyLevel,
+            d.link,
+            d.jobSite,
+            d.salary,
+            d.currency)">
               {{d.titleKR}}
               <img *ngIf="d.hasVideoPost" src="./../../assets/images/youtube.png" alt="유튜브" style="margin-left: 5px; margin-bottom: 3px;">
             </p>
@@ -15,6 +24,6 @@
       </section>
     </mdb-tab>
   </mdb-tabset>
-  <button type="button" class="btn btn-outline-info waves-effect btn-sm" (click)="onClickMore()" style="margin-top: -100px;">다른
-    국가 보기</button>
+  <!-- <button type="button" class="btn btn-outline-info waves-effect btn-sm" (click)="onClickMore()" style="margin-top: -100px;">다른
+    국가 보기</button> -->
 </div>

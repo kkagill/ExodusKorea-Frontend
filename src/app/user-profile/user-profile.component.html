@@ -37,12 +37,12 @@
             style="cursor:pointer;">
             <mat-card-header>
               <div mat-card-avatar class="example-header-image" [ngStyle]="{'background-image':'url(' + backgroundUrl + card.countryEN +'.png' + ')'}"></div>
-              <mat-card-title>{{card.uploader}}</mat-card-title>
-              <mat-card-subtitle>{{card.uploadedDate | date:'yyyy-MM-dd'}}</mat-card-subtitle>
+              <mat-card-title [ngClass]="{'eko-video': card.isGoogleDriveVideo}" mdbTooltip="{{card.uploaderOriginal}}" placement="bottom">{{card.uploader}}</mat-card-title>
+              <mat-card-subtitle>좋아요: {{card.likes}}</mat-card-subtitle>
             </mat-card-header>
             <img mat-card-image src="https://img.youtube.com/vi/{{card.youTubeVideoId}}/hqdefault.jpg">
             <mat-card-content>
-              <h6><strong>{{card.countryKR}} {{card.title}}</strong></h6>
+              <p><strong><span style="color: #007bff;">[{{card.category}}]</span> {{card.countryKR}} {{card.title}}</strong></p>
             </mat-card-content>
           </mat-card>
         </div>

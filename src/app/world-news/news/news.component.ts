@@ -1,3 +1,4 @@
+import { DataSharingService } from './../../shared/services/data-sharing.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { INewsDetail, ICategory } from '../../shared/interfaces';
 import { Router } from '@angular/router';
@@ -28,6 +29,7 @@ export class NewsComponent implements OnInit {
   public constructor(private router: Router,
     public snackBar: MatSnackBar,
     private dataService: DataService,
+    private dataSharingService: DataSharingService,
     private itemsService: ItemsService) { }
 
   ngOnInit() {   
@@ -45,22 +47,26 @@ export class NewsComponent implements OnInit {
         //this.staticTabs.setActiveTab(2);
         localStorage.removeItem('index');
       }      
-      this.loadAllCategories(+newsId);
+      this.loadAllCategories(+newsId, false);
     // initial landing
     } else { 
-      this.loadAllCategories(0);
-      this.loadNewsList(0); 
+      this.loadAllCategories(0, true);
+      this.loadNewsList(1); 
     }
-    this.loadPopularNews();
+    //this.loadPopularNews();
   }
 
-  loadAllCategories(newsId: number) {
+  loadAllCategories(newsId: number, isInitial: boolean) {
     this.dataService.getAllCategories()
       .subscribe(res => {
         if (res.status === 200) {
           this.isCategoriesLoaded = true;
           this.categories = this.itemsService.getSerialized<ICategory[]>(res.body);
-          this.selectedCategory = this.categories[newsId];
+          if (isInitial) {
+            this.selectedCategory = this.categories[newsId];
+          } else {
+            this.selectedCategory = this.categories[newsId-1];
+          }      
         }
       },
         error => {
@@ -80,6 +86,7 @@ export class NewsComponent implements OnInit {
           this.newsList = this.itemsService.getSerialized<INewsDetail[]>(res.body);
           let count = 1;
           for (let nl of this.newsList) {
+            nl.newsId = newsId;
             nl.index = count; // Manually add index for each item
             count++;
           }
@@ -94,34 +101,36 @@ export class NewsComponent implements OnInit {
       );
   }
 
-  loadPopularNews() {
-    this.dataService.getPopularNews()
-      .subscribe(res => {
-        if (res.status === 200) {
-          this.isPopularNewsLoaded = true;
-          this.popularNews = this.itemsService.getSerialized<INewsDetail[]>(res.body);
-        }
-      },
-        error => {
-          this.snackBar.open('정보를 불러오는 과정에서 오류가 났습니다.', '', {
-            duration: 5000,
-            panelClass: ['error-snackbar']
-          });
-        }
-      );
-  }
+  // loadPopularNews() {
+  //   this.dataService.getPopularNews()
+  //     .subscribe(res => {
+  //       if (res.status === 200) {
+  //         this.isPopularNewsLoaded = true;
+  //         this.popularNews = this.itemsService.getSerialized<INewsDetail[]>(res.body);
+  //       }
+  //     },
+  //       error => {
+  //         this.snackBar.open('정보를 불러오는 과정에서 오류가 났습니다.', '', {
+  //           duration: 5000,
+  //           panelClass: ['error-snackbar']
+  //         });
+  //       }
+  //     );
+  // }
 
-  onPopularNewsClick(newsDetailId: number, newsId: number) {
-    this.router.navigate(['news-detail', newsDetailId, newsId, 0]);
-  }
+  // onPopularNewsClick(newsDetailId: number, newsId: number) {
+  //   this.router.navigate(['news-detail', newsDetailId, newsId, 0]);
+  // }
 
-  onSelectCategory(category: ICategory) {   
+  onSelectCategory(category: ICategory) {  
+    this.isNewsLoaded = false; 
     this.selectedCategory = category;
     this.page = 1;
     this.loadNewsList(category.categoryId);
   }  
 
-  onNewsClick(newsDetailId: number, newsId: number, index: number) {
-    this.router.navigate(['news-detail', newsDetailId, newsId, index]);
+  onNewsClick(nl: any) {
+    this.dataSharingService.nl.next(nl);    
+    this.router.navigate(['news-detail', nl.newsId, nl.index]);
   }
 }

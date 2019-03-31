@@ -14,7 +14,7 @@
         </mat-expansion-panel>
       </mat-accordion>
       <br />
-      <div class="single-news mb-lg-0 mb-4">
+      <!-- <div class="single-news mb-lg-0 mb-4">
         <div *ngIf="isPopularNewsLoaded">
           <mat-card class="example-card">
             <p class="thick">많이 본 뉴스</p>
@@ -27,7 +27,7 @@
             </mat-card-content>
           </mat-card>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <div class="col-lg-10 col-md-12">
@@ -44,19 +44,19 @@
           <mdb-spinner spinnerType="big" spinnerColor="yellow"></mdb-spinner>
         </div>
         <div *ngIf="isNewsLoaded">
-          <div class="col-12" *ngFor="let nl of newsList | searchFilter: {subject: searchText, country: searchText, department: searchText, dateCreated: searchText} | paginate: { itemsPerPage: 10, currentPage: page }">
+          <div class="col-12" *ngFor="let nl of newsList | searchFilter: {newsTitl: searchText, newsWrterNm: searchText, newsBdt: searchText, newsWrtDt: searchText} | paginate: { itemsPerPage: 10, currentPage: page }">
             <section class="magazine-section my-5">
               <div class="row">
                 <div class="col-lg-12	col-md-12">
-                  <div class="row pointer" (click)="onNewsClick(nl.newsDetailId, nl.newsId, nl.index)">
-                    <div class="col-md-3">
+                  <div class="row pointer" (click)="onNewsClick(nl)">
+                    <!-- <div class="col-md-3">
                       <img class="news-image" src="{{nl.thumbnail}}">
-                    </div>
-                    <div class="col-md-9 left-align">
-                      <h5 class="font-weight-bold dark-grey-text">{{nl.subject}}</h5>
-                      <p>{{nl.department}}</p>
-                      <p style="margin-top: -10px;">{{nl.dateCreated | date:'y-MM-dd'}}</p>
-                      <p style="margin-top: -20px;">조회수: {{nl.views}}</p>
+                    </div> -->
+                    <div class="col-lg-12">
+                      <h5 class="font-weight-bold dark-grey-text">{{nl.newsTitl}}</h5>
+                      <p>{{nl.ovrofInfo}}</p>
+                      <p style="margin-top: -10px;">{{nl.newsWrtDt | date:'y-MM-dd'}}</p>
+                      <!-- <p style="margin-top: -20px;">조회수: {{nl.views}}</p> -->
                     </div>
                   </div>
                 </div>

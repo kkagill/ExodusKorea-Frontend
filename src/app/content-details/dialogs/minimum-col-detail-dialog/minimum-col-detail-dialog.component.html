@@ -1,5 +1,5 @@
 <div id="minimum">
-  <h1 mat-dialog-title>각 도시 매월 최소 생활비 ({{data.baseCurrency}})</h1>
+  <h1 mat-dialog-title>각 도시 매월 1人 최소 생활비 ({{data.baseCurrency}})</h1>
   <div *ngIf="!isMinimumCoLLoaded">
     <mdb-spinner spinnerType="big" spinnerColor="yellow"></mdb-spinner>
   </div>
@@ -17,11 +17,7 @@
       <thead>
         <tr>
           <th *ngFor="let head of headElements; let i = index" scope="col" class="th-sm" style="text-align: center;">
-            <span *ngIf="head === '룸쉐어'">
-              {{head}}
-              <i class="fa fa-info-circle" mdbTooltip="one bedroom 아파트/콘도 룸메이트와 공유" placement="top" aria-hidden="true"></i>
-            </span>
-            <span *ngIf="head !== '룸쉐어'">{{head}}</span>
+            {{head}}
           </th>
         </tr>
       </thead>

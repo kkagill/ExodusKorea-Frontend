@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
   recommendedVideo: IVideoPost;
   currencyInfo: ICurrencyInfo;
   allVideos: IVideoPost[];
+  popularVideos: IVideoPost[];
   initial = [{}, {}];
   slides: any = [[]];
   backgroundUrl = '../../../assets/images/countries/';
@@ -27,6 +28,7 @@ export class HomeComponent implements OnInit {
   isRecommendedVideoLoaded: boolean = false;
   isCurrencyLoaded: boolean = false;
   isNewVideosLoaded: boolean = false;
+  isPopularVideosLoaded: boolean = false;
   isAllVideosLoaded: boolean = false;
   today: string;
   email: string;
@@ -45,11 +47,12 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadMainNews();
-    this.loadRecommendedVideo();
-    this.loadCurrency();
+    //this.loadMainNews();
     this.loadNewVideos();
+    this.loadPopularVideos();
     this.loadAllVideos();
+    this.loadRecommendedVideo();
+    this.loadCurrency();  
     //this.slides = this.chunk(this.initial, 1); // 진짜 미스테리.. loadNewVideoPosts에서도 this.slides 대입하고 여기서도 이런식으로해야 비로소 ngAfterViewInit이 작동한다..
   }
 
@@ -63,25 +66,25 @@ export class HomeComponent implements OnInit {
   //   this.renderer.setStyle(controls.children[1], 'left', '94%');
   // }
 
-  loadMainNews() {
-    this.dataService.getMainNews()
-      .subscribe(res => {
-        if (res.status === 200) {
-          this.isNewsLoaded = true;
-          this.mainNews = this.itemService.getSerialized<INewsDetail[]>(res.body);
-          for (let mn of this.mainNews) {
-            mn.createdDate = this.datePipe.transform(mn.dateCreated, 'yyyy-MM-dd');
-          }
-        }
-      },
-        error => {
-          this.snackBar.open('정보를 불러오는 과정에서 오류가 났습니다.', '', {
-            duration: 5000,
-            panelClass: ['error-snackbar']
-          });
-        }
-      );
-  }
+  // loadMainNews() {
+  //   this.dataService.getMainNews()
+  //     .subscribe(res => {
+  //       if (res.status === 200) {
+  //         this.isNewsLoaded = true;
+  //         this.mainNews = this.itemService.getSerialized<INewsDetail[]>(res.body);
+  //         for (let mn of this.mainNews) {
+  //           mn.createdDate = this.datePipe.transform(mn.dateCreated, 'yyyy-MM-dd');
+  //         }
+  //       }
+  //     },
+  //       error => {
+  //         this.snackBar.open('정보를 불러오는 과정에서 오류가 났습니다.', '', {
+  //           duration: 5000,
+  //           panelClass: ['error-snackbar']
+  //         });
+  //       }
+  //     );
+  // }
 
   loadRecommendedVideo() {
     this.dataService.getRecommendedVideo()
@@ -124,6 +127,23 @@ export class HomeComponent implements OnInit {
           this.isNewVideosLoaded = true;
           let newVideoPosts = this.itemService.getSerialized<IVideoPost[]>(res.body);
           this.slides = this.chunk(newVideoPosts, 4);
+        }
+      },
+        error => {
+          this.snackBar.open('정보를 불러오는 과정에서 오류가 났습니다.', '', {
+            duration: 5000,
+            panelClass: ['error-snackbar']
+          });
+        }
+      );
+  }
+
+  loadPopularVideos() {
+    this.dataService.getPopularVideos()
+      .subscribe(res => {
+        if (res.status === 200) {
+          this.isPopularVideosLoaded = true;
+          this.popularVideos = this.itemService.getSerialized<IVideoPost[]>(res.body);
         }
       },
         error => {

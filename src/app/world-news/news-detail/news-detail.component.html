@@ -19,7 +19,7 @@
         <div class="list-group-item list-group-item-action pointer" (click)="loadNewsList(3)">일자리 동향</div>
       </div> -->
       <br />
-      <div class="single-news mb-lg-0 mb-4">
+      <!-- <div class="single-news mb-lg-0 mb-4">
         <div *ngIf="isPopularNewsLoaded">
           <mat-card class="example-card">
             <p class="thick">많이 본 뉴스</p>
@@ -32,7 +32,7 @@
             </mat-card-content>
           </mat-card>
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="col-lg-10 col-md-12">
       <div class="single-news mb-lg-0 mb-4">
@@ -43,27 +43,27 @@
           <section class="magazine-section my-5">
             <div class="row">
               <div class="col-lg-12	col-md-12 right-align">
-                <h5 class="font-weight-bold dark-grey-text">{{newsDetail.subject}}</h5>
-                <p>{{newsDetail.department}}</p>
-                <p>{{newsDetail.dateCreated | date:'y-MM-dd'}}</p>
-                <p style="margin-top: -10px;">{{newsDetail.creator}}</p>
-                <p style="margin-top: -10px;">조회수: {{newsDetail.views}}</p>
+                <h5 class="font-weight-bold dark-grey-text">{{nl.newsTitl}}</h5>
+                <p>{{nl.ovrofInfo}}</p>
+                <p>{{nl.newsWrtDt | date:'y-MM-dd'}}</p>
+                <p style="margin-top: -10px;">{{nl.newsWrterNm}}</p>
+                <!-- <p style="margin-top: -10px;">조회수: {{newsDetail.views}}</p> -->
                 <hr />
               </div>
-            </div>
+            </div>          
             <div class="row">
               <div class="col-lg-12	col-md-12">
                 <br />
-                <div class="left-align" [innerHTML]="newsDetail.body | safeHtml"></div>
+                <div class="left-align" [innerHTML]="nl.newsBdt"></div>
                 <hr />
                 <div>
                   <button mdbBtn type="button" color="info" outline="true" (click)="backToList()" mdbWavesEffect>목록</button>
                 </div>
                 <hr />
                 <p style="font-size: 13px; text-align: left;">
-                  본 저작물은 KOTRA에서 <span>{{newsDetail.dateCreated | date:'y년 M월 d일'}}</span>
-                  작성하여 공공누리 제 1유형으로 개방한 '<span>[{{newsDetail.subject}}]</span>
-                  <span>(작성자: {{newsDetail.creator}})</span>'를 이용하였으며,
+                  본 저작물은 KOTRA에서 <span>{{nl.newsWrtDt | date:'y년 M월 d일'}}</span>
+                  작성하여 공공누리 제 1유형으로 개방한 '<span>[{{nl.newsTitl}}]</span>
+                  <span>(작성자: {{nl.newsWrterNm}})</span>'를 이용하였으며,
                   해당 저작물은 KOTRA 해외시장뉴스(news.kotra.or.kr)에서 무료로 열람 가능합니다.
                 </p>
               </div>

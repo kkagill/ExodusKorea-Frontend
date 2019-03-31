@@ -21,7 +21,7 @@ export class MinimumColDetailDialog implements OnInit {
   isMinimumCoLLoaded: boolean = false;
   isSubmitted: boolean = false;
   minimumCoL: IMinimumCOL[];
-  headElements = ['닉네임', '날짜', '도시', '룸쉐어', '교통비', '식비', '핸드폰비', '인터넷비', '기타비용', '설명', 'Total'];
+  headElements = ['닉네임', '날짜', '도시', '주거비', '교통비', '식비', '핸드폰비', '인터넷비', '기타비용', '설명', 'Total'];
   searchText: string;
 
   constructor(private dataService: DataService,

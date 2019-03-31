@@ -35,7 +35,7 @@ export class UploaderRankingPanelComponent implements OnInit {
           let count = 0;
 
           for (let ur of uploaderRanking) {
-            if (count === 10) {
+            if (count === 15) {
               break;
             } else {
               this.uploaderRanking.push(ur);

@@ -11,10 +11,10 @@ const routes: Routes = [
     { path: 'auth', loadChildren: './auth/auth.module#AuthModule' },    
     { path: 'core', loadChildren: './core/core.module#CoreModule' },   
     { path: 'content-details', loadChildren: './content-details/content-details.module#ContentDetailsModule' },  
-    { path: 'news', loadChildren: './world-news/news.module#NewsModule' },  
+    // { path: 'news', loadChildren: './world-news/news.module#NewsModule' },  
     { path: 'country-info', loadChildren: './country-info/country-info.module#CountryInfoModule' }, 
     { path: 'search-videos', loadChildren: './search-videos/search-videos.module#SearchVideosModule' }, 
-    { path: 'uploader-rankings', loadChildren: './uploader-rankings/uploader-rankings.module#UploaderRankingsModule' }    
+    // { path: 'uploader-rankings', loadChildren: './uploader-rankings/uploader-rankings.module#UploaderRankingsModule' }    
 ];
  
 @NgModule({

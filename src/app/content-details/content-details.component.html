@@ -262,16 +262,16 @@
                 <p style="font-size: 12px;">{{priceInfo.countryKR}} 전국 평균</p>
                 <p style="font-size: 11px;"> (한국 물가 대비)</p>
                 <mat-label>
-                  <b>생활비:</b> {{priceInfo.costOfLiving}} <mdb-icon [icon]="priceInfo.costOfLivingIcon"></mdb-icon>
+                  <b>생활비: {{priceInfo.costOfLiving}}</b> <mdb-icon [icon]="priceInfo.costOfLivingIcon"></mdb-icon>
                 </mat-label><br />
                 <mat-label>
-                  <b>주거비:</b> {{priceInfo.rent}} <mdb-icon [icon]="priceInfo.rentIcon"></mdb-icon>
+                  <b>주거비: {{priceInfo.rent}}</b> <mdb-icon [icon]="priceInfo.rentIcon"></mdb-icon>
                 </mat-label><br />
                 <mat-label>
-                  <b>식료품:</b> {{priceInfo.groceries}} <mdb-icon [icon]="priceInfo.groceriesIcon"></mdb-icon>
+                  <b>식료품: {{priceInfo.groceries}}</b> <mdb-icon [icon]="priceInfo.groceriesIcon"></mdb-icon>
                 </mat-label><br />
                 <mat-label>
-                  <b>외식비:</b> {{priceInfo.restaurantPrice}} <mdb-icon [icon]="priceInfo.restaurantPriceIcon"></mdb-icon>
+                  <b>외식비: {{priceInfo.restaurantPrice}}</b> <mdb-icon [icon]="priceInfo.restaurantPriceIcon"></mdb-icon>
                 </mat-label>
                 <br /><br />
                 <span class="pointer" style="color: #007ad9;" (click)="onClickPriceInfoDetail(priceInfo.countryEN)">더
@@ -286,11 +286,11 @@
                 <mat-card-title><b>최소 생활비</b></mat-card-title>
               </mat-card-header>
               <mat-card-content class="left-align-panel">
-                <p style="font-size: 12px;">한달 평균 ({{minimumCoLInfo.baseCurrency}})</p>
+                <p style="font-size: 12px;">1人 한달 ({{minimumCoLInfo.baseCurrency}})</p>
                 <mat-label *ngFor="let mcol of minimumCoLInfo.cityMinimums">
                   <span>
                     {{mcol.city}}:
-                    <span *ngIf="mcol.avgCostOfLiving === 0" class="thick" style="font-size: 13px;">자료없음</span>
+                    <span *ngIf="mcol.avgCostOfLiving === 0" class="thick" style="font-size: 13px;">?</span>
                     <span *ngIf="mcol.avgCostOfLiving !== 0" class="thick" style="font-size: 13px;">{{mcol.avgCostOfLiving
                       | currency:minimumCoLInfo.baseCurrency:'symbol-narrow':'1.0-0'}}</span>
                   </span>
@@ -300,7 +300,7 @@
                 <span class="pointer" style="color: #007ad9;" (click)="onClickMinimumCoLDetail(minimumCoLInfo.countryEN, minimumCoLInfo.baseCurrency)">더
                   자세히..</span>
                 <hr />
-                <p style="font-size: 12px;">{{minimumCoLInfo.countryKR}}에 사세요?</p>
+                <p style="font-size: 12px;">{{minimumCoLInfo.countryKR}} 사세요?</p>
                 <button type="button" class="btn btn-outline-info waves-effect btn-sm" (click)="onClickHelp(minimumCoLInfo.countryId, minimumCoLInfo.countryKR, minimumCoLInfo.countryEN, minimumCoLInfo.baseCurrency)"
                   style="margin-top: -20px;">HELP!</button>
               </mat-card-content>

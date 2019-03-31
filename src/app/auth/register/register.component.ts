@@ -46,14 +46,14 @@ export class RegisterComponent {
     this.nickNameFormControl = new FormControl('', []);
     this.passwordFormControl = new FormControl('', [Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$")]);
     this.confirmPasswordFormControl = new FormControl('', [Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$")]);
-    this.tandsFormControl = new FormControl('', []);
+    //this.tandsFormControl = new FormControl('', []);
     this.registerForm = new FormGroup({
       email: this.emailFormControl,
       nickName: this.nickNameFormControl,
       password: this.passwordFormControl,
       confirmPassword: this.confirmPasswordFormControl,
       recaptcha: new FormControl(null),
-      tands: this.tandsFormControl
+      //tands: this.tandsFormControl
     });
   }
 
@@ -76,9 +76,9 @@ export class RegisterComponent {
       this.registerForm.value.email === '' || 
       this.registerForm.value.nickName === '' ||
       this.registerForm.value.password === '' ||
-      this.registerForm.value.confirmPassword === '' ||
-      this.registerForm.value.tands === '' ||
-      this.registerForm.value.tands === false) {
+      this.registerForm.value.confirmPassword === '') {
+      //this.registerForm.value.tands === '' ||
+      //this.registerForm.value.tands === false) {
       return;
     }
     if (!this.isCaptchaPassed) {
@@ -171,9 +171,9 @@ export class RegisterComponent {
     }
   }
 
-  onClickTermsOfService() {
-    const dialogRef = this.dialog.open(TermsOfServiceDialog, {
-      width: '1000px'
-    });
-  }
+  // onClickTermsOfService() {
+  //   const dialogRef = this.dialog.open(TermsOfServiceDialog, {
+  //     width: '1000px'
+  //   });
+  // }
 }

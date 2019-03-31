@@ -90,10 +90,11 @@ export class ContentDetailsComponent implements OnInit {
       this.youtubeId = params.get('id2');
       this.isGoogleDriveVideo = +params.get('id3');
       // Use Google Drive Video
-      if (this.isGoogleDriveVideo === 1 && this.authService.isAuthenticated()) {
-        this.safeURL = this.sanitizer.bypassSecurityTrustResourceUrl(`https://drive.google.com/file/d/${this.youtubeId}/preview`); // rel=0, related videos will come from the same channel as the video that was just played. 
-        // Enter 1 at the end of URL without being logged in
-      } else if (this.isGoogleDriveVideo === 1 && !this.authService.isAuthenticated()) {
+      // if (this.isGoogleDriveVideo === 1 && this.authService.isAuthenticated()) {
+      //   this.safeURL = this.sanitizer.bypassSecurityTrustResourceUrl(`https://drive.google.com/file/d/${this.youtubeId}/preview`); // rel=0, related videos will come from the same channel as the video that was just played. 
+      //   // Enter 1 at the end of URL without being logged in
+      // } 
+      if (this.isGoogleDriveVideo === 1 && !this.authService.isAuthenticated()) {
         this.router.navigate(['**']);
         // Use YouTube Video
       } else {
@@ -589,7 +590,7 @@ export class ContentDetailsComponent implements OnInit {
 
   onClickMinimumCoLDetail(countryEN: string, baseCurrency: string) {
     const dialogRef = this.dialog.open(MinimumColDetailDialog, {
-      width: '1100px',
+      width: '1200px',
       data: { countryEN: countryEN, baseCurrency: baseCurrency }
     });
   }

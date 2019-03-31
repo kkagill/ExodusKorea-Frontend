@@ -3,16 +3,16 @@
     <div class="container">
       <div class="row py-4 d-flex align-items-center">
         <div class="col-md-6 col-lg-5 text-center text-md-left mb-4 mb-md-0">
-          <h6 class="mb-0">해외 취업/이민/유학의 현실적 정보</h6>
+          <h6 class="mb-0">해외 취업/이민/워홀 정보 공유</h6>
         </div>
-        <div class="col-md-6 col-lg-7 text-center text-md-right">
+        <!-- <div class="col-md-6 col-lg-7 text-center text-md-right">
           <a class="fb-ic">
             <mdb-icon icon="facebook" class="white-text mr-4"></mdb-icon>
           </a>
           <a class="li-ic">
             <mdb-icon icon="linkedin" class="white-text mr-4"></mdb-icon>
           </a>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -24,7 +24,7 @@
         <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
         <p>
           경쟁이 치열한 국내 시장에서 눈을 돌리면 해외의 놀라운 시장이 보입니다.
-          글로벌 무대로 진출하고자 하는 당신을 위한 정보 공유.
+          깨끗한 환경과 글로벌 무대로 진출하고자 하는 당신을 위한 영상 정보 공유 플랫폼
         </p>
       </div>
       <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
@@ -33,11 +33,17 @@
         <p>
           <a class="dark-grey-text" [routerLink]="['search-videos']">영상 분류</a>
         </p>
+        <!-- <p>
+          <a class="dark-grey-text" [routerLink]="['news']">해외 뉴스</a>
+        </p> -->
         <p>
-          <a class="dark-grey-text" [routerLink]="['news']">취업/이민 뉴스</a>
+          <a class="dark-grey-text" [routerLink]="['upload-video']">영상공유 신청</a>
         </p>
         <p>
-          <a class="dark-grey-text" [routerLink]="['upload-video']">영상 올리기</a>
+          <a class="dark-grey-text" [routerLink]="['uploader-ranking']">공유자 랭킹</a>
+        </p>
+        <p>
+          <a class="dark-grey-text" [routerLink]="['jobs-in-demand']">{{ currentYear | date: "yyyy" }} Hot Jobs</a>
         </p>
       </div>
 
@@ -62,13 +68,13 @@
         <h6 class="text-uppercase font-weight-bold">연락</h6>
         <hr class="teal accent-3 mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
         <p>
-          <mdb-icon icon="envelope" class="mr-3"></mdb-icon> admin@taljoseon.com
+          <mdb-icon icon="envelope" class="mr-3"></mdb-icon> admin@talchoseon.com
         </p>
       </div>
     </div>
   </div>
 
   <div class="footer-copyright text-center py-3" style="background-color: #eceff1; color: black;">
-    Copyright © {{ currentYear | date: "yyyy" }} 탈조선.com
+    Copyright © {{ currentYear | date: "yyyy" }} talchoseon.com
   </div>
 </footer>

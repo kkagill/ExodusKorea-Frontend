@@ -4,6 +4,7 @@ import { DataService } from 'src/app/shared/services/data.service';
 import { ItemsService } from 'src/app/shared/utils/items.service';
 import { IUploaderRanking } from 'src/app/shared/interfaces';
 import { DetailDialog } from '../uploader-ranking-panel/dialogs/detail-dialog/detail-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-uploader-ranking',
@@ -16,6 +17,7 @@ export class UploaderRankingComponent implements OnInit {
 
   public constructor(public snackBar: MatSnackBar,
     public dialog: MatDialog,
+    private router: Router,
     private dataService: DataService,
     private itemService: ItemsService) { }
 

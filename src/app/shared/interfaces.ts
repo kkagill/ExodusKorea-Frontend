@@ -42,24 +42,36 @@ export interface INews {
 }
 
 export interface INewsDetail {
-    newsDetailId: number;
-    subject: string;
-    country: string;
-    department: string;
-    creator: string;
-    body: string;
-    dateCreated: Date;
-    views: number;
-    thumbnail: string;
-    newsId: number;
+    newsTitl: string;
+    newsWrterNm: string;
+    newsWrtDt: Date;
+    newsBdt: string;
+    ovrofInfo: string;   
 
+    newsId: number;
     index: number;
-    createdDate: string;
 }
+
+// export interface INewsDetail {
+//     newsDetailId: number;
+//     subject: string;
+//     country: string;
+//     department: string;
+//     creator: string;
+//     body: string;
+//     dateCreated: Date;
+//     views: number;
+//     thumbnail: string;
+//     newsId: number;
+
+//     index: number;
+//     createdDate: string;
+// }
 
 export interface IVideoPost {
     videoPostId: number;
     uploader: string;
+    uploaderOriginal: string;
     uploadedDate: Date;
     title: string;
     likes: number;
@@ -200,6 +212,7 @@ export interface IChannelInfo {
 
 export interface IUploaderRanking {
     name: string;
+    nameOriginal: string;
     thumbnailDefaultUrl: string;
     uploaderId: number;
     specificInfo: ISpecificInfo;
@@ -312,13 +325,21 @@ export interface IJobsInDemand {
 export interface IDetails {
     jobsInDemandId: number;
     titleKR: string;
+    titleEN: string;
     description: string;
     hasVideoPost: boolean;
+    isRecommended: boolean;
+    difficultyLevel: string;
+    link: string;
+    jobSite: string;
+    salary: number;
+    currency: string;
 }
 
-export interface ICategoryCountryUploader {
+export interface ICategoryCountryCareerUploader {
     categories: ICategory[];
     countries: ICountry[];
+    careers: ICareer[];
     uploaders: IUploader[];
 }
 

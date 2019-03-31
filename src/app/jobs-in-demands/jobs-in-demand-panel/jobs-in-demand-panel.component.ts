@@ -14,7 +14,8 @@ import { IJobsInDemand } from 'src/app/shared/interfaces';
 export class JobsInDemandPanelComponent implements OnInit {
   jobsInDemand: IJobsInDemand[] = [];
   isJobsInDemandLoaded: boolean = false;
-
+  currentYear: number = Date.now();
+  
   public constructor(public snackBar: MatSnackBar,
     public dialog: MatDialog,
     private router: Router,
@@ -26,11 +27,11 @@ export class JobsInDemandPanelComponent implements OnInit {
   }
 
   loadJobsInDemand() {
-    this.dataService.getJobsInDemandByRandomCountries()
+    this.dataService.getJobsInDemandByAllCountries()
       .subscribe(res => {
         if (res.status === 200) {
           this.isJobsInDemandLoaded = true;
-          this.jobsInDemand = this.itemService.getSerialized<IJobsInDemand[]>(res.body);
+          this.jobsInDemand = this.itemService.getSerialized<IJobsInDemand[]>(res.body);  
         }
       },
         error => {
@@ -42,10 +43,32 @@ export class JobsInDemandPanelComponent implements OnInit {
       );
   }
 
-  onClickTitle(description: string, jobsInDemandId: number, hasVideoPost: boolean, titleKR: string, countryKR: string) {
+  onClickTitle(description: string,
+    jobsInDemandId: number,
+    hasVideoPost: boolean,
+    titleKR: string,
+    titleEN: string,
+    countryKR: string,
+    difficultyLevel: string,
+    link: string,
+    jobSite: string,
+    salary: number,
+    currency: string) {
     const dialogRef = this.dialog.open(JidDetailDialog, {
       width: '350px',
-      data: { description: description, jobsInDemandId: jobsInDemandId, hasVideoPost: hasVideoPost, titleKR: titleKR, countryKR: countryKR }
+      data: {
+        description: description,
+        jobsInDemandId: jobsInDemandId,
+        hasVideoPost: hasVideoPost,
+        titleKR: titleKR,
+        titleEN: titleEN,
+        countryKR: countryKR,
+        difficultyLevel: difficultyLevel,
+        link: link,
+        jobSite: jobSite,
+        salary: salary,
+        currency: currency
+      }
     });
   }
 

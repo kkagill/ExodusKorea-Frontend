@@ -77,7 +77,7 @@ export function tokenGetter() {
     AuthModule,   
     CountryInfoModule,
     AdminModule,
-    NewsModule,
+    // NewsModule,
     ContentDetailsModule,
     SearchVideosModule,
     UserProfileModule,
