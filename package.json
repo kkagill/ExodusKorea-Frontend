@@ -41,7 +41,7 @@
     "rxjs-compat": "^6.3.3",
     "screenfull": "^3.3.0",
     "zone.js": "~0.8.26",
-    "jquery": "3.3.1"
+    "jquery": "3.5.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.7.0",
